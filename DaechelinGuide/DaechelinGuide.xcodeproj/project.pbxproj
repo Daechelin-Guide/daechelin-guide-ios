@@ -12,6 +12,11 @@
 		52141CDD2BE0D82400551A94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52141CDC2BE0D82400551A94 /* ViewController.swift */; };
 		52141CE22BE0D82500551A94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52141CE12BE0D82500551A94 /* Assets.xcassets */; };
 		52141CE52BE0D82500551A94 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 52141CE42BE0D82500551A94 /* Base */; };
+		52141CF42BE0E03200551A94 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CF32BE0E03200551A94 /* ReactorKit */; };
+		52141CF72BE0E04000551A94 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CF62BE0E04000551A94 /* Then */; };
+		52141CFB2BE0E58D00551A94 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52141CFA2BE0E58D00551A94 /* Constants.swift */; };
+		52141CFE2BE0E6C800551A94 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CFD2BE0E6C800551A94 /* SnapKit */; };
+		52141D022BE0E7CB00551A94 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52141D012BE0E7CB00551A94 /* Response.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,8 @@
 		52141CE12BE0D82500551A94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52141CE42BE0D82500551A94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52141CE62BE0D82500551A94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52141CFA2BE0E58D00551A94 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		52141D012BE0E7CB00551A94 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +36,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52141CFE2BE0E6C800551A94 /* SnapKit in Frameworks */,
+				52141CF42BE0E03200551A94 /* ReactorKit in Frameworks */,
+				52141CF72BE0E04000551A94 /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,7 +83,8 @@
 		52141CED2BE0D99C00551A94 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				52141CDC2BE0D82400551A94 /* ViewController.swift */,
+				52141CF92BE0E57F00551A94 /* Service */,
+				52141CF82BE0E51100551A94 /* Scene */,
 				52141CEE2BE0DA1C00551A94 /* Delegate */,
 			);
 			name = Sources;
@@ -86,6 +97,39 @@
 				52141CDA2BE0D82400551A94 /* SceneDelegate.swift */,
 			);
 			name = Delegate;
+			sourceTree = "<group>";
+		};
+		52141CF82BE0E51100551A94 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				52141CDC2BE0D82400551A94 /* ViewController.swift */,
+			);
+			name = Scene;
+			sourceTree = "<group>";
+		};
+		52141CF92BE0E57F00551A94 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				52141D002BE0E75F00551A94 /* Model */,
+				52141CFF2BE0E71000551A94 /* Configuration */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		52141CFF2BE0E71000551A94 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				52141CFA2BE0E58D00551A94 /* Constants.swift */,
+			);
+			name = Configuration;
+			sourceTree = "<group>";
+		};
+		52141D002BE0E75F00551A94 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				52141D012BE0E7CB00551A94 /* Response.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -104,6 +148,11 @@
 			dependencies = (
 			);
 			name = DaechelinGuide;
+			packageProductDependencies = (
+				52141CF32BE0E03200551A94 /* ReactorKit */,
+				52141CF62BE0E04000551A94 /* Then */,
+				52141CFD2BE0E6C800551A94 /* SnapKit */,
+			);
 			productName = DaechelinGuide;
 			productReference = 52141CD52BE0D82400551A94 /* DaechelinGuide.app */;
 			productType = "com.apple.product-type.application";
@@ -132,6 +181,11 @@
 				Base,
 			);
 			mainGroup = 52141CCC2BE0D82400551A94;
+			packageReferences = (
+				52141CF22BE0E03200551A94 /* XCRemoteSwiftPackageReference "ReactorKit" */,
+				52141CF52BE0E04000551A94 /* XCRemoteSwiftPackageReference "Then" */,
+				52141CFC2BE0E6C800551A94 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 52141CD62BE0D82400551A94 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -161,6 +215,8 @@
 				52141CDD2BE0D82400551A94 /* ViewController.swift in Sources */,
 				52141CD92BE0D82400551A94 /* AppDelegate.swift in Sources */,
 				52141CDB2BE0D82400551A94 /* SceneDelegate.swift in Sources */,
+				52141CFB2BE0E58D00551A94 /* Constants.swift in Sources */,
+				52141D022BE0E7CB00551A94 /* Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +443,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		52141CF22BE0E03200551A94 /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactorKit/ReactorKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
+		52141CF52BE0E04000551A94 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		52141CFC2BE0E6C800551A94 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		52141CF32BE0E03200551A94 /* ReactorKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52141CF22BE0E03200551A94 /* XCRemoteSwiftPackageReference "ReactorKit" */;
+			productName = ReactorKit;
+		};
+		52141CF62BE0E04000551A94 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52141CF52BE0E04000551A94 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+		52141CFD2BE0E6C800551A94 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52141CFC2BE0E6C800551A94 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 52141CCD2BE0D82400551A94 /* Project object */;
 }
