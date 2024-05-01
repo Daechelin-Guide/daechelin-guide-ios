@@ -24,6 +24,10 @@
 		52141D162BE0EDAF00551A94 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52141D152BE0EDAF00551A94 /* BaseViewController.swift */; };
 		52141D1C2BE1CD3900551A94 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52141D1B2BE1CD3900551A94 /* UIColor+Ext.swift */; };
 		52141D1E2BE1CD8900551A94 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52141D1D2BE1CD8900551A94 /* Color.swift */; };
+		52141D202BE1D15400551A94 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52141D1F2BE1D15400551A94 /* BaseView.swift */; };
+		52141D222BE1DCF200551A94 /* MenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52141D212BE1DCF200551A94 /* MenuResponse.swift */; };
+		52141D252BE1DEC800551A94 /* MealType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52141D242BE1DEC800551A94 /* MealType.swift */; };
+		52141D272BE1DEFD00551A94 /* MealResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52141D262BE1DEFD00551A94 /* MealResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +47,10 @@
 		52141D152BE0EDAF00551A94 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		52141D1B2BE1CD3900551A94 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		52141D1D2BE1CD8900551A94 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		52141D1F2BE1D15400551A94 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		52141D212BE1DCF200551A94 /* MenuResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuResponse.swift; sourceTree = "<group>"; };
+		52141D242BE1DEC800551A94 /* MealType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealType.swift; sourceTree = "<group>"; };
+		52141D262BE1DEFD00551A94 /* MealResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +136,7 @@
 		52141CF92BE0E57F00551A94 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				52141D002BE0E75F00551A94 /* Model */,
+				52141D002BE0E75F00551A94 /* Response */,
 				52141CFF2BE0E71000551A94 /* Configuration */,
 			);
 			name = Service;
@@ -142,12 +150,14 @@
 			name = Configuration;
 			sourceTree = "<group>";
 		};
-		52141D002BE0E75F00551A94 /* Model */ = {
+		52141D002BE0E75F00551A94 /* Response */ = {
 			isa = PBXGroup;
 			children = (
 				52141D012BE0E7CB00551A94 /* Response.swift */,
+				52141D212BE1DCF200551A94 /* MenuResponse.swift */,
+				52141D262BE1DEFD00551A94 /* MealResponse.swift */,
 			);
-			name = Model;
+			name = Response;
 			sourceTree = "<group>";
 		};
 		52141D032BE0EBEC00551A94 /* Main */ = {
@@ -197,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				52141D152BE0EDAF00551A94 /* BaseViewController.swift */,
+				52141D1F2BE1D15400551A94 /* BaseView.swift */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -211,6 +222,7 @@
 		52141D182BE1CCB000551A94 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				52141D232BE1DEB500551A94 /* Enum */,
 				52141D1A2BE1CCFA00551A94 /* Color */,
 				52141D192BE1CCCC00551A94 /* Extension */,
 			);
@@ -231,6 +243,14 @@
 				52141D1D2BE1CD8900551A94 /* Color.swift */,
 			);
 			name = Color;
+			sourceTree = "<group>";
+		};
+		52141D232BE1DEB500551A94 /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				52141D242BE1DEC800551A94 /* MealType.swift */,
+			);
+			name = Enum;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,13 +334,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				52141D0E2BE0EC6800551A94 /* RankingViewController.swift in Sources */,
+				52141D202BE1D15400551A94 /* BaseView.swift in Sources */,
+				52141D222BE1DCF200551A94 /* MenuResponse.swift in Sources */,
 				52141D102BE0EC6F00551A94 /* SettingViewController.swift in Sources */,
+				52141D252BE1DEC800551A94 /* MealType.swift in Sources */,
 				52141D092BE0EC2400551A94 /* MainViewController.swift in Sources */,
 				52141CD92BE0D82400551A94 /* AppDelegate.swift in Sources */,
 				52141D1C2BE1CD3900551A94 /* UIColor+Ext.swift in Sources */,
 				52141D1E2BE1CD8900551A94 /* Color.swift in Sources */,
 				52141CDB2BE0D82400551A94 /* SceneDelegate.swift in Sources */,
 				52141D162BE0EDAF00551A94 /* BaseViewController.swift in Sources */,
+				52141D272BE1DEFD00551A94 /* MealResponse.swift in Sources */,
 				52141CFB2BE0E58D00551A94 /* Constants.swift in Sources */,
 				52141D0C2BE0EC6100551A94 /* ReviewViewController.swift in Sources */,
 				52141D122BE0ECA800551A94 /* MainViewReactor.swift in Sources */,

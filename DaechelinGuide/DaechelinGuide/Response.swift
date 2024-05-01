@@ -5,13 +5,13 @@
 //  Created by 이민규 on 4/30/24.
 //
 
-class Response<T: Decodable>: Decodable {
-    var status: Int
-    var message: String
-    var data: T
+struct Response<T: Decodable>: Decodable {
+    let status: Int
+    let message: String
+    let data: T
 }
 
-class MessageResponse: Decodable {
-    var status: Int
-    var message : String
+struct MessageResponse: Decodable {
+    let status: Int
+    let message : String
 }
