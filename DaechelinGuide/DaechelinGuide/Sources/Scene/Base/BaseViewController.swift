@@ -16,7 +16,7 @@ class BaseVC<T: Reactor>: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = Color.primary
+        view.backgroundColor = Color.background
         setUp()
         addView()
         setLayout()

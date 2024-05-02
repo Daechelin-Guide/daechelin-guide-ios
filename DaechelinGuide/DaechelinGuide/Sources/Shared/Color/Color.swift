@@ -9,5 +9,5 @@ import UIKit
 
 class Color {
     
-    static let primary: UIColor = .init(hex: "#F9F9F9")
+    static let background: UIColor = .init(hex: "#F9F9F9")
 }
