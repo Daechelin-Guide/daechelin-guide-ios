@@ -10,7 +10,7 @@ import RxCocoa
 import SnapKit
 import Then
 
-final class HomeViewController: BaseVC<HomeViewReactor> {
+final class HomeViewController: BaseVC<HomeReactor> {
     
     // MARK: - Properties
     private lazy var container = UIView()
@@ -39,12 +39,15 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
         $0.tintColor = Color.darkGray
     }
     
+    /// scroll view
     private lazy var scrollView = UIScrollView().then {
         $0.showsVerticalScrollIndicator = false
         $0.alwaysBounceVertical = true
         $0.contentInsetAdjustmentBehavior = .always
         $0.clipsToBounds = false
     }
+    
+    private let refreshControl = UIRefreshControl()
     
     /// calendar button
     private lazy var calendarStackView = UIStackView().then {
@@ -106,6 +109,10 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
     }
     
     // MARK: - UI
+    override func configureVC() {
+        scrollView.refreshControl = refreshControl
+    }
+    
     override func addView() {
         view.addSubview(container)
         container.addSubviews(
@@ -189,11 +196,14 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
     }
     
     // MARK: - Reactor
-    override func bindView(reactor: HomeViewReactor) {
-        
+    override func bindView(reactor: HomeReactor) {
+        refreshControl.rx.controlEvent(.valueChanged)
+            .map { _ in .refresh }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
-    override func bindAction(reactor: HomeViewReactor) {
+    override func bindAction(reactor: HomeReactor) {
         yesterdayButton.rx.tap
             .map { Reactor.Action.yesterdayButtonDidTap }
             .bind(to: reactor.action)
@@ -205,11 +215,16 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
             .disposed(by: disposeBag)
     }
     
-    override func bindState(reactor: HomeViewReactor) {
+    override func bindState(reactor: HomeReactor) {
         reactor.state.map { $0.date }
             .distinctUntilChanged()
             .map { "\($0.formattingDate(format: "yyyy년 M월 d일 (E)"))" }
             .bind(to: calendarDateLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isRefreshing }
+            .distinctUntilChanged()
+            .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
     }
 }

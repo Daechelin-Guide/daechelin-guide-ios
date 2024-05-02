@@ -1,5 +1,5 @@
 //
-//  HomeViewReactor.swift
+//  HomeReactor.swift
 //  DaechelinGuide
 //
 //  Created by 이민규 on 4/30/24.
@@ -8,7 +8,7 @@
 import Foundation
 import ReactorKit
 
-final class HomeViewReactor: Reactor {
+final class HomeReactor: Reactor {
     
     // MARK: - Properties
     var initialState: State = State()
@@ -31,21 +31,28 @@ final class HomeViewReactor: Reactor {
     // MARK: - Mutation
     enum Mutation {
         case setDate(Date)
+        
+        case setRefreshing(Bool)
     }
     
     // MARK: - State
     struct State {
         var date: Date = Date()
+        
+        var isRefreshing: Bool = false
     }
 }
 
 // MARK: - Mutate
-extension HomeViewReactor {
+extension HomeReactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .refresh:
-            return .empty()
+            return Observable.just(Mutation.setRefreshing(false))
+                .delay(.milliseconds(500), scheduler: MainScheduler.instance)
+                .startWith(Mutation.setRefreshing(true))
+                .concat(Observable.just(Mutation.setDate(Date())))
             
         case .rankingButtonDidTap:
             return .empty()
@@ -73,6 +80,9 @@ extension HomeViewReactor {
         switch mutation {
         case .setDate(let date):
             newState.date = date
+            
+        case .setRefreshing(let isRefreshing):
+            newState.isRefreshing = isRefreshing
         }
         return newState
     }

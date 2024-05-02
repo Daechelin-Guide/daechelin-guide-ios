@@ -25,7 +25,7 @@
 		52229AF82BE251C600C82AC9 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AF72BE251C600C82AC9 /* ReviewViewController.swift */; };
 		52229AFA2BE251CE00C82AC9 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AF92BE251CE00C82AC9 /* SettingViewController.swift */; };
 		52229AFD2BE251D800C82AC9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AFB2BE251D800C82AC9 /* HomeViewController.swift */; };
-		52229AFE2BE251D800C82AC9 /* HomeViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AFC2BE251D800C82AC9 /* HomeViewReactor.swift */; };
+		52229AFE2BE251D800C82AC9 /* HomeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AFC2BE251D800C82AC9 /* HomeReactor.swift */; };
 		52229B012BE251E600C82AC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AFF2BE251E600C82AC9 /* AppDelegate.swift */; };
 		52229B022BE251E600C82AC9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229B002BE251E600C82AC9 /* SceneDelegate.swift */; };
 		52FC14812BE3236700462B37 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14802BE3236700462B37 /* UIView+Ext.swift */; };
@@ -35,6 +35,11 @@
 		52FC148D2BE33E2100462B37 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC148C2BE33E2100462B37 /* UIStackView+Ext.swift */; };
 		52FC14902BE36A6A00462B37 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC148F2BE36A6A00462B37 /* RxCocoa */; };
 		52FC14932BE36AAD00462B37 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14922BE36AAD00462B37 /* Date+Ext.swift */; };
+		52FC14962BE370D400462B37 /* MenuInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14952BE370D400462B37 /* MenuInfoViewController.swift */; };
+		52FC14982BE370FB00462B37 /* MenuInfoReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14972BE370FA00462B37 /* MenuInfoReactor.swift */; };
+		52FC149A2BE3716300462B37 /* ReviewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14992BE3716300462B37 /* ReviewReactor.swift */; };
+		52FC149C2BE3718000462B37 /* RankingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC149B2BE3718000462B37 /* RankingReactor.swift */; };
+		52FC149E2BE3719D00462B37 /* SettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC149D2BE3719D00462B37 /* SettingReactor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,7 +60,7 @@
 		52229AF72BE251C600C82AC9 /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewViewController.swift; path = Sources/Scene/ReviewViewController.swift; sourceTree = "<group>"; };
 		52229AF92BE251CE00C82AC9 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingViewController.swift; path = Sources/Scene/SettingViewController.swift; sourceTree = "<group>"; };
 		52229AFB2BE251D800C82AC9 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Sources/Scene/Main/HomeViewController.swift; sourceTree = "<group>"; };
-		52229AFC2BE251D800C82AC9 /* HomeViewReactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewReactor.swift; path = Sources/Scene/Main/HomeViewReactor.swift; sourceTree = "<group>"; };
+		52229AFC2BE251D800C82AC9 /* HomeReactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeReactor.swift; path = Sources/Scene/Main/HomeReactor.swift; sourceTree = "<group>"; };
 		52229AFF2BE251E600C82AC9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Sources/Delegate/AppDelegate.swift; sourceTree = "<group>"; };
 		52229B002BE251E600C82AC9 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = Sources/Delegate/SceneDelegate.swift; sourceTree = "<group>"; };
 		52FC14802BE3236700462B37 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
@@ -64,6 +69,11 @@
 		52FC148A2BE339BE00462B37 /* MenuContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContainer.swift; sourceTree = "<group>"; };
 		52FC148C2BE33E2100462B37 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
 		52FC14922BE36AAD00462B37 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
+		52FC14952BE370D400462B37 /* MenuInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuInfoViewController.swift; sourceTree = "<group>"; };
+		52FC14972BE370FA00462B37 /* MenuInfoReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuInfoReactor.swift; sourceTree = "<group>"; };
+		52FC14992BE3716300462B37 /* ReviewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReactor.swift; sourceTree = "<group>"; };
+		52FC149B2BE3718000462B37 /* RankingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingReactor.swift; sourceTree = "<group>"; };
+		52FC149D2BE3719D00462B37 /* SettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingReactor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				52141D032BE0EBEC00551A94 /* Home */,
+				52FC14942BE370C300462B37 /* MenuInfo */,
 				52141D052BE0EBFB00551A94 /* Review */,
 				52141D062BE0EC0100551A94 /* Ranking */,
 				52141D072BE0EC0600551A94 /* Setting */,
@@ -178,7 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				52229AFB2BE251D800C82AC9 /* HomeViewController.swift */,
-				52229AFC2BE251D800C82AC9 /* HomeViewReactor.swift */,
+				52229AFC2BE251D800C82AC9 /* HomeReactor.swift */,
 				52141D172BE111CC00551A94 /* Components */,
 			);
 			name = Home;
@@ -188,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				52229AF72BE251C600C82AC9 /* ReviewViewController.swift */,
+				52FC14992BE3716300462B37 /* ReviewReactor.swift */,
 			);
 			name = Review;
 			sourceTree = "<group>";
@@ -196,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				52229AF52BE251C300C82AC9 /* RankingViewController.swift */,
+				52FC149B2BE3718000462B37 /* RankingReactor.swift */,
 			);
 			name = Ranking;
 			sourceTree = "<group>";
@@ -204,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				52229AF92BE251CE00C82AC9 /* SettingViewController.swift */,
+				52FC149D2BE3719D00462B37 /* SettingReactor.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -297,6 +311,15 @@
 			name = Extension;
 			sourceTree = "<group>";
 		};
+		52FC14942BE370C300462B37 /* MenuInfo */ = {
+			isa = PBXGroup;
+			children = (
+				52FC14952BE370D400462B37 /* MenuInfoViewController.swift */,
+				52FC14972BE370FA00462B37 /* MenuInfoReactor.swift */,
+			);
+			name = MenuInfo;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -388,17 +411,22 @@
 				52229AEE2BE251A700C82AC9 /* Response.swift in Sources */,
 				52229AFA2BE251CE00C82AC9 /* SettingViewController.swift in Sources */,
 				52229AE82BE2519900C82AC9 /* UIColor+Ext.swift in Sources */,
+				52FC14982BE370FB00462B37 /* MenuInfoReactor.swift in Sources */,
 				52FC14892BE32CD500462B37 /* UIImage+Ext.swift in Sources */,
+				52FC149C2BE3718000462B37 /* RankingReactor.swift in Sources */,
+				52FC149E2BE3719D00462B37 /* SettingReactor.swift in Sources */,
 				52229AFD2BE251D800C82AC9 /* HomeViewController.swift in Sources */,
 				52FC148B2BE339BE00462B37 /* MenuContainer.swift in Sources */,
 				52229AF82BE251C600C82AC9 /* ReviewViewController.swift in Sources */,
 				52229AF02BE251AE00C82AC9 /* Constants.swift in Sources */,
 				52229AF62BE251C300C82AC9 /* RankingViewController.swift in Sources */,
 				52229B022BE251E600C82AC9 /* SceneDelegate.swift in Sources */,
+				52FC149A2BE3716300462B37 /* ReviewReactor.swift in Sources */,
 				52229AE62BE2519200C82AC9 /* MealType.swift in Sources */,
 				52FC14932BE36AAD00462B37 /* Date+Ext.swift in Sources */,
 				52229AED2BE251A700C82AC9 /* MealResponse.swift in Sources */,
-				52229AFE2BE251D800C82AC9 /* HomeViewReactor.swift in Sources */,
+				52FC14962BE370D400462B37 /* MenuInfoViewController.swift in Sources */,
+				52229AFE2BE251D800C82AC9 /* HomeReactor.swift in Sources */,
 				52229B012BE251E600C82AC9 /* AppDelegate.swift in Sources */,
 				52229AEC2BE251A700C82AC9 /* MenuResponse.swift in Sources */,
 			);
