@@ -12,49 +12,58 @@ import Then
 final class HomeViewController: BaseVC<HomeViewReactor> {
     
     // MARK: - Properties
-    private let container = UIView()
+    private lazy var container = UIView()
     
-    private let navigationBarView = UIView().then {
+    private lazy var navigationBarView = UIView().then {
         $0.backgroundColor = Color.white
     }
     
-    private let navigationBarItemView = UIView()
+    private lazy var navigationBarItemView = UIView()
     
-    private let logoImage = UIImageView().then {
+    private lazy var logoImage = UIImageView().then {
         $0.image = UIImage(icon: .logo)
         $0.contentMode = .scaleAspectFit
     }
     
-    private let rankingButton = UIButton().then {
+    private lazy var rankingButton = UIButton().then {
         $0.setImage(UIImage(icon: .ranking), for: .normal)
         $0.imageView!.contentMode = .scaleAspectFit
         $0.tintColor = Color.black
     }
     
-    private let settingButton = UIButton().then {
+    private lazy var settingButton = UIButton().then {
         $0.setImage(UIImage(icon: .setting), for: .normal)
         $0.imageView!.contentMode = .scaleAspectFill
         $0.tintColor = Color.black
     }
     
-    private let scrollView = UIScrollView().then {
+    private lazy var scrollView = UIScrollView().then {
         $0.showsVerticalScrollIndicator = false
         $0.alwaysBounceVertical = true
         $0.contentInsetAdjustmentBehavior = .always
         $0.clipsToBounds = false
     }
     
-    private let menuContainerStackView = UIStackView().then {
+    private lazy var menuContainerStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 20
         $0.distribution = .fill
     }
     
-    private let breakfastContainer = MenuContainer(type: .TYPE_BREAKFAST)
+    private lazy var breakfastContainer = MenuContainer(
+        menu: "들깨계란죽 -감자햄볶음 나박김치 아몬드후레이크+우유 통영식꿀빵",
+        type: .TYPE_BREAKFAST
+    )
     
-    private let lunchContainer = MenuContainer(type: .TYPE_LUNCH)
+    private lazy var lunchContainer = MenuContainer(
+        menu: "*브리오슈싸이버거 유부초밥/크래미 미소된장국 모듬야채피클 오렌지주스",
+        type: .TYPE_LUNCH
+    )
     
-    private let dinnerContainer = MenuContainer(type: .TYPE_DINNER)
+    private lazy var dinnerContainer = MenuContainer(
+        menu: nil,
+        type: .TYPE_DINNER
+    )
     
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
