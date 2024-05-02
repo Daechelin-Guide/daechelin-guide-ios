@@ -7,6 +7,7 @@
 
 import UIKit
 import RxCocoa
+import RxGesture
 import SnapKit
 import Then
 
@@ -200,6 +201,50 @@ final class HomeViewController: BaseVC<HomeReactor> {
         refreshControl.rx.controlEvent(.valueChanged)
             .map { _ in .refresh }
             .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rankingButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                let vc = RankingViewController(reactor: RankingReactor())
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        settingButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                let vc = SettingViewController(reactor: SettingReactor())
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        breakfastContainer.rx.tapGesture()
+            .subscribe(onNext: { _ in
+                let vc = MenuInfoViewController(reactor: MenuInfoReactor(
+                    date: reactor.currentState.date,
+                    type: .TYPE_BREAKFAST
+                ))
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        lunchContainer.rx.tapGesture()
+            .subscribe(onNext: { _ in
+                let vc = MenuInfoViewController(reactor: MenuInfoReactor(
+                    date: reactor.currentState.date,
+                    type: .TYPE_LUNCH
+                ))
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        dinnerContainer.rx.tapGesture()
+            .subscribe(onNext: { _ in
+                let vc = MenuInfoViewController(reactor: MenuInfoReactor(
+                    date: reactor.currentState.date,
+                    type: .TYPE_DINNER
+                ))
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
             .disposed(by: disposeBag)
     }
     

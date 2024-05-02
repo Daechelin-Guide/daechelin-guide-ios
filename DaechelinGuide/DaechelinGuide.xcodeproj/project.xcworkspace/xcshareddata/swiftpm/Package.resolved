@@ -1,5 +1,5 @@
 {
-  "originHash" : "4d5a01db741a7644be01529d3f12cd506ac0322b9ffdac36447a3b90db0aebbc",
+  "originHash" : "487a72c32c5e54ed69a09d71e9b2b03dac48f732750775ac250238ed3f84ea15",
   "pins" : [
     {
       "identity" : "reactorkit",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "8fa33f09c6f6621a2aa536d739956d53b84dd139",
         "version" : "3.2.0"
+      }
+    },
+    {
+      "identity" : "rxgesture",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RxSwiftCommunity/RxGesture",
+      "state" : {
+        "revision" : "1b137c576b4aaaab949235752278956697c9e4a0",
+        "version" : "4.0.4"
       }
     },
     {

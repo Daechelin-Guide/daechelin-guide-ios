@@ -8,7 +8,7 @@
 import Foundation
 
 enum MealType: String, Decodable {
-    case TYPE_BREAKFAST
-    case TYPE_LUNCH
-    case TYPE_DINNER
+    case TYPE_BREAKFAST = "breakfast"
+    case TYPE_LUNCH = "lunch"
+    case TYPE_DINNER = "dinner"
 }

@@ -17,7 +17,6 @@ final class MenuContainer: BaseView {
         setUI(for: type)
         self.menuLabel.text = menu ?? "급식이 없어요."
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

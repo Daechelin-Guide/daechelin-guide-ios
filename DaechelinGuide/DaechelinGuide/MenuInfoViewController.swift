@@ -19,7 +19,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        print(reactor?.currentState.date)
+        print(reactor?.currentState.type)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - UI

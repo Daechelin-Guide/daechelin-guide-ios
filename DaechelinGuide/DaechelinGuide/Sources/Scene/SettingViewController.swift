@@ -19,7 +19,7 @@ final class SettingViewController: BaseVC<SettingReactor> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-//        navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - UI

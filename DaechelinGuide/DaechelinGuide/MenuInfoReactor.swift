@@ -11,7 +11,7 @@ import ReactorKit
 final class MenuInfoReactor: Reactor {
     
     // MARK: - Properties
-    var initialState: State = State()
+    var initialState: State
     
     // MARK: - Action
     enum Action {
@@ -25,7 +25,12 @@ final class MenuInfoReactor: Reactor {
     
     // MARK: - State
     struct State {
-        
+        var date: Date
+        var type: MealType
+    }
+    
+    init(date: Date, type: MealType) {
+        self.initialState = State(date: date, type: type)
     }
 }
 
@@ -33,9 +38,9 @@ final class MenuInfoReactor: Reactor {
 extension MenuInfoReactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
-//        switch action {
-//        
-//        }
+        //        switch action {
+        //
+        //        }
     }
     
     // MARK: - Reduce

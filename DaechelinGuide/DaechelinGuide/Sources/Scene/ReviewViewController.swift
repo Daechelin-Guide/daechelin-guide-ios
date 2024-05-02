@@ -19,7 +19,7 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - UI
