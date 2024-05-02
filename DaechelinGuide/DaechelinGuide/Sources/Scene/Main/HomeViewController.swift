@@ -169,6 +169,7 @@ final class HomeViewController: BaseVC<HomeReactor> {
         settingButton.snp.makeConstraints {
             $0.height.trailing.equalToSuperview()
         }
+        /// scroll view
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navigationBarView.snp.bottom).offset(34)
             $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
@@ -196,7 +197,6 @@ final class HomeViewController: BaseVC<HomeReactor> {
             $0.width.equalTo(scrollView.snp.width).inset(16)
             $0.centerX.equalToSuperview()
         }
-        
     }
     
     // MARK: - Reactor
@@ -223,7 +223,8 @@ final class HomeViewController: BaseVC<HomeReactor> {
         breakfastContainer.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self = self,
+                      reactor.currentState.menu?.breakfast != nil else { return }
                 let vc = MenuInfoViewController(
                     reactor: MenuInfoReactor(date: Date(), type: .TYPE_BREAKFAST)
                 )
@@ -234,7 +235,8 @@ final class HomeViewController: BaseVC<HomeReactor> {
         lunchContainer.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self = self,
+                      reactor.currentState.menu?.lunch != nil else { return }
                 let vc = MenuInfoViewController(
                     reactor: MenuInfoReactor(date: Date(), type: .TYPE_LUNCH)
                 )
@@ -245,11 +247,12 @@ final class HomeViewController: BaseVC<HomeReactor> {
         dinnerContainer.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self = self,
+                      reactor.currentState.menu?.dinner != nil else { return }
                 let vc = MenuInfoViewController(
                     reactor: MenuInfoReactor(date: Date(), type: .TYPE_DINNER)
                 )
-                self.present(vc, animated: true)
+                self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }

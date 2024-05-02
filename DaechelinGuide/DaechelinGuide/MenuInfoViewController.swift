@@ -9,6 +9,7 @@ import UIKit
 import RxCocoa
 import SnapKit
 import Then
+import Cosmos
 
 final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     
@@ -38,6 +39,59 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.textColor = Color.black
     }
     
+    /// scroll view
+    private lazy var scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+        $0.alwaysBounceVertical = true
+        $0.contentInsetAdjustmentBehavior = .always
+        $0.clipsToBounds = false
+    }
+    
+    private let refreshControl = UIRefreshControl()
+    
+    /// menu info container
+    private lazy var menuInfoContainer = UIView().then {
+        $0.backgroundColor = Color.white
+        $0.layer.cornerRadius = 12
+        $0.layer.borderWidth = 1
+    }
+    
+    private lazy var menuDateLabel = UILabel().then {
+        $0.text = "2월 6일 (월)"
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 18, weight: .medium)
+    }
+    
+    private lazy var mealView = UIView().then {
+        $0.layer.cornerRadius = 14
+        $0.clipsToBounds = true
+    }
+    
+    private lazy var mealLabel = UILabel().then {
+        $0.text = "meal"
+        $0.textColor = Color.white
+        $0.font = .systemFont(ofSize: 16, weight: .semibold)
+    }
+    
+    private lazy var starView = CosmosView().then {
+        $0.rating = 3.6
+        $0.settings.fillMode = .half
+        $0.settings.updateOnTouch = false
+        $0.settings.starSize = 30
+        $0.settings.starMargin = 4
+        $0.settings.filledImage = UIImage(icon: .filledStar)
+        $0.settings.emptyImage = UIImage(icon: .emptyStar)
+    }
+    
+    private lazy var separateLine = UILabel()
+    
+    private lazy var menuLabel = UILabel().then {
+        $0.text = "menu\nmenu\nmenu\nmenu"
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.numberOfLines = 0
+    }
+    
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -48,7 +102,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            navigationBarView
+            scrollView, navigationBarView
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -56,6 +110,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         navigationBarItemView.addSubviews(
             backButton, navigationTitle
         )
+        scrollView.addSubview(menuInfoContainer)
+        menuInfoContainer.addSubviews(
+            menuDateLabel, mealView, starView, separateLine, menuLabel
+        )
+        mealView.addSubview(mealLabel)
     }
     
     override func setLayout() {
@@ -82,6 +141,75 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         navigationTitle.snp.makeConstraints {
             $0.height.equalToSuperview()
             $0.leading.equalTo(backButton.snp.trailing).offset(10)
+        }
+        /// scroll view
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(navigationBarView.snp.bottom).offset(20)
+            $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        /// menu info container
+        menuInfoContainer.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.bottom.equalTo(menuLabel.snp.bottom).offset(24)
+            $0.width.equalTo(scrollView.snp.width).inset(16)
+            $0.centerX.equalToSuperview()
+        }
+        menuDateLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(24)
+            $0.bottom.equalTo(menuDateLabel.snp.top).offset(18)
+            $0.centerX.equalToSuperview()
+        }
+        mealView.snp.makeConstraints {
+            $0.width.equalTo(66)
+            $0.top.equalTo(menuDateLabel.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
+        }
+        mealLabel.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+            $0.verticalEdges.equalToSuperview().inset(4)
+        }
+        starView.snp.makeConstraints {
+            $0.top.equalTo(mealView.snp.bottom).offset(8)
+            $0.centerX.equalToSuperview()
+        }
+        separateLine.snp.makeConstraints {
+            $0.width.equalTo(menuInfoContainer.snp.width).dividedBy(2)
+            $0.top.equalTo(starView.snp.bottom).offset(8)
+            $0.bottom.equalTo(separateLine.snp.top).offset(1)
+            $0.centerX.equalToSuperview()
+        }
+        menuLabel.snp.makeConstraints {
+            $0.top.equalTo(separateLine.snp.bottom).offset(20)
+            $0.centerX.equalToSuperview()
+        }
+    }
+    
+    override func setUp() {
+        setColor()
+    }
+    
+    private func setColor() {
+        switch reactor?.currentState.type {
+        case .TYPE_BREAKFAST:
+            let color = Color.breakfast
+            menuInfoContainer.layer.borderColor = color.cgColor
+            mealView.backgroundColor = color
+            mealLabel.text = "조식"
+            separateLine.backgroundColor = color.withAlphaComponent(0.7)
+        case .TYPE_LUNCH:
+            let color = Color.lunch
+            menuInfoContainer.layer.borderColor = color.cgColor
+            mealView.backgroundColor = color
+            mealLabel.text = "중식"
+            separateLine.backgroundColor = color.withAlphaComponent(0.7)
+        case .TYPE_DINNER:
+            let color = Color.dinner
+            menuInfoContainer.layer.borderColor = color.cgColor
+            mealView.backgroundColor = color
+            mealLabel.text = "석식"
+            separateLine.backgroundColor = color.withAlphaComponent(0.7)
+        case .none:
+            return
         }
     }
     

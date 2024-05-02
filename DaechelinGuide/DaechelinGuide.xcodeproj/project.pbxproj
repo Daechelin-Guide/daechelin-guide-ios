@@ -42,6 +42,7 @@
 		52FC149E2BE3719D00462B37 /* SettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC149D2BE3719D00462B37 /* SettingReactor.swift */; };
 		52FC14A12BE378A300462B37 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A02BE378A300462B37 /* RxGesture */; };
 		52FC14A32BE391D800462B37 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14A22BE391D800462B37 /* UINavigationController.swift */; };
+		52FC14A92BE459C400462B37 /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A82BE459C400462B37 /* Cosmos */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52FC14A92BE459C400462B37 /* Cosmos in Frameworks */,
 				52141CFE2BE0E6C800551A94 /* SnapKit in Frameworks */,
 				52141CF42BE0E03200551A94 /* ReactorKit in Frameworks */,
 				52FC14A12BE378A300462B37 /* RxGesture in Frameworks */,
@@ -347,6 +349,7 @@
 				52141CFD2BE0E6C800551A94 /* SnapKit */,
 				52FC148F2BE36A6A00462B37 /* RxCocoa */,
 				52FC14A02BE378A300462B37 /* RxGesture */,
+				52FC14A82BE459C400462B37 /* Cosmos */,
 			);
 			productName = DaechelinGuide;
 			productReference = 52141CD52BE0D82400551A94 /* DaechelinGuide.app */;
@@ -382,6 +385,7 @@
 				52141CFC2BE0E6C800551A94 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				52FC148E2BE36A6A00462B37 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				52FC149F2BE378A300462B37 /* XCRemoteSwiftPackageReference "RxGesture" */,
+				52FC14A72BE459C400462B37 /* XCRemoteSwiftPackageReference "Cosmos" */,
 			);
 			productRefGroup = 52141CD62BE0D82400551A94 /* Products */;
 			projectDirPath = "";
@@ -705,6 +709,14 @@
 				minimumVersion = 4.0.4;
 			};
 		};
+		52FC14A72BE459C400462B37 /* XCRemoteSwiftPackageReference "Cosmos" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/Cosmos";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 25.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -732,6 +744,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 52FC149F2BE378A300462B37 /* XCRemoteSwiftPackageReference "RxGesture" */;
 			productName = RxGesture;
+		};
+		52FC14A82BE459C400462B37 /* Cosmos */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52FC14A72BE459C400462B37 /* XCRemoteSwiftPackageReference "Cosmos" */;
+			productName = Cosmos;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
