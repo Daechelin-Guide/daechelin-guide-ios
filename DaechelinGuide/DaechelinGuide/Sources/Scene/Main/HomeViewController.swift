@@ -88,18 +88,15 @@ final class HomeViewController: BaseVC<HomeReactor> {
     }
     
     private lazy var breakfastContainer = MenuContainer(
-        menu: "들깨계란죽 -감자햄볶음 나박김치 아몬드후레이크+우유 통영식꿀빵",
-        type: .TYPE_BREAKFAST
+        menu: nil, type: .TYPE_BREAKFAST
     )
     
     private lazy var lunchContainer = MenuContainer(
-        menu: "*브리오슈싸이버거 유부초밥/크래미 미소된장국 모듬야채피클 오렌지주스",
-        type: .TYPE_LUNCH
+        menu: nil, type: .TYPE_LUNCH
     )
     
     private lazy var dinnerContainer = MenuContainer(
-        menu: nil,
-        type: .TYPE_DINNER
+        menu: nil, type: .TYPE_DINNER
     )
     
     // MARK: - LifeCycle
@@ -198,6 +195,7 @@ final class HomeViewController: BaseVC<HomeReactor> {
     
     // MARK: - Reactor
     override func bindView(reactor: HomeReactor) {
+        
         refreshControl.rx.controlEvent(.valueChanged)
             .map { _ in .refresh }
             .bind(to: reactor.action)
@@ -218,37 +216,42 @@ final class HomeViewController: BaseVC<HomeReactor> {
             .disposed(by: disposeBag)
         
         breakfastContainer.rx.tapGesture()
-            .subscribe(onNext: { _ in
-                let vc = MenuInfoViewController(reactor: MenuInfoReactor(
-                    date: reactor.currentState.date,
-                    type: .TYPE_BREAKFAST
-                ))
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let vc = MenuInfoViewController(
+                    reactor: MenuInfoReactor(date: Date(), type: .TYPE_BREAKFAST)
+                )
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
         lunchContainer.rx.tapGesture()
-            .subscribe(onNext: { _ in
-                let vc = MenuInfoViewController(reactor: MenuInfoReactor(
-                    date: reactor.currentState.date,
-                    type: .TYPE_LUNCH
-                ))
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let vc = MenuInfoViewController(
+                    reactor: MenuInfoReactor(date: Date(), type: .TYPE_LUNCH)
+                )
                 self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
         dinnerContainer.rx.tapGesture()
-            .subscribe(onNext: { _ in
-                let vc = MenuInfoViewController(reactor: MenuInfoReactor(
-                    date: reactor.currentState.date,
-                    type: .TYPE_DINNER
-                ))
-                self.navigationController?.pushViewController(vc, animated: true)
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let vc = MenuInfoViewController(
+                    reactor: MenuInfoReactor(date: Date(), type: .TYPE_DINNER)
+                )
+                self.present(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }
     
     override func bindAction(reactor: HomeReactor) {
+        reactor.action.onNext(.fetchMenu)
+        
         yesterdayButton.rx.tap
             .map { Reactor.Action.yesterdayButtonDidTap }
             .bind(to: reactor.action)
@@ -270,6 +273,17 @@ final class HomeViewController: BaseVC<HomeReactor> {
         reactor.state.map { $0.isRefreshing }
             .distinctUntilChanged()
             .bind(to: refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.menu }
+            .subscribe(onNext: { [weak self] menuResponse in
+                let breakfast = menuResponse?.breakfast
+                let lunch = menuResponse?.lunch
+                let dinner = menuResponse?.dinner
+                self?.breakfastContainer.configure(menu: breakfast)
+                self?.lunchContainer.configure(menu: lunch)
+                self?.dinnerContainer.configure(menu: dinner)
+            })
             .disposed(by: disposeBag)
     }
 }

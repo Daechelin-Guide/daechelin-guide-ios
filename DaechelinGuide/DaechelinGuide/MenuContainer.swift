@@ -15,10 +15,15 @@ final class MenuContainer: BaseView {
     ) {
         super.init()
         setUI(for: type)
-        self.menuLabel.text = menu ?? "급식이 없어요."
+        configure(menu: menu)
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(menu: String?) {
+        self.menuLabel.text = menu ?? "급식이 없어요."
     }
     
     // MARK: - Properties
