@@ -1,8 +1,8 @@
 //
-//  RankingViewController.swift
+//  MenuInfoViewController.swift
 //  DaechelinGuide
 //
-//  Created by 이민규 on 4/30/24.
+//  Created by 이민규 on 5/2/24.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import RxCocoa
 import SnapKit
 import Then
 
-final class RankingViewController: BaseVC<RankingReactor> {
+final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     
     // MARK: - Properties
     private lazy var container = UIView()
@@ -34,14 +34,15 @@ final class RankingViewController: BaseVC<RankingReactor> {
     }
     
     // MARK: - Reactor
-    override func bindView(reactor: RankingReactor) {
+    override func bindView(reactor: MenuInfoReactor) {
         
     }
     
-    override func bindAction(reactor: RankingReactor) {
+    override func bindAction(reactor: MenuInfoReactor) {
+        
     }
     
-    override func bindState(reactor: RankingReactor) {
+    override func bindState(reactor: MenuInfoReactor) {
         
     }
 }
