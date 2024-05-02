@@ -41,6 +41,7 @@
 		52FC149C2BE3718000462B37 /* RankingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC149B2BE3718000462B37 /* RankingReactor.swift */; };
 		52FC149E2BE3719D00462B37 /* SettingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC149D2BE3719D00462B37 /* SettingReactor.swift */; };
 		52FC14A12BE378A300462B37 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A02BE378A300462B37 /* RxGesture */; };
+		52FC14A32BE391D800462B37 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14A22BE391D800462B37 /* UINavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +76,7 @@
 		52FC14992BE3716300462B37 /* ReviewReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReactor.swift; sourceTree = "<group>"; };
 		52FC149B2BE3718000462B37 /* RankingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingReactor.swift; sourceTree = "<group>"; };
 		52FC149D2BE3719D00462B37 /* SettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingReactor.swift; sourceTree = "<group>"; };
+		52FC14A22BE391D800462B37 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +269,7 @@
 				52FC14802BE3236700462B37 /* UIView+Ext.swift */,
 				52FC148C2BE33E2100462B37 /* UIStackView+Ext.swift */,
 				52FC14922BE36AAD00462B37 /* Date+Ext.swift */,
+				52FC14A22BE391D800462B37 /* UINavigationController.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -419,6 +422,7 @@
 				52FC14892BE32CD500462B37 /* UIImage+Ext.swift in Sources */,
 				52FC149C2BE3718000462B37 /* RankingReactor.swift in Sources */,
 				52FC149E2BE3719D00462B37 /* SettingReactor.swift in Sources */,
+				52FC14A32BE391D800462B37 /* UINavigationController.swift in Sources */,
 				52229AFD2BE251D800C82AC9 /* HomeViewController.swift in Sources */,
 				52FC148B2BE339BE00462B37 /* MenuContainer.swift in Sources */,
 				52229AF82BE251C600C82AC9 /* ReviewViewController.swift in Sources */,
