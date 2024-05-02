@@ -16,17 +16,22 @@ final class HomeViewReactor: Reactor {
     // MARK: - Action
     enum Action {
         case refresh
-        case didViewScroll(CGFloat)
-        case notificationButtonDidTap
+        
+        // button
+        case calendarButtonDidTap
+        case tomorrowButtonDidTap
+        case yesterdayButtonDidTap
+        case rankingButtonDidTap
+        case settingButtonDidTap
     }
     
     // MARK: - Mutation
     enum Mutation {
-        case setTopBarBlurAppearance(Bool)
+        
     }
     
     // MARK: - State
     struct State {
-        var topBarBlurAppearance: Bool = false
+        var date: Date = Date()
     }
 }

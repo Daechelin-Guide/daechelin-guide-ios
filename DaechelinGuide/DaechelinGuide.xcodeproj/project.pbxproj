@@ -31,6 +31,8 @@
 		52FC14812BE3236700462B37 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14802BE3236700462B37 /* UIView+Ext.swift */; };
 		52FC14832BE326CD00462B37 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14822BE326CD00462B37 /* Icon.swift */; };
 		52FC14892BE32CD500462B37 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14882BE32CD500462B37 /* UIImage+Ext.swift */; };
+		52FC148B2BE339BE00462B37 /* MenuContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC148A2BE339BE00462B37 /* MenuContainer.swift */; };
+		52FC148D2BE33E2100462B37 /* UIStackView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC148C2BE33E2100462B37 /* UIStackView+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,8 @@
 		52FC14802BE3236700462B37 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		52FC14822BE326CD00462B37 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		52FC14882BE32CD500462B37 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
+		52FC148A2BE339BE00462B37 /* MenuContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContainer.swift; sourceTree = "<group>"; };
+		52FC148C2BE33E2100462B37 /* UIStackView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +173,8 @@
 		52141D032BE0EBEC00551A94 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				52229AFB2BE251D800C82AC9 /* HomeViewController.swift */,
+				52229AFC2BE251D800C82AC9 /* HomeViewReactor.swift */,
 				52141D172BE111CC00551A94 /* Components */,
 			);
 			name = Home;
@@ -219,8 +225,7 @@
 		52141D172BE111CC00551A94 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				52229AFB2BE251D800C82AC9 /* HomeViewController.swift */,
-				52229AFC2BE251D800C82AC9 /* HomeViewReactor.swift */,
+				52FC148A2BE339BE00462B37 /* MenuContainer.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -240,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				52FC14802BE3236700462B37 /* UIView+Ext.swift */,
+				52FC148C2BE33E2100462B37 /* UIStackView+Ext.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -366,6 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52FC148D2BE33E2100462B37 /* UIStackView+Ext.swift in Sources */,
 				52FC14812BE3236700462B37 /* UIView+Ext.swift in Sources */,
 				52FC14832BE326CD00462B37 /* Icon.swift in Sources */,
 				52229AF32BE251BA00C82AC9 /* BaseView.swift in Sources */,
@@ -376,6 +383,7 @@
 				52229AE82BE2519900C82AC9 /* UIColor+Ext.swift in Sources */,
 				52FC14892BE32CD500462B37 /* UIImage+Ext.swift in Sources */,
 				52229AFD2BE251D800C82AC9 /* HomeViewController.swift in Sources */,
+				52FC148B2BE339BE00462B37 /* MenuContainer.swift in Sources */,
 				52229AF82BE251C600C82AC9 /* ReviewViewController.swift in Sources */,
 				52229AF02BE251AE00C82AC9 /* Constants.swift in Sources */,
 				52229AF62BE251C300C82AC9 /* RankingViewController.swift in Sources */,

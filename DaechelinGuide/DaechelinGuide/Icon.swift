@@ -14,6 +14,7 @@ public enum Icon: String {
     
     // MARK: - Icon
     case ranking = "ranking"
+    case setting = "setting"
     
     // MARK: - Food
 }
