@@ -1,5 +1,5 @@
 //
-//  MainViewReactor.swift
+//  HomeViewReactor.swift
 //  DaechelinGuide
 //
 //  Created by 이민규 on 4/30/24.
@@ -8,7 +8,7 @@
 import Foundation
 import ReactorKit
 
-final class MainViewReactor: Reactor {
+final class HomeViewReactor: Reactor {
     
     // MARK: - Properties
     var initialState: State = State()

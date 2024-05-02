@@ -7,7 +7,7 @@
 
 import UIKit
 
-class Color {
+public class Color {
     
-    static let background: UIColor = .init(hex: "#F9F9F9")
+    public static let background: UIColor = .init(hex: "#F9F9F9")
 }

@@ -24,10 +24,13 @@
 		52229AF62BE251C300C82AC9 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AF52BE251C300C82AC9 /* RankingViewController.swift */; };
 		52229AF82BE251C600C82AC9 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AF72BE251C600C82AC9 /* ReviewViewController.swift */; };
 		52229AFA2BE251CE00C82AC9 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AF92BE251CE00C82AC9 /* SettingViewController.swift */; };
-		52229AFD2BE251D800C82AC9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AFB2BE251D800C82AC9 /* MainViewController.swift */; };
-		52229AFE2BE251D800C82AC9 /* MainViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AFC2BE251D800C82AC9 /* MainViewReactor.swift */; };
+		52229AFD2BE251D800C82AC9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AFB2BE251D800C82AC9 /* HomeViewController.swift */; };
+		52229AFE2BE251D800C82AC9 /* HomeViewReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AFC2BE251D800C82AC9 /* HomeViewReactor.swift */; };
 		52229B012BE251E600C82AC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AFF2BE251E600C82AC9 /* AppDelegate.swift */; };
 		52229B022BE251E600C82AC9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229B002BE251E600C82AC9 /* SceneDelegate.swift */; };
+		52FC14812BE3236700462B37 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14802BE3236700462B37 /* UIView+Ext.swift */; };
+		52FC14832BE326CD00462B37 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14822BE326CD00462B37 /* Icon.swift */; };
+		52FC14892BE32CD500462B37 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14882BE32CD500462B37 /* UIImage+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,10 +50,13 @@
 		52229AF52BE251C300C82AC9 /* RankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RankingViewController.swift; path = Sources/Scene/RankingViewController.swift; sourceTree = "<group>"; };
 		52229AF72BE251C600C82AC9 /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReviewViewController.swift; path = Sources/Scene/ReviewViewController.swift; sourceTree = "<group>"; };
 		52229AF92BE251CE00C82AC9 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingViewController.swift; path = Sources/Scene/SettingViewController.swift; sourceTree = "<group>"; };
-		52229AFB2BE251D800C82AC9 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = Sources/Scene/Main/MainViewController.swift; sourceTree = "<group>"; };
-		52229AFC2BE251D800C82AC9 /* MainViewReactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewReactor.swift; path = Sources/Scene/Main/MainViewReactor.swift; sourceTree = "<group>"; };
+		52229AFB2BE251D800C82AC9 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewController.swift; path = Sources/Scene/Main/HomeViewController.swift; sourceTree = "<group>"; };
+		52229AFC2BE251D800C82AC9 /* HomeViewReactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewReactor.swift; path = Sources/Scene/Main/HomeViewReactor.swift; sourceTree = "<group>"; };
 		52229AFF2BE251E600C82AC9 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Sources/Delegate/AppDelegate.swift; sourceTree = "<group>"; };
 		52229B002BE251E600C82AC9 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = Sources/Delegate/SceneDelegate.swift; sourceTree = "<group>"; };
+		52FC14802BE3236700462B37 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		52FC14822BE326CD00462B37 /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
+		52FC14882BE32CD500462B37 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +131,7 @@
 		52141CF82BE0E51100551A94 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				52141D032BE0EBEC00551A94 /* Main */,
+				52141D032BE0EBEC00551A94 /* Home */,
 				52141D052BE0EBFB00551A94 /* Review */,
 				52141D062BE0EC0100551A94 /* Ranking */,
 				52141D072BE0EC0600551A94 /* Setting */,
@@ -160,12 +166,12 @@
 			name = Response;
 			sourceTree = "<group>";
 		};
-		52141D032BE0EBEC00551A94 /* Main */ = {
+		52141D032BE0EBEC00551A94 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				52141D172BE111CC00551A94 /* Components */,
 			);
-			name = Main;
+			name = Home;
 			sourceTree = "<group>";
 		};
 		52141D052BE0EBFB00551A94 /* Review */ = {
@@ -213,8 +219,8 @@
 		52141D172BE111CC00551A94 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				52229AFB2BE251D800C82AC9 /* MainViewController.swift */,
-				52229AFC2BE251D800C82AC9 /* MainViewReactor.swift */,
+				52229AFB2BE251D800C82AC9 /* HomeViewController.swift */,
+				52229AFC2BE251D800C82AC9 /* HomeViewReactor.swift */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -222,8 +228,9 @@
 		52141D182BE1CCB000551A94 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				52FC14852BE32CAB00462B37 /* Icon */,
+				52FC14842BE32A4B00462B37 /* Color */,
 				52141D232BE1DEB500551A94 /* Enum */,
-				52141D1A2BE1CCFA00551A94 /* Color */,
 				52141D192BE1CCCC00551A94 /* Extension */,
 			);
 			name = Shared;
@@ -232,17 +239,9 @@
 		52141D192BE1CCCC00551A94 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				52229AE72BE2519900C82AC9 /* UIColor+Ext.swift */,
+				52FC14802BE3236700462B37 /* UIView+Ext.swift */,
 			);
 			name = Extension;
-			sourceTree = "<group>";
-		};
-		52141D1A2BE1CCFA00551A94 /* Color */ = {
-			isa = PBXGroup;
-			children = (
-				52229AE32BE2518B00C82AC9 /* Color.swift */,
-			);
-			name = Color;
 			sourceTree = "<group>";
 		};
 		52141D232BE1DEB500551A94 /* Enum */ = {
@@ -251,6 +250,40 @@
 				52229AE52BE2519200C82AC9 /* MealType.swift */,
 			);
 			name = Enum;
+			sourceTree = "<group>";
+		};
+		52FC14842BE32A4B00462B37 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				52FC14862BE32CBC00462B37 /* Extension */,
+				52229AE32BE2518B00C82AC9 /* Color.swift */,
+			);
+			name = Color;
+			sourceTree = "<group>";
+		};
+		52FC14852BE32CAB00462B37 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				52FC14872BE32CCD00462B37 /* Extension */,
+				52FC14822BE326CD00462B37 /* Icon.swift */,
+			);
+			name = Icon;
+			sourceTree = "<group>";
+		};
+		52FC14862BE32CBC00462B37 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				52229AE72BE2519900C82AC9 /* UIColor+Ext.swift */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
+		52FC14872BE32CCD00462B37 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				52FC14882BE32CD500462B37 /* UIImage+Ext.swift */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,20 +366,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52FC14812BE3236700462B37 /* UIView+Ext.swift in Sources */,
+				52FC14832BE326CD00462B37 /* Icon.swift in Sources */,
 				52229AF32BE251BA00C82AC9 /* BaseView.swift in Sources */,
 				52229AE42BE2518B00C82AC9 /* Color.swift in Sources */,
 				52229AF42BE251BA00C82AC9 /* BaseViewController.swift in Sources */,
 				52229AEE2BE251A700C82AC9 /* Response.swift in Sources */,
 				52229AFA2BE251CE00C82AC9 /* SettingViewController.swift in Sources */,
 				52229AE82BE2519900C82AC9 /* UIColor+Ext.swift in Sources */,
-				52229AFD2BE251D800C82AC9 /* MainViewController.swift in Sources */,
+				52FC14892BE32CD500462B37 /* UIImage+Ext.swift in Sources */,
+				52229AFD2BE251D800C82AC9 /* HomeViewController.swift in Sources */,
 				52229AF82BE251C600C82AC9 /* ReviewViewController.swift in Sources */,
 				52229AF02BE251AE00C82AC9 /* Constants.swift in Sources */,
 				52229AF62BE251C300C82AC9 /* RankingViewController.swift in Sources */,
 				52229B022BE251E600C82AC9 /* SceneDelegate.swift in Sources */,
 				52229AE62BE2519200C82AC9 /* MealType.swift in Sources */,
 				52229AED2BE251A700C82AC9 /* MealResponse.swift in Sources */,
-				52229AFE2BE251D800C82AC9 /* MainViewReactor.swift in Sources */,
+				52229AFE2BE251D800C82AC9 /* HomeViewReactor.swift in Sources */,
 				52229B012BE251E600C82AC9 /* AppDelegate.swift in Sources */,
 				52229AEC2BE251A700C82AC9 /* MenuResponse.swift in Sources */,
 			);
