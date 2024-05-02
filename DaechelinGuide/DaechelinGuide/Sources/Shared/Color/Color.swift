@@ -16,7 +16,8 @@ public class Color {
     public static let dinner: UIColor = .init(hex: "#A18CF6")
     
     // MARK: - UI Color
-    public static let black: UIColor = .init(hex: "#4E4D4D")
+    public static let darkGray: UIColor = .init(hex: "#4E4D4D")
+    public static let lightGray: UIColor = .init(hex: "#D7D7D7")
     public static let white: UIColor = .init(hex: "#FFFFFF")
     public static let error: UIColor = .init(hex: "#C52222")
 }

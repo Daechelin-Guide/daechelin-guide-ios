@@ -46,7 +46,7 @@ final class MenuContainer: BaseView {
     }
     
     private lazy var menuLabel = UILabel().then {
-        $0.textColor = Color.black
+        $0.textColor = Color.darkGray
         $0.font = .systemFont(ofSize: 14, weight: .regular)
         $0.numberOfLines = 4
     }

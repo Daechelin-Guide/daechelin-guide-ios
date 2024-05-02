@@ -14,6 +14,7 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
     // MARK: - Properties
     private lazy var container = UIView()
     
+    /// navigation bar
     private lazy var navigationBarView = UIView().then {
         $0.backgroundColor = Color.white
     }
@@ -28,13 +29,13 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
     private lazy var rankingButton = UIButton().then {
         $0.setImage(UIImage(icon: .ranking), for: .normal)
         $0.imageView!.contentMode = .scaleAspectFit
-        $0.tintColor = Color.black
+        $0.tintColor = Color.darkGray
     }
     
     private lazy var settingButton = UIButton().then {
         $0.setImage(UIImage(icon: .setting), for: .normal)
         $0.imageView!.contentMode = .scaleAspectFill
-        $0.tintColor = Color.black
+        $0.tintColor = Color.darkGray
     }
     
     private lazy var scrollView = UIScrollView().then {
@@ -44,6 +45,40 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
         $0.clipsToBounds = false
     }
     
+    /// calendar button
+    private lazy var calendarStackView = UIStackView().then {
+        $0.axis = .horizontal
+        $0.spacing = 10
+        $0.distribution = .fill
+    }
+    
+    private lazy var yesterdayButton = UIButton().then {
+        $0.setImage(UIImage(icon: .leadingArrow), for: .normal)
+        $0.imageView?.tintColor = Color.darkGray
+        $0.addTarget(self, action: #selector(test), for: .touchUpInside)
+    }
+    
+    private lazy var calendarButton = UIButton().then {
+        $0.layer.cornerRadius = 16
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = Color.lightGray.cgColor
+        $0.backgroundColor = Color.white
+        $0.addTarget(self, action: #selector(test), for: .touchUpInside)
+    }
+    
+    private lazy var calendarDateLabel = UILabel().then {
+        $0.text = "2023년 12월 25일 (월)"
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 14, weight: .medium)
+    }
+    
+    private lazy var tomorrowButton = UIButton().then {
+        $0.setImage(UIImage(icon: .trailingArrow), for: .normal)
+        $0.imageView?.tintColor = Color.darkGray
+        $0.addTarget(self, action: #selector(test), for: .touchUpInside)
+    }
+    
+    /// menu container
     private lazy var menuContainerStackView = UIStackView().then {
         $0.axis = .vertical
         $0.spacing = 20
@@ -75,10 +110,20 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
     // MARK: - UI
     override func addView() {
         view.addSubview(container)
-        container.addSubviews(scrollView, navigationBarView)
+        container.addSubviews(
+            scrollView, navigationBarView
+        )
         navigationBarView.addSubview(navigationBarItemView)
-        navigationBarItemView.addSubviews(logoImage, rankingButton, settingButton)
-        scrollView.addSubview(menuContainerStackView)
+        navigationBarItemView.addSubviews(
+            logoImage, rankingButton, settingButton
+        )
+        scrollView.addSubviews(
+            calendarStackView, menuContainerStackView
+        )
+        calendarStackView.addArrangedSubviews(
+            yesterdayButton, calendarButton, tomorrowButton
+        )
+        calendarButton.addSubview(calendarDateLabel)
         menuContainerStackView.addArrangedSubviews(
             breakfastContainer, lunchContainer, dinnerContainer
         )
@@ -88,6 +133,8 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
         container.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        /// navigation bar
         navigationBarView.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(navigationBarItemView.snp.bottom).offset(16)
@@ -115,12 +162,36 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
             $0.top.equalTo(navigationBarView.snp.bottom).offset(34)
             $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
         }
-        menuContainerStackView.snp.makeConstraints {
+        
+        /// calendar button
+        calendarStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(scrollView.snp.width).inset(16)
-            $0.verticalEdges.equalToSuperview()
         }
+        yesterdayButton.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+        }
+        calendarButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+        }
+        calendarDateLabel.snp.makeConstraints {
+            $0.verticalEdges.equalToSuperview().inset(6)
+            $0.horizontalEdges.equalToSuperview().inset(14)
+        }
+        tomorrowButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+        }
+        
+        /// menu container
+        menuContainerStackView.snp.makeConstraints {
+            $0.top.equalTo(calendarStackView.snp.bottom).offset(20)
+            $0.width.equalTo(scrollView.snp.width).inset(16)
+            $0.centerX.equalToSuperview()
+        }
+
     }
     
     // MARK: - Reactor
+    @objc func test() {
+        print("버튼")
+    }
 }
