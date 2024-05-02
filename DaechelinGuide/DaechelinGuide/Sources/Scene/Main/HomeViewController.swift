@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxCocoa
 import SnapKit
 import Then
 
@@ -55,7 +56,6 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
     private lazy var yesterdayButton = UIButton().then {
         $0.setImage(UIImage(icon: .leadingArrow), for: .normal)
         $0.imageView?.tintColor = Color.darkGray
-        $0.addTarget(self, action: #selector(test), for: .touchUpInside)
     }
     
     private lazy var calendarButton = UIButton().then {
@@ -63,7 +63,6 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
         $0.layer.borderWidth = 1
         $0.layer.borderColor = Color.lightGray.cgColor
         $0.backgroundColor = Color.white
-        $0.addTarget(self, action: #selector(test), for: .touchUpInside)
     }
     
     private lazy var calendarDateLabel = UILabel().then {
@@ -75,7 +74,6 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
     private lazy var tomorrowButton = UIButton().then {
         $0.setImage(UIImage(icon: .trailingArrow), for: .normal)
         $0.imageView?.tintColor = Color.darkGray
-        $0.addTarget(self, action: #selector(test), for: .touchUpInside)
     }
     
     /// menu container
@@ -187,11 +185,31 @@ final class HomeViewController: BaseVC<HomeViewReactor> {
             $0.width.equalTo(scrollView.snp.width).inset(16)
             $0.centerX.equalToSuperview()
         }
-
+        
     }
     
     // MARK: - Reactor
-    @objc func test() {
-        print("버튼")
+    override func bindView(reactor: HomeViewReactor) {
+        
+    }
+    
+    override func bindAction(reactor: HomeViewReactor) {
+        yesterdayButton.rx.tap
+            .map { Reactor.Action.yesterdayButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        tomorrowButton.rx.tap
+            .map { Reactor.Action.tomorrowButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+    
+    override func bindState(reactor: HomeViewReactor) {
+        reactor.state.map { $0.date }
+            .distinctUntilChanged()
+            .map { "\($0.formattingDate(format: "yyyy년 M월 d일 (E)"))" }
+            .bind(to: calendarDateLabel.rx.text)
+            .disposed(by: disposeBag)
     }
 }
