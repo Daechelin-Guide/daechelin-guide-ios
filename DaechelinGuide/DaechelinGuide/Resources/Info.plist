@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Domain</key>
-	<string>http://54.180.155.53:8080/</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>Domain</key>
+	<string>http://54.180.155.53:8080/</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -226,7 +226,10 @@ final class HomeViewController: BaseVC<HomeReactor> {
                 guard let self = self,
                       reactor.currentState.menu?.breakfast != nil else { return }
                 let vc = MenuInfoViewController(
-                    reactor: MenuInfoReactor(date: Date(), type: .TYPE_BREAKFAST)
+                    reactor: MenuInfoReactor(
+                        date: reactor.currentState.date,
+                        type: .TYPE_BREAKFAST
+                    )
                 )
                 self.navigationController?.pushViewController(vc, animated: true)
             })
@@ -238,7 +241,10 @@ final class HomeViewController: BaseVC<HomeReactor> {
                 guard let self = self,
                       reactor.currentState.menu?.lunch != nil else { return }
                 let vc = MenuInfoViewController(
-                    reactor: MenuInfoReactor(date: Date(), type: .TYPE_LUNCH)
+                    reactor: MenuInfoReactor(
+                        date: reactor.currentState.date,
+                        type: .TYPE_LUNCH
+                    )
                 )
                 self.navigationController?.pushViewController(vc, animated: true)
             })
@@ -250,7 +256,10 @@ final class HomeViewController: BaseVC<HomeReactor> {
                 guard let self = self,
                       reactor.currentState.menu?.dinner != nil else { return }
                 let vc = MenuInfoViewController(
-                    reactor: MenuInfoReactor(date: Date(), type: .TYPE_DINNER)
+                    reactor: MenuInfoReactor(
+                        date: reactor.currentState.date,
+                        type: .TYPE_DINNER
+                    )
                 )
                 self.navigationController?.pushViewController(vc, animated: true)
             })

@@ -83,13 +83,31 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.settings.emptyImage = UIImage(icon: .emptyStar)
     }
     
-    private lazy var separateLine = UILabel()
+    private lazy var topSeparateLine = UILabel()
     
     private lazy var menuLabel = UILabel().then {
-        $0.text = "menu\nmenu\nmenu\nmenu"
+        $0.text = "menu"
         $0.textColor = Color.darkGray
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.numberOfLines = 0
+        $0.setLineSpacing(lineSpacing: 2, alignment: .center)
+    }
+    
+    private lazy var bottomSeparateLine = UILabel()
+    
+    private lazy var kcalLabel = UILabel().then {
+        $0.text = "kcal"
+        $0.textColor = Color.gray
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.numberOfLines = 0
+    }
+    
+    private lazy var nutrientsLabel = UILabel().then {
+        $0.text = "nutrients"
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.numberOfLines = 0
+        $0.setLineSpacing(lineSpacing: 2, alignment: .center)
     }
     
     // MARK: - LifeCycle
@@ -98,6 +116,14 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     }
     
     // MARK: - UI
+    override func setUp() {
+        setColor()
+    }
+    
+    override func configureVC() {
+        scrollView.refreshControl = refreshControl
+    }
+    
     override func addView() {
         view.addSubview(container)
         /// navigation bar
@@ -112,7 +138,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         )
         scrollView.addSubview(menuInfoContainer)
         menuInfoContainer.addSubviews(
-            menuDateLabel, mealView, starView, separateLine, menuLabel
+            menuDateLabel, mealView, starView,
+            topSeparateLine, menuLabel, bottomSeparateLine,
+            kcalLabel, nutrientsLabel
         )
         mealView.addSubview(mealLabel)
     }
@@ -150,12 +178,12 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         /// menu info container
         menuInfoContainer.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.bottom.equalTo(menuLabel.snp.bottom).offset(24)
+            $0.bottom.equalTo(nutrientsLabel.snp.bottom).offset(25)
             $0.width.equalTo(scrollView.snp.width).inset(16)
             $0.centerX.equalToSuperview()
         }
         menuDateLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(24)
+            $0.top.equalToSuperview().offset(25)
             $0.bottom.equalTo(menuDateLabel.snp.top).offset(18)
             $0.centerX.equalToSuperview()
         }
@@ -169,23 +197,33 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             $0.verticalEdges.equalToSuperview().inset(4)
         }
         starView.snp.makeConstraints {
-            $0.top.equalTo(mealView.snp.bottom).offset(8)
+            $0.top.equalTo(mealView.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
         }
-        separateLine.snp.makeConstraints {
+        topSeparateLine.snp.makeConstraints {
             $0.width.equalTo(menuInfoContainer.snp.width).dividedBy(2)
-            $0.top.equalTo(starView.snp.bottom).offset(8)
-            $0.bottom.equalTo(separateLine.snp.top).offset(1)
+            $0.top.equalTo(starView.snp.bottom).offset(15)
+            $0.bottom.equalTo(topSeparateLine.snp.top).offset(1)
             $0.centerX.equalToSuperview()
         }
         menuLabel.snp.makeConstraints {
-            $0.top.equalTo(separateLine.snp.bottom).offset(20)
+            $0.top.equalTo(topSeparateLine.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
         }
-    }
-    
-    override func setUp() {
-        setColor()
+        bottomSeparateLine.snp.makeConstraints {
+            $0.width.equalTo(menuInfoContainer.snp.width).dividedBy(2)
+            $0.top.equalTo(menuLabel.snp.bottom).offset(20)
+            $0.bottom.equalTo(bottomSeparateLine.snp.top).offset(1)
+            $0.centerX.equalToSuperview()
+        }
+        kcalLabel.snp.makeConstraints{
+            $0.top.equalTo(bottomSeparateLine.snp.bottom).offset(15)
+            $0.centerX.equalToSuperview()
+        }
+        nutrientsLabel.snp.makeConstraints{
+            $0.top.equalTo(kcalLabel.snp.bottom).offset(4)
+            $0.centerX.equalToSuperview()
+        }
     }
     
     private func setColor() {
@@ -195,19 +233,22 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             menuInfoContainer.layer.borderColor = color.cgColor
             mealView.backgroundColor = color
             mealLabel.text = "조식"
-            separateLine.backgroundColor = color.withAlphaComponent(0.7)
+            bottomSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
+            topSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
         case .TYPE_LUNCH:
             let color = Color.lunch
             menuInfoContainer.layer.borderColor = color.cgColor
             mealView.backgroundColor = color
             mealLabel.text = "중식"
-            separateLine.backgroundColor = color.withAlphaComponent(0.7)
+            bottomSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
+            topSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
         case .TYPE_DINNER:
             let color = Color.dinner
             menuInfoContainer.layer.borderColor = color.cgColor
             mealView.backgroundColor = color
             mealLabel.text = "석식"
-            separateLine.backgroundColor = color.withAlphaComponent(0.7)
+            bottomSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
+            topSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
         case .none:
             return
         }
@@ -215,6 +256,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     
     // MARK: - Reactor
     override func bindView(reactor: MenuInfoReactor) {
+        refreshControl.rx.controlEvent(.valueChanged)
+            .map { _ in .refresh }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         backButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
@@ -223,10 +269,42 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     }
     
     override func bindAction(reactor: MenuInfoReactor) {
+        reactor.action.onNext(.fetchMenuDetail)
         
     }
     
     override func bindState(reactor: MenuInfoReactor) {
+        reactor.state.map { $0.date }
+            .distinctUntilChanged()
+            .map { "\($0.formattingDate(format: "M월 d일 (E)"))" }
+            .bind(to: menuDateLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isRefreshing }
+            .distinctUntilChanged()
+            .bind(to: refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.menuDetail?.menu }
+            .distinctUntilChanged()
+            .map { $0?.replacingOccurrences(of: " ", with: "\n") }
+            .bind(to: menuLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.menuDetail?.cal }
+            .distinctUntilChanged()
+            .bind(to: kcalLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.menuDetail?.nutrients }
+            .distinctUntilChanged()
+            .map {
+                guard let nutrients = $0 else { return "" }
+                let nutrientsArray = nutrients.components(separatedBy: ", ")
+                return "\(nutrientsArray[0])\n\(nutrientsArray[1])\n\(nutrientsArray[2])"
+            }
+            .bind(to: nutrientsLabel.rx.text)
+            .disposed(by: disposeBag)
         
     }
 }

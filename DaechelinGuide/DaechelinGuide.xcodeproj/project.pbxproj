@@ -16,7 +16,7 @@
 		52229AE62BE2519200C82AC9 /* MealType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AE52BE2519200C82AC9 /* MealType.swift */; };
 		52229AE82BE2519900C82AC9 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AE72BE2519900C82AC9 /* UIColor+Ext.swift */; };
 		52229AEC2BE251A700C82AC9 /* MenuResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AE92BE251A700C82AC9 /* MenuResponse.swift */; };
-		52229AED2BE251A700C82AC9 /* MealResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AEA2BE251A700C82AC9 /* MealResponse.swift */; };
+		52229AED2BE251A700C82AC9 /* MenuDetailResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AEA2BE251A700C82AC9 /* MenuDetailResponse.swift */; };
 		52229AEE2BE251A700C82AC9 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AEB2BE251A700C82AC9 /* Response.swift */; };
 		52229AF02BE251AE00C82AC9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AEF2BE251AE00C82AC9 /* Constants.swift */; };
 		52229AF32BE251BA00C82AC9 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52229AF12BE251BA00C82AC9 /* BaseView.swift */; };
@@ -43,6 +43,7 @@
 		52FC14A12BE378A300462B37 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A02BE378A300462B37 /* RxGesture */; };
 		52FC14A32BE391D800462B37 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14A22BE391D800462B37 /* UINavigationController.swift */; };
 		52FC14A92BE459C400462B37 /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A82BE459C400462B37 /* Cosmos */; };
+		52FC14AB2BE46BED00462B37 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC14AA2BE46BED00462B37 /* UILabel+Ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +55,7 @@
 		52229AE52BE2519200C82AC9 /* MealType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MealType.swift; path = Sources/Shared/Enum/MealType.swift; sourceTree = "<group>"; };
 		52229AE72BE2519900C82AC9 /* UIColor+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Ext.swift"; path = "Sources/Shared/Extension/UIColor+Ext.swift"; sourceTree = "<group>"; };
 		52229AE92BE251A700C82AC9 /* MenuResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuResponse.swift; path = Sources/Service/Response/MenuResponse.swift; sourceTree = "<group>"; };
-		52229AEA2BE251A700C82AC9 /* MealResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MealResponse.swift; path = Sources/Service/Response/MealResponse.swift; sourceTree = "<group>"; };
+		52229AEA2BE251A700C82AC9 /* MenuDetailResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MenuDetailResponse.swift; path = Sources/Service/Response/MenuDetailResponse.swift; sourceTree = "<group>"; };
 		52229AEB2BE251A700C82AC9 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Sources/Service/Response/Response.swift; sourceTree = "<group>"; };
 		52229AEF2BE251AE00C82AC9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Sources/Service/Configuration/Constants.swift; sourceTree = "<group>"; };
 		52229AF12BE251BA00C82AC9 /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BaseView.swift; path = Sources/Scene/Base/BaseView.swift; sourceTree = "<group>"; };
@@ -78,6 +79,7 @@
 		52FC149B2BE3718000462B37 /* RankingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingReactor.swift; sourceTree = "<group>"; };
 		52FC149D2BE3719D00462B37 /* SettingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingReactor.swift; sourceTree = "<group>"; };
 		52FC14A22BE391D800462B37 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
+		52FC14AA2BE46BED00462B37 /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,7 +186,7 @@
 		52141D002BE0E75F00551A94 /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				52229AEA2BE251A700C82AC9 /* MealResponse.swift */,
+				52229AEA2BE251A700C82AC9 /* MenuDetailResponse.swift */,
 				52229AE92BE251A700C82AC9 /* MenuResponse.swift */,
 				52229AEB2BE251A700C82AC9 /* Response.swift */,
 			);
@@ -272,6 +274,7 @@
 				52FC148C2BE33E2100462B37 /* UIStackView+Ext.swift */,
 				52FC14922BE36AAD00462B37 /* Date+Ext.swift */,
 				52FC14A22BE391D800462B37 /* UINavigationController.swift */,
+				52FC14AA2BE46BED00462B37 /* UILabel+Ext.swift */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				52FC14A32BE391D800462B37 /* UINavigationController.swift in Sources */,
 				52229AFD2BE251D800C82AC9 /* HomeViewController.swift in Sources */,
 				52FC148B2BE339BE00462B37 /* MenuContainer.swift in Sources */,
+				52FC14AB2BE46BED00462B37 /* UILabel+Ext.swift in Sources */,
 				52229AF82BE251C600C82AC9 /* ReviewViewController.swift in Sources */,
 				52229AF02BE251AE00C82AC9 /* Constants.swift in Sources */,
 				52229AF62BE251C300C82AC9 /* RankingViewController.swift in Sources */,
@@ -436,7 +440,7 @@
 				52FC149A2BE3716300462B37 /* ReviewReactor.swift in Sources */,
 				52229AE62BE2519200C82AC9 /* MealType.swift in Sources */,
 				52FC14932BE36AAD00462B37 /* Date+Ext.swift in Sources */,
-				52229AED2BE251A700C82AC9 /* MealResponse.swift in Sources */,
+				52229AED2BE251A700C82AC9 /* MenuDetailResponse.swift in Sources */,
 				52FC14962BE370D400462B37 /* MenuInfoViewController.swift in Sources */,
 				52229AFE2BE251D800C82AC9 /* HomeReactor.swift in Sources */,
 				52229B012BE251E600C82AC9 /* AppDelegate.swift in Sources */,
@@ -593,13 +597,14 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "kr.dgsw.daechelin-guide";
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.dgsw.mingyu.Guide-Daechelin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -627,13 +632,14 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "kr.dgsw.daechelin-guide";
+				PRODUCT_BUNDLE_IDENTIFIER = "kr.dgsw.mingyu.Guide-Daechelin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
