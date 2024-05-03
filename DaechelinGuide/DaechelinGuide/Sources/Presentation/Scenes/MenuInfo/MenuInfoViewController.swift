@@ -74,7 +74,6 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     }
     
     private lazy var starView = CosmosView().then {
-        $0.rating = 3.6
         $0.settings.fillMode = .half
         $0.settings.updateOnTouch = false
         $0.settings.starSize = 30
@@ -336,6 +335,12 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
         
+        reactor.state.map { $0.menuDetail?.totalScore }
+            .distinctUntilChanged()
+            .map { $0 ?? 0.0 }
+            .bind(to: starView.rx.rating)
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.menuDetail?.menu }
             .distinctUntilChanged()
             .map { $0?.replacingOccurrences(of: " ", with: "\n") }
@@ -351,8 +356,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             .distinctUntilChanged()
             .map {
                 guard let nutrients = $0 else { return "" }
-                let nutrientsArray = nutrients.components(separatedBy: ", ")
-                return "\(nutrientsArray[0])\n\(nutrientsArray[1])\n\(nutrientsArray[2])"
+                let nutrientsArray = nutrients.components(separatedBy: ", ")[0...2]
+                let replacingArray = nutrientsArray.map {
+                    $0.replacingOccurrences(of: "(g)", with: "") + "g"
+                }
+                return replacingArray.joined(separator: "\n")
             }
             .bind(to: nutrientsLabel.rx.text)
             .disposed(by: disposeBag)
