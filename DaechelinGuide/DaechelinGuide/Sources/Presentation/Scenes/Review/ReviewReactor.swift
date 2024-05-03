@@ -15,17 +15,21 @@ final class ReviewReactor: Reactor {
     
     // MARK: - Action
     enum Action {
-        
+        case completeReview
+        case setReviewText(String)
+        case setReviewScore(Double)
     }
     
     // MARK: - Mutation
     enum Mutation {
-        
+        case setReviewText(String)
+        case setReviewScore(Double)
     }
     
     // MARK: - State
     struct State {
-        
+        var reviewText: String = ""
+        var score: Double = 0.0
     }
 }
 
@@ -33,13 +37,30 @@ final class ReviewReactor: Reactor {
 extension ReviewReactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
-//        switch action {
-//
-//        }
+        switch action {
+            
+        case let .setReviewText(text):
+            return .just(.setReviewText(text))
+            
+        case let .setReviewScore(rating):
+            return .just(.setReviewScore(rating))
+            
+        case .completeReview:
+            return .empty()
+        }
     }
     
     // MARK: - Reduce
     func reduce(state: State, mutation: Mutation) -> State {
-        
+        var newState = state
+        switch mutation {
+            
+        case .setReviewText(let reviewText):
+            newState.reviewText = reviewText
+            
+        case .setReviewScore(let score):
+            newState.score = score
+        }
+        return newState
     }
 }

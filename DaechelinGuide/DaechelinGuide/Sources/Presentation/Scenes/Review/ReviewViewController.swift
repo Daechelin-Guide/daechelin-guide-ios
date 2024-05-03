@@ -9,6 +9,7 @@ import UIKit
 import RxCocoa
 import SnapKit
 import Then
+import Cosmos
 
 final class ReviewViewController: BaseVC<ReviewReactor> {
     
@@ -42,6 +43,10 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
     private lazy var reviewContainer = UIView().then {
         $0.backgroundColor = Color.white
         $0.layer.cornerRadius = 12
+        $0.layer.shadowColor = Color.black.cgColor
+        $0.layer.shadowOpacity = 0.02
+        $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+        $0.layer.shadowRadius = 10
     }
     
     private lazy var reviewTextView = UITextView().then {
@@ -70,6 +75,16 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
         $0.setTitleColor(Color.darkGray, for: .normal)
     }
     
+    private lazy var starView = CosmosView().then {
+        $0.rating = 0.0
+        $0.settings.fillMode = .half
+        $0.settings.starSize = 30
+        $0.settings.starMargin = 4
+        $0.settings.minTouchRating = 0.0
+        $0.settings.filledImage = UIImage(icon: .filledStar)
+        $0.settings.emptyImage = UIImage(icon: .emptyStar)
+    }
+    
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -82,7 +97,7 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            reviewContainer, navigationBarView
+            starView, reviewContainer, navigationBarView
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -124,7 +139,7 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
         /// reivew text view
         reviewContainer.snp.makeConstraints {
             $0.top.equalTo(navigationBarView.snp.bottom).offset(20)
-            $0.bottom.equalTo(reviewTextView.snp.bottom).offset(50)
+            $0.bottom.equalTo(reviewTextView.snp.bottom).offset(54)
             $0.width.equalToSuperview().inset(16)
             $0.centerX.equalToSuperview()
         }
@@ -140,13 +155,17 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
         }
         reviewTextCountingLabel.snp.makeConstraints {
             $0.height.equalTo(18)
-            $0.bottom.equalToSuperview().inset(14)
-            $0.leading.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(20)
+            $0.leading.equalToSuperview().inset(22)
         }
         reviewCompleteButton.snp.makeConstraints {
             $0.height.equalTo(18)
-            $0.bottom.equalToSuperview().inset(14)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(22)
+        }
+        starView.snp.makeConstraints {
+            $0.top.equalTo(reviewContainer.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().offset(26)
         }
     }
     
@@ -160,28 +179,51 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
         
         reviewCompleteButton.rx.tap
             .subscribe(onNext: {
-                print("reviewCompleteButton")
+                print(reactor.currentState.reviewText)
+                print(reactor.currentState.score)
             })
             .disposed(by: disposeBag)
+        
+        reviewTextView.rx.text
+            .map { text -> ReviewReactor.Action in
+                return .setReviewText(text ?? "")
+            }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+
+        starView.rx.didFinishTouchingCosmos
+            .onNext { [weak reactor] score in
+                guard let reactor = reactor else { return }
+                let action = ReviewReactor.Action.setReviewScore(score)
+                reactor.action.onNext(action)
+            }
     }
     
     override func bindAction(reactor: ReviewReactor) {
     }
     
     override func bindState(reactor: ReviewReactor) {
+        reactor.state.map { $0.reviewText }
+            .bind(to: reviewTextView.rx.text)
+            .disposed(by: disposeBag)
         
+        reactor.state.map { $0.score }
+            .bind(to: starView.rx.rating)
+            .disposed(by: disposeBag)
     }
 }
 
 extension ReviewViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        let size = CGSize(width: self.reviewContainer.frame.width - 20, height: .infinity)
+        /// reactive text view
+        let size = CGSize(width: self.reviewContainer.frame.width - 32, height: .infinity)
         textView.constraints.forEach {
             if $0.firstAttribute == .height {
                 $0.constant = textView.sizeThatFits(size).height
             }
         }
+        /// limit the number of review text count
         let textCount = textView.text.count
         let maxCount = 100
         if textCount >= maxCount {
