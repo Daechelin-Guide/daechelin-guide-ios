@@ -15,6 +15,8 @@ public enum Icon: String {
     // MARK: - Icon
     case ranking = "ranking"
     case setting = "setting"
+    case review = "review"
+    
     case emptyStar = "star_empty"
     case filledStar = "star_filled"
     

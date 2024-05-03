@@ -157,26 +157,18 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     /// review button
     private lazy var reviewButton = UIButton().then {
         $0.backgroundColor = Color.white
-        $0.layer.cornerRadius = 12
+        $0.layer.cornerRadius = 32
         $0.layer.borderWidth = 1
     }
     
-    private lazy var reviewButtonLabel = UILabel().then {
-        $0.text = "급식 리뷰하기"
-        $0.textColor = Color.darkGray
-        $0.font = .systemFont(ofSize: 16, weight: .regular)
-    }
-    
     private lazy var reviewButtonImage = UIImageView().then {
-        $0.image = UIImage(icon: .trailingArrow)
+        $0.image = UIImage(icon: .review)
         $0.contentMode = .scaleAspectFit
         $0.tintColor = Color.black
     }
     
     /// comment
-    private lazy var test = UIView().then {
-        $0.backgroundColor = .red
-    }
+    private lazy var test = UIView()
     
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
@@ -198,7 +190,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            scrollView, fixedMenuInfoContainer, navigationBarView
+            scrollView, fixedMenuInfoContainer, navigationBarView, reviewButton
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -208,7 +200,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         )
         scrollView.addSubview(scrollStackView)
         scrollStackView.addArrangedSubviews(
-            menuInfoContainer, reviewButton, test
+            menuInfoContainer, test
         )
         menuInfoContainer.addSubviews(
             menuDateLabel, mealView, starView,
@@ -219,9 +211,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             fixedMenuLabel, fixedBottomSeparateLine,
             fixedKcalLabel, fixedNutrientsLabel
         )
-        reviewButton.addSubviews(
-            reviewButtonLabel, reviewButtonImage
-        )
+        reviewButton.addSubview(reviewButtonImage)
         mealView.addSubview(mealLabel)
     }
     
@@ -335,17 +325,13 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         }
         /// review button
         reviewButton.snp.makeConstraints {
-            $0.width.equalTo(scrollView.snp.width).inset(16)
-            $0.centerX.equalToSuperview()
-        }
-        reviewButtonLabel.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview().inset(16)
-            $0.leading.equalToSuperview().offset(20)
+            $0.width.height.equalTo(64)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(16)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
         reviewButtonImage.snp.makeConstraints {
-            $0.width.height.equalTo(20)
-            $0.trailing.equalToSuperview().offset(-16)
-            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(30)
+            $0.centerY.centerX.equalToSuperview()
         }
         /// comment
         test.snp.makeConstraints {
