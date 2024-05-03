@@ -21,6 +21,10 @@ final class HomeViewController: BaseVC<HomeReactor> {
         $0.backgroundColor = Color.white
     }
     
+    private lazy var navigationBarSeparateLine = UIView().then {
+        $0.backgroundColor = Color.lightGray
+    }
+    
     private lazy var navigationBarItemView = UIView()
     
     private lazy var logoImage = UIImageView().then {
@@ -103,7 +107,7 @@ final class HomeViewController: BaseVC<HomeReactor> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        print("\(type(of: self)): \(#function)")
     }
     
     // MARK: - UI
@@ -116,7 +120,9 @@ final class HomeViewController: BaseVC<HomeReactor> {
         container.addSubviews(
             scrollView, navigationBarView
         )
-        navigationBarView.addSubview(navigationBarItemView)
+        navigationBarView.addSubviews(
+            navigationBarItemView, navigationBarSeparateLine
+        )
         navigationBarItemView.addSubviews(
             logoImage, rankingButton, settingButton
         )
@@ -136,20 +142,23 @@ final class HomeViewController: BaseVC<HomeReactor> {
         container.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        
         /// navigation bar
         navigationBarView.snp.makeConstraints {
             $0.top.horizontalEdges.equalToSuperview()
             $0.bottom.equalTo(navigationBarItemView.snp.bottom).offset(16)
         }
         navigationBarItemView.snp.makeConstraints {
-            $0.height.equalTo(22)
+            $0.height.equalTo(24)
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.horizontalEdges.equalToSuperview().inset(20)
         }
+        navigationBarSeparateLine.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.bottom.horizontalEdges.equalToSuperview()
+        }
         logoImage.snp.makeConstraints {
             $0.height.equalToSuperview()
-            $0.width.equalTo(120)
+            $0.width.equalTo(108)
             $0.top.equalTo(navigationBarItemView.snp.top).offset(2)
             $0.leading.equalTo(navigationBarItemView.snp.leading)
         }
@@ -158,14 +167,13 @@ final class HomeViewController: BaseVC<HomeReactor> {
             $0.trailing.equalTo(settingButton.snp.leading).offset(-10)
         }
         settingButton.snp.makeConstraints {
-            $0.height.equalToSuperview()
-            $0.trailing.equalTo(navigationBarItemView.snp.trailing)
+            $0.height.trailing.equalToSuperview()
         }
+        /// scroll view
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navigationBarView.snp.bottom).offset(34)
             $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
         }
-        
         /// calendar button
         calendarStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -183,19 +191,16 @@ final class HomeViewController: BaseVC<HomeReactor> {
         tomorrowButton.snp.makeConstraints {
             $0.trailing.equalToSuperview()
         }
-        
         /// menu container
         menuContainerStackView.snp.makeConstraints {
             $0.top.equalTo(calendarStackView.snp.bottom).offset(20)
             $0.width.equalTo(scrollView.snp.width).inset(16)
             $0.centerX.equalToSuperview()
         }
-        
     }
     
     // MARK: - Reactor
     override func bindView(reactor: HomeReactor) {
-        
         refreshControl.rx.controlEvent(.valueChanged)
             .map { _ in .refresh }
             .bind(to: reactor.action)
@@ -218,9 +223,13 @@ final class HomeViewController: BaseVC<HomeReactor> {
         breakfastContainer.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self = self,
+                      reactor.currentState.menu?.breakfast != nil else { return }
                 let vc = MenuInfoViewController(
-                    reactor: MenuInfoReactor(date: Date(), type: .TYPE_BREAKFAST)
+                    reactor: MenuInfoReactor(
+                        date: reactor.currentState.date,
+                        type: .TYPE_BREAKFAST
+                    )
                 )
                 self.navigationController?.pushViewController(vc, animated: true)
             })
@@ -229,9 +238,13 @@ final class HomeViewController: BaseVC<HomeReactor> {
         lunchContainer.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self = self,
+                      reactor.currentState.menu?.lunch != nil else { return }
                 let vc = MenuInfoViewController(
-                    reactor: MenuInfoReactor(date: Date(), type: .TYPE_LUNCH)
+                    reactor: MenuInfoReactor(
+                        date: reactor.currentState.date,
+                        type: .TYPE_LUNCH
+                    )
                 )
                 self.navigationController?.pushViewController(vc, animated: true)
             })
@@ -240,11 +253,15 @@ final class HomeViewController: BaseVC<HomeReactor> {
         dinnerContainer.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self = self,
+                      reactor.currentState.menu?.dinner != nil else { return }
                 let vc = MenuInfoViewController(
-                    reactor: MenuInfoReactor(date: Date(), type: .TYPE_DINNER)
+                    reactor: MenuInfoReactor(
+                        date: reactor.currentState.date,
+                        type: .TYPE_DINNER
+                    )
                 )
-                self.present(vc, animated: true)
+                self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }

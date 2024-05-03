@@ -1,6 +1,15 @@
 {
-  "originHash" : "487a72c32c5e54ed69a09d71e9b2b03dac48f732750775ac250238ed3f84ea15",
+  "originHash" : "f8453d0a117d879bb0bd0598cfc657dd676beaffb3905c0260c0df0b07130a56",
   "pins" : [
+    {
+      "identity" : "cosmos",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/evgenyneu/Cosmos",
+      "state" : {
+        "revision" : "40ba10aaf175bf50abefd0e518bd3b40862af3b1",
+        "version" : "25.0.1"
+      }
+    },
     {
       "identity" : "reactorkit",
       "kind" : "remoteSourceControl",
