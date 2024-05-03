@@ -45,9 +45,16 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.alwaysBounceVertical = true
         $0.contentInsetAdjustmentBehavior = .always
         $0.clipsToBounds = false
+        $0.delegate = self
     }
     
     private let refreshControl = UIRefreshControl()
+    
+    private lazy var scrollStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 20
+        $0.distribution = .fill
+    }
     
     /// menu info container
     private lazy var menuInfoContainer = UIView().then {
@@ -82,7 +89,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.settings.emptyImage = UIImage(icon: .emptyStar)
     }
     
-    private lazy var topSeparateLine = UILabel()
+    private lazy var topSeparateLine = UIView()
     
     private lazy var menuLabel = UILabel().then {
         $0.text = "menu"
@@ -92,7 +99,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.setLineSpacing(lineSpacing: 2, alignment: .center)
     }
     
-    private lazy var bottomSeparateLine = UILabel()
+    private lazy var bottomSeparateLine = UIView()
     
     private lazy var kcalLabel = UILabel().then {
         $0.text = "kcal"
@@ -103,6 +110,44 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     
     private lazy var nutrientsLabel = UILabel().then {
         $0.text = "nutrients"
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.numberOfLines = 0
+        $0.setLineSpacing(lineSpacing: 2, alignment: .center)
+    }
+    
+    ///fixed menu info container
+    private lazy var fixedMenuInfoContainer = UIView().then {
+        $0.backgroundColor = Color.white
+        $0.layer.cornerRadius = 12
+        $0.layer.borderColor = menuInfoContainer.layer.borderColor
+        $0.layer.borderWidth = 1
+        $0.layer.maskedCorners = CACornerMask(
+            arrayLiteral: .layerMinXMaxYCorner, .layerMaxXMaxYCorner
+        )
+    }
+    
+    private lazy var fixedMenuLabel = UILabel().then {
+        $0.text = menuLabel.text
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.numberOfLines = 0
+        $0.setLineSpacing(lineSpacing: 2, alignment: .center)
+    }
+    
+    private lazy var fixedBottomSeparateLine = UIView().then {
+        $0.backgroundColor = bottomSeparateLine.backgroundColor
+    }
+    
+    private lazy var fixedKcalLabel = UILabel().then {
+        $0.text = kcalLabel.text
+        $0.textColor = Color.gray
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+        $0.numberOfLines = 0
+    }
+    
+    private lazy var fixedNutrientsLabel = UILabel().then {
+        $0.text = nutrientsLabel.text
         $0.textColor = Color.darkGray
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.numberOfLines = 0
@@ -128,6 +173,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.tintColor = Color.black
     }
     
+    /// comment
+    private lazy var test = UIView().then {
+        $0.backgroundColor = .red
+    }
+    
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -148,7 +198,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            scrollView, navigationBarView
+            scrollView, fixedMenuInfoContainer, navigationBarView
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -156,13 +206,18 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         navigationBarItemView.addSubviews(
             backButton, navigationTitle
         )
-        scrollView.addSubviews(
-            menuInfoContainer, reviewButton
+        scrollView.addSubview(scrollStackView)
+        scrollStackView.addArrangedSubviews(
+            menuInfoContainer, reviewButton, test
         )
         menuInfoContainer.addSubviews(
             menuDateLabel, mealView, starView,
             topSeparateLine, menuLabel, bottomSeparateLine,
             kcalLabel, nutrientsLabel
+        )
+        fixedMenuInfoContainer.addSubviews(
+            fixedMenuLabel, fixedBottomSeparateLine,
+            fixedKcalLabel, fixedNutrientsLabel
         )
         reviewButton.addSubviews(
             reviewButtonLabel, reviewButtonImage
@@ -198,13 +253,17 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         /// scroll view
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navigationBarView.snp.bottom).offset(20)
-            $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        scrollStackView.snp.makeConstraints {
+            $0.verticalEdges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(16)
         }
         /// menu info container
         menuInfoContainer.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.bottom.equalTo(nutrientsLabel.snp.bottom).offset(25)
-            $0.width.equalTo(scrollView.snp.width).inset(16)
+            $0.width.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
         menuDateLabel.snp.makeConstraints {
@@ -249,9 +308,33 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             $0.top.equalTo(kcalLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
+        /// fixed menu info container
+        fixedMenuInfoContainer.snp.makeConstraints {
+            $0.top.equalTo(navigationBarView.snp.bottom)
+            $0.bottom.equalTo(fixedNutrientsLabel.snp.bottom).offset(25)
+            $0.width.equalTo(scrollView.snp.width).inset(16)
+            $0.centerX.equalToSuperview()
+        }
+        fixedMenuLabel.snp.makeConstraints {
+            $0.top.equalTo(fixedMenuInfoContainer.snp.top).offset(20)
+            $0.centerX.equalToSuperview()
+        }
+        fixedBottomSeparateLine.snp.makeConstraints {
+            $0.width.equalTo(fixedMenuInfoContainer.snp.width).dividedBy(2)
+            $0.top.equalTo(fixedMenuLabel.snp.bottom).offset(20)
+            $0.bottom.equalTo(fixedBottomSeparateLine.snp.top).offset(1)
+            $0.centerX.equalToSuperview()
+        }
+        fixedKcalLabel.snp.makeConstraints {
+            $0.top.equalTo(fixedBottomSeparateLine.snp.bottom).offset(15)
+            $0.centerX.equalToSuperview()
+        }
+        fixedNutrientsLabel.snp.makeConstraints {
+            $0.top.equalTo(fixedKcalLabel.snp.bottom).offset(4)
+            $0.centerX.equalToSuperview()
+        }
         /// review button
         reviewButton.snp.makeConstraints {
-            $0.top.equalTo(menuInfoContainer.snp.bottom).offset(20)
             $0.width.equalTo(scrollView.snp.width).inset(16)
             $0.centerX.equalToSuperview()
         }
@@ -263,6 +346,12 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             $0.width.height.equalTo(20)
             $0.trailing.equalToSuperview().offset(-16)
             $0.centerY.equalToSuperview()
+        }
+        /// comment
+        test.snp.makeConstraints {
+            $0.width.equalTo(scrollView.snp.width).inset(16)
+            $0.bottom.equalTo(test.snp.top).offset(1200)
+            $0.centerX.equalToSuperview()
         }
     }
     
@@ -366,4 +455,20 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             .disposed(by: disposeBag)
         
     }
+}
+
+extension MenuInfoViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let fixedPosition: CGFloat = 155
+        let currentPosition = scrollView.contentOffset.y + scrollView.safeAreaInsets.top
+        
+        if currentPosition >= fixedPosition {
+            fixedMenuInfoContainer.isHidden = false
+        } else {
+            fixedMenuInfoContainer.isHidden = true
+        }
+    }
+    
 }
