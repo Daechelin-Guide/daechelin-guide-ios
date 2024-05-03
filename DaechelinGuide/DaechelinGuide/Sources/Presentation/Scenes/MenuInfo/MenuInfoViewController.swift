@@ -356,8 +356,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             .distinctUntilChanged()
             .map {
                 guard let nutrients = $0 else { return "" }
-                let nutrientsArray = nutrients.components(separatedBy: ", ")
-                return "\(nutrientsArray[0])\n\(nutrientsArray[1])\n\(nutrientsArray[2])"
+                let nutrientsArray = nutrients.components(separatedBy: ", ")[0...2]
+                let replacingArray = nutrientsArray.map {
+                    $0.replacingOccurrences(of: "(g)", with: "") + "g"
+                }
+                return replacingArray.joined(separator: "\n")
             }
             .bind(to: nutrientsLabel.rx.text)
             .disposed(by: disposeBag)

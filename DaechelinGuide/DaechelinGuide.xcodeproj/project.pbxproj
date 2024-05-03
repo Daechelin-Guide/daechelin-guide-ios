@@ -184,8 +184,8 @@
 		52FC14EB2BE47E2E00462B37 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				52FC14F12BE47E6200462B37 /* HomeReactor.swift */,
 				52FC14F22BE47E6200462B37 /* HomeViewController.swift */,
+				52FC14F12BE47E6200462B37 /* HomeReactor.swift */,
 				52FC14F52BE47E6E00462B37 /* MenuContainer.swift */,
 			);
 			path = Home;
