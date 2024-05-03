@@ -110,9 +110,30 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.setLineSpacing(lineSpacing: 2, alignment: .center)
     }
     
+    /// review button
+    private lazy var reviewButton = UIButton().then {
+        $0.backgroundColor = Color.white
+        $0.layer.cornerRadius = 12
+        $0.layer.borderWidth = 1
+    }
+    
+    private lazy var reviewButtonLabel = UILabel().then {
+        $0.text = "급식 리뷰하기"
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+    }
+    
+    private lazy var reviewButtonImage = UIImageView().then {
+        $0.image = UIImage(icon: .trailingArrow)
+        $0.contentMode = .scaleAspectFit
+        $0.tintColor = Color.black
+    }
+    
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        print("\(type(of: self)): \(#function)")
     }
     
     // MARK: - UI
@@ -136,11 +157,16 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         navigationBarItemView.addSubviews(
             backButton, navigationTitle
         )
-        scrollView.addSubview(menuInfoContainer)
+        scrollView.addSubviews(
+            menuInfoContainer, reviewButton
+        )
         menuInfoContainer.addSubviews(
             menuDateLabel, mealView, starView,
             topSeparateLine, menuLabel, bottomSeparateLine,
             kcalLabel, nutrientsLabel
+        )
+        reviewButton.addSubviews(
+            reviewButtonLabel, reviewButtonImage
         )
         mealView.addSubview(mealLabel)
     }
@@ -216,13 +242,28 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             $0.bottom.equalTo(bottomSeparateLine.snp.top).offset(1)
             $0.centerX.equalToSuperview()
         }
-        kcalLabel.snp.makeConstraints{
+        kcalLabel.snp.makeConstraints {
             $0.top.equalTo(bottomSeparateLine.snp.bottom).offset(15)
             $0.centerX.equalToSuperview()
         }
-        nutrientsLabel.snp.makeConstraints{
+        nutrientsLabel.snp.makeConstraints {
             $0.top.equalTo(kcalLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
+        }
+        /// review button
+        reviewButton.snp.makeConstraints {
+            $0.top.equalTo(menuInfoContainer.snp.bottom).offset(20)
+            $0.width.equalTo(scrollView.snp.width).inset(16)
+            $0.centerX.equalToSuperview()
+        }
+        reviewButtonLabel.snp.makeConstraints {
+            $0.verticalEdges.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        reviewButtonImage.snp.makeConstraints {
+            $0.width.height.equalTo(20)
+            $0.trailing.equalToSuperview().offset(-16)
+            $0.centerY.equalToSuperview()
         }
     }
     
@@ -231,6 +272,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         case .TYPE_BREAKFAST:
             let color = Color.breakfast
             menuInfoContainer.layer.borderColor = color.cgColor
+            reviewButton.layer.borderColor = color.cgColor
             mealView.backgroundColor = color
             mealLabel.text = "조식"
             bottomSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
@@ -238,6 +280,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         case .TYPE_LUNCH:
             let color = Color.lunch
             menuInfoContainer.layer.borderColor = color.cgColor
+            reviewButton.layer.borderColor = color.cgColor
             mealView.backgroundColor = color
             mealLabel.text = "중식"
             bottomSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
@@ -245,6 +288,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         case .TYPE_DINNER:
             let color = Color.dinner
             menuInfoContainer.layer.borderColor = color.cgColor
+            reviewButton.layer.borderColor = color.cgColor
             mealView.backgroundColor = color
             mealLabel.text = "석식"
             bottomSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
@@ -264,6 +308,13 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         backButton.rx.tap
             .subscribe(onNext: { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        reviewButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                let vc = ReviewViewController(reactor: ReviewReactor())
+                self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }

@@ -17,6 +17,7 @@ class BaseVC<T: Reactor>: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = Color.background
+        navigationController?.setNavigationBarHidden(true, animated: true)
         setUp()
         addView()
         setLayout()

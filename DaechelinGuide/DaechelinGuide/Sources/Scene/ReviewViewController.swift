@@ -19,7 +19,7 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        self.navigationController?.popViewController(animated: true)
+        print("\(type(of: self)): \(#function)")
     }
     
     // MARK: - UI

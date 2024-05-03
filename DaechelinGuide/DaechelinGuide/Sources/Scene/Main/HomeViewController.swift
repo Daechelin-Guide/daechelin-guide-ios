@@ -107,7 +107,7 @@ final class HomeViewController: BaseVC<HomeReactor> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        print("\(type(of: self)): \(#function)")
     }
     
     // MARK: - UI
