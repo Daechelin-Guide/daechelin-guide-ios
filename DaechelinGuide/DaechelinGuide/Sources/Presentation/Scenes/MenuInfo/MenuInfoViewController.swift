@@ -131,13 +131,13 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         let gradientLayer = CAGradientLayer().then {
             guard let type = reactor?.currentState.type else { return }
             let color = Color.getMealColor(for: type)
-            $0.frame = CGRect(x: 0, y: -10, width: view.frame.width - 32, height: 25)
+            $0.frame = CGRect(x: 0, y: 0, width: view.frame.width - 32, height: 20)
             $0.colors = [color.withAlphaComponent(1).cgColor,
-                         color.withAlphaComponent(0.3).cgColor,
-                         Color.background.withAlphaComponent(0).cgColor]
+                         color.withAlphaComponent(0.85).cgColor,
+                         color.withAlphaComponent(0).cgColor]
             $0.startPoint = CGPoint(x: 0.5, y: 0)
             $0.endPoint = CGPoint(x: 0.5, y: 1)
-            $0.cornerRadius = 15
+            $0.cornerRadius = 12
             $0.maskedCorners = CACornerMask(
                 arrayLiteral: .layerMinXMaxYCorner, .layerMaxXMaxYCorner
             )
@@ -353,8 +353,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             $0.centerX.equalToSuperview()
         }
         bottomShadow.snp.makeConstraints {
-            $0.top.equalTo(fixedMenuInfoContainer.snp.bottom)
-            $0.horizontalEdges.equalToSuperview().inset(16)
+            $0.top.equalTo(fixedMenuInfoContainer.snp.bottom).offset(-12)
+            $0.leading.equalTo(fixedMenuInfoContainer.snp.leading)
+            $0.centerX.equalToSuperview()
         }
         /// review button
         reviewButton.snp.makeConstraints {
