@@ -42,27 +42,33 @@ final class HomeReactor: Reactor {
 // MARK: - Mutate
 extension HomeReactor {
     
-    //test
-    func fetchMenu() -> MenuResponse {
-        return MenuResponse(
-            date: "2024년 05월 03일 (금)",
-            breakfast: "들깨계란죽 -감자햄볶음 나박김치 아몬드후레이크+우유 통영식꿀빵",
-            lunch: "*브리오슈싸이버거 유부초밥/크래미 미소된장국 모듬야채피클 오렌지주스",
-            dinner: nil
-        )
+    // MARK: - Mutate
+    private func fetchMenuForCurrentDate(date: Date? = nil) -> Observable<Mutation> {
+        let targetDate = date ?? currentState.date
+        return MenuProvider.shared
+            .getMenu(targetDate.formattingDate(format: "yyyyMMdd"))
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let data):
+                    return Observable.just(.setMenu(data))
+                case .failure(_):
+                    return Observable.empty()
+                }
+            }
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
             
         case .fetchMenu:
-            return Observable.just(Mutation.setMenu(fetchMenu()))
+            return fetchMenuForCurrentDate()
             
         case .refresh:
             return Observable.just(Mutation.setRefreshing(false))
                 .delay(.milliseconds(500), scheduler: MainScheduler.instance)
                 .startWith(Mutation.setRefreshing(true))
                 .concat(Observable.just(Mutation.setDate(Date())))
+                .concat(fetchMenuForCurrentDate())
             
         case .calendarButtonDidTap:
             return .empty()
@@ -70,10 +76,12 @@ extension HomeReactor {
         case .tomorrowButtonDidTap:
             let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: currentState.date) ?? Date()
             return Observable.just(Mutation.setDate(tomorrow))
+                .concat(fetchMenuForCurrentDate())
             
         case .yesterdayButtonDidTap:
             let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: currentState.date) ?? Date()
             return Observable.just(Mutation.setDate(yesterday))
+                .concat(fetchMenuForCurrentDate())
         }
     }
     

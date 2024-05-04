@@ -58,7 +58,7 @@
 		52141CE42BE0D82500551A94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52141CE62BE0D82500551A94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52F4EB072BE6600000582D33 /* ScaledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledButton.swift; sourceTree = "<group>"; };
-		52F4EB0B2BE6718000582D33 /* MenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuService.swift; path = DaechelinGuide/Sources/Shared/Component/MenuService.swift; sourceTree = SOURCE_ROOT; };
+		52F4EB0B2BE6718000582D33 /* MenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuService.swift; path = DaechelinGuide/Sources/Network/Service/MenuService.swift; sourceTree = SOURCE_ROOT; };
 		52F4EB112BE6731E00582D33 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		52F4EB142BE679BE00582D33 /* MenuProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProvider.swift; sourceTree = "<group>"; };
 		52F4EB162BE67A2000582D33 /* ProviderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderWrapper.swift; sourceTree = "<group>"; };
@@ -154,14 +154,6 @@
 			path = Component;
 			sourceTree = "<group>";
 		};
-		52F4EB092BE6714400582D33 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				52F4EB0B2BE6718000582D33 /* MenuService.swift */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
 		52F4EB102BE672B600582D33 /* Request */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +177,14 @@
 				52F4EB142BE679BE00582D33 /* MenuProvider.swift */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		52F8CE892BE68920009D0663 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				52F4EB0B2BE6718000582D33 /* MenuService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		52FC14C62BE47CDF00462B37 /* Sources */ = {
@@ -219,9 +219,9 @@
 		52FC14CC2BE47D8A00462B37 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				52FC15032BE47E9900462B37 /* Configuration */,
-				52F4EB092BE6714400582D33 /* Service */,
 				52F4EB132BE679AD00582D33 /* Provider */,
+				52F8CE892BE68920009D0663 /* Service */,
+				52FC15032BE47E9900462B37 /* Configuration */,
 				52FC14FC2BE47E8D00462B37 /* Response */,
 				52F4EB102BE672B600582D33 /* Request */,
 			);

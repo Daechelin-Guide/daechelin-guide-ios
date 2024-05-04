@@ -7,31 +7,42 @@
 
 import Foundation
 import Moya
+import RxSwift
 
 final class MenuProvider {
     static let shared = MenuProvider()
 
     private let wrapper = ProviderWrapper<MenuService>()
 
-    func getMenu(_ date: String, completion: @escaping (Result<MenuResponse, Error>) -> Void) {
-        wrapper.daechelinRequest(target: .getMenu(date), instance: MenuResponse.self) {
-            switch $0 {
-            case .success(let data):
-                completion(.success(data))
-            case .failure(let error):
-                completion(.failure(error))
+    func getMenu(_ date: String) -> Observable<Result<MenuResponse, Error>> {
+        return Observable.create { observer in
+            self.wrapper.daechelinRequest(target: .getMenu(date), instance: MenuResponse.self) { result in
+                switch result {
+                case .success(let data):
+                    observer.onNext(.success(data))
+                    observer.onCompleted()
+                case .failure(let error):
+                    observer.onNext(.failure(error))
+                }
             }
+            return Disposables.create()
         }
     }
+
     
-    func getMenuDetail(_ date: String, _ mealType: MealType, completion: @escaping (Result<MenuResponse, Error>) -> Void) {
-        wrapper.daechelinRequest(target: .getMenuDatail(date, mealType), instance: MenuResponse.self) {
-            switch $0 {
-            case .success(let data):
-                completion(.success(data))
-            case .failure(let error):
-                completion(.failure(error))
+    func getMenuDetail(_ date: String, _ mealType: MealType) -> Observable<Result<MenuDetailResponse, Error>> {
+        
+        return Observable.create { observer in
+            self.wrapper.daechelinRequest(target: .getMenuDatail(date, mealType), instance: MenuDetailResponse.self) { result in
+                switch result {
+                case .success(let data):
+                    observer.onNext(.success(data))
+                    observer.onCompleted()
+                case .failure(let error):
+                    observer.onNext(.failure(error))
+                }
             }
+            return Disposables.create()
         }
     }
 }

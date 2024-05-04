@@ -78,7 +78,19 @@ extension MenuInfoReactor {
                 .concat(Observable.just(Mutation.setMenuDetail(fetchMenuDetail())))
             
         case .fetchMenuDetail:
-            return Observable.just(Mutation.setMenuDetail(fetchMenuDetail()))
+            return MenuProvider.shared
+                .getMenuDetail(
+                    currentState.date.formattingDate(format: "yyyyMMdd"),
+                    currentState.type
+                )
+                .flatMap { result -> Observable<Mutation> in
+                    switch result {
+                    case .success(let data):
+                        return Observable.just(.setMenuDetail(data))
+                    case .failure(_):
+                        return Observable.empty()
+                    }
+                }
             
         case .fetchComments:
             return Observable.just(Mutation.setComments(fetchComments()))
