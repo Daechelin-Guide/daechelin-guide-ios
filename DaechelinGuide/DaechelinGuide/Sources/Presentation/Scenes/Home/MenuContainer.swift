@@ -91,21 +91,18 @@ final class MenuContainer: BaseView {
     }
     
     private func setUI(for type: MealType) {
+        self.container.layer.borderColor = Color.getMealColor(for: type).cgColor
+        self.mealView.backgroundColor = Color.getMealColor(for: type)
+        
         switch type {
         case .TYPE_BREAKFAST:
-            self.container.layer.borderColor = Color.breakfast.cgColor
             self.foodIcon.image = UIImage(icon: .taco)
-            self.mealView.backgroundColor = Color.breakfast
             self.mealLabel.text = "조식"
         case .TYPE_LUNCH:
-            self.container.layer.borderColor = Color.lunch.cgColor
             self.foodIcon.image = UIImage(icon: .burger)
-            self.mealView.backgroundColor = Color.lunch
             self.mealLabel.text = "중식"
         case .TYPE_DINNER:
-            self.container.layer.borderColor = Color.dinner.cgColor
             self.foodIcon.image = UIImage(icon: .ramen)
-            self.mealView.backgroundColor = Color.dinner
             self.mealLabel.text = "석식"
         }
     }

@@ -127,13 +127,20 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         )
     }
     
-    private lazy var bottomBlur = UIView().then { blur in
+    private lazy var bottomShadow = UIView().then { blur in
         let gradientLayer = CAGradientLayer().then {
-            $0.frame = CGRect(x: 0, y: -10, width: view.frame.width - 32, height: 30)
-            $0.colors = [Color.lightGray.withAlphaComponent(1).cgColor,
-                         Color.white.withAlphaComponent(0).cgColor,]
+            guard let type = reactor?.currentState.type else { return }
+            let color = Color.getMealColor(for: type)
+            $0.frame = CGRect(x: 0, y: -10, width: view.frame.width - 32, height: 25)
+            $0.colors = [color.withAlphaComponent(1).cgColor,
+                         color.withAlphaComponent(0.3).cgColor,
+                         Color.background.withAlphaComponent(0).cgColor]
             $0.startPoint = CGPoint(x: 0.5, y: 0)
             $0.endPoint = CGPoint(x: 0.5, y: 1)
+            $0.cornerRadius = 15
+            $0.maskedCorners = CACornerMask(
+                arrayLiteral: .layerMinXMaxYCorner, .layerMaxXMaxYCorner
+            )
         }
         blur.layer.addSublayer(gradientLayer)
     }
@@ -200,7 +207,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     
     // MARK: - UI
     override func setUp() {
-        setColor()
+        setUIColor()
     }
     
     override func configureVC() {
@@ -211,7 +218,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            scrollView, bottomBlur, fixedMenuInfoContainer,
+            scrollView, bottomShadow, fixedMenuInfoContainer,
             navigationBarView, reviewButton
         )
         navigationBarView.addSubviews(
@@ -345,7 +352,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             $0.top.equalTo(fixedKcalLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
-        bottomBlur.snp.makeConstraints {
+        bottomShadow.snp.makeConstraints {
             $0.top.equalTo(fixedMenuInfoContainer.snp.bottom)
             $0.horizontalEdges.equalToSuperview().inset(16)
         }
@@ -367,35 +374,24 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         }
     }
     
-    private func setColor() {
-        switch reactor?.currentState.type {
-        case .TYPE_BREAKFAST:
-            let color = Color.breakfast
-            menuInfoContainer.layer.borderColor = color.cgColor
-            reviewButton.layer.borderColor = color.cgColor
-            mealView.backgroundColor = color
-            mealLabel.text = "조식"
-            bottomSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
-            topSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
-        case .TYPE_LUNCH:
-            let color = Color.lunch
-            menuInfoContainer.layer.borderColor = color.cgColor
-            reviewButton.layer.borderColor = color.cgColor
-            mealView.backgroundColor = color
-            mealLabel.text = "중식"
-            bottomSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
-            topSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
-        case .TYPE_DINNER:
-            let color = Color.dinner
-            menuInfoContainer.layer.borderColor = color.cgColor
-            reviewButton.layer.borderColor = color.cgColor
-            mealView.backgroundColor = color
-            mealLabel.text = "석식"
-            bottomSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
-            topSeparateLine.backgroundColor = color.withAlphaComponent(0.7)
-        case .none:
-            return
+    private func setUIColor() {
+        guard let type = reactor?.currentState.type else { return }
+        let color = Color.getMealColor(for: reactor!.currentState.type)
+        
+        [menuInfoContainer, reviewButton].forEach {
+            $0.layer.borderColor = color.cgColor
         }
+        [bottomSeparateLine, topSeparateLine].forEach {
+            $0.backgroundColor = color.withAlphaComponent(0.7)
+        }
+        mealView.backgroundColor = color
+        mealLabel.text = {
+            switch type {
+                case .TYPE_BREAKFAST: return "조식"
+                case .TYPE_LUNCH: return "중식"
+                case .TYPE_DINNER: return "석식"
+            }
+        }()
     }
     
     // MARK: - Reactor
@@ -486,15 +482,23 @@ extension MenuInfoViewController: UIScrollViewDelegate {
         let currentPosition = scrollView.contentOffset.y + scrollView.safeAreaInsets.top
         
         if currentPosition >= 155 {
-            
             fixedMenuInfoContainer.isHidden = false
-            bottomBlur.isHidden = false
         } else {
             fixedMenuInfoContainer.isHidden = true
-            bottomBlur.isHidden = true
+            bottomShadow.isHidden = true
+        }
+        
+        if currentPosition >= 180 {
+            UIView.animate(withDuration: 0.3) {
+                self.bottomShadow.alpha = 1
+            }
+            bottomShadow.isHidden = false
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.bottomShadow.alpha = 0
+            }
         }
     }
-    
 }
 
 // MARK: - UITableViewDelegate

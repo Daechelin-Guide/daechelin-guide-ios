@@ -18,8 +18,6 @@ final class SettingViewController: BaseVC<SettingReactor> {
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - UI
