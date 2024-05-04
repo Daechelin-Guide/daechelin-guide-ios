@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="SplashLogo" translatesAutoresizingMaskIntoConstraints="NO" id="9NX-D8-6jL">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="splash_logo" translatesAutoresizingMaskIntoConstraints="NO" id="9NX-D8-6jL">
                                 <rect key="frame" x="114.66666666666669" y="355.66666666666669" width="164" height="141"/>
                             </imageView>
                         </subviews>
@@ -35,7 +35,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="SplashLogo" width="164" height="141"/>
+        <image name="splash_logo" width="164" height="141"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

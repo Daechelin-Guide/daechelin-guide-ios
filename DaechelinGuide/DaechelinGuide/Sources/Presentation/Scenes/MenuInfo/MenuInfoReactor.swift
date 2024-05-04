@@ -17,11 +17,13 @@ final class MenuInfoReactor: Reactor {
     enum Action {
         case refresh
         case fetchMenuDetail
+        case fetchComments
     }
     
     // MARK: - Mutation
     enum Mutation {
         case setMenuDetail(MenuDetailResponse)
+        case setComments([String])
         case setRefreshing(Bool)
     }
     
@@ -30,6 +32,7 @@ final class MenuInfoReactor: Reactor {
         var date: Date
         var type: MealType
         var menuDetail: MenuDetailResponse?
+        var comments: [String]?
         var isRefreshing: Bool = false
     }
     
@@ -54,6 +57,17 @@ extension MenuInfoReactor {
         )
     }
     
+    func fetchComments() -> [String] {
+        return [
+            "오늘 급식 너무 맛있다",
+            "아 라면 먹고 싶네",
+            "브리오슈싸이버거하고 유부초밥/크래미이 생각보다 엄청 맛있었어요 굳굳좝",
+            "윗 댓글 진짜 레전드네..",
+            "뭔가 배고프네요 점심 뭐 먹죠? 피자..?",
+            "배고파서 순두부찌개 끓였는데 맛있게 먹겠습니다"
+        ]
+    }
+    
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
             
@@ -65,6 +79,9 @@ extension MenuInfoReactor {
             
         case .fetchMenuDetail:
             return Observable.just(Mutation.setMenuDetail(fetchMenuDetail()))
+            
+        case .fetchComments:
+            return Observable.just(Mutation.setComments(fetchComments()))
         }
     }
     
@@ -75,6 +92,9 @@ extension MenuInfoReactor {
             
         case .setMenuDetail(let menuDetail):
             newState.menuDetail = menuDetail
+            
+        case .setComments(let comments):
+            newState.comments = comments
             
         case .setRefreshing(let isRefreshing):
             newState.isRefreshing = isRefreshing

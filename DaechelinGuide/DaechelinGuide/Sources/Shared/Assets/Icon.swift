@@ -15,12 +15,23 @@ public enum Icon: String {
     // MARK: - Icon
     case ranking = "ranking"
     case setting = "setting"
+    case review = "review"
+    
+    /// start
     case emptyStar = "star_empty"
     case filledStar = "star_filled"
     
+    /// arrow
     case bottomArrow = "arrow_down"
     case leadingArrow = "arrow_left"
     case trailingArrow = "arrow_right"
+    
+    /// anonymous profile
+    case cat = "cat"
+    case rabbit = "rabbit"
+    case snake = "snake"
+    case elephant = "elephant"
+    case tiger = "tiger"
     
     // MARK: - Food
     case taco = "taco"
