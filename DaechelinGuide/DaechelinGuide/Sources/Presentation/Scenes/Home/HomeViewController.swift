@@ -36,6 +36,8 @@ final class HomeViewController: BaseVC<HomeReactor> {
         $0.setImage(UIImage(icon: .ranking), for: .normal)
         $0.imageView!.contentMode = .scaleAspectFit
         $0.tintColor = Color.darkGray
+        /// disable
+        $0.isHidden = true
     }
     
     private lazy var settingButton = UIButton().then {
@@ -66,11 +68,12 @@ final class HomeViewController: BaseVC<HomeReactor> {
         $0.imageView?.tintColor = Color.darkGray
     }
     
-    private lazy var calendarButton = UIButton().then {
+    private lazy var calendarButton = ScaledButton(
+        scale: 0.98, backgroundColor: Color.white
+    ).then {
         $0.layer.cornerRadius = 16
         $0.layer.borderWidth = 1
         $0.layer.borderColor = Color.lightGray.cgColor
-        $0.backgroundColor = Color.white
     }
     
     private lazy var calendarDateLabel = UILabel().then {

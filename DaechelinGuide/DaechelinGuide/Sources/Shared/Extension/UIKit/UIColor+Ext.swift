@@ -23,4 +23,16 @@ extension UIColor {
                 alpha: 1
             )
     }
+    
+    func darken(by percentage: CGFloat) -> UIColor {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        
+        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        red = max(0.0, min(1.0, red - percentage))
+        green = max(0.0, min(1.0, green - percentage))
+        blue = max(0.0, min(1.0, blue - percentage))
+        
+        return UIColor(red: red, green: green, blue: blue, alpha: alpha)
+    }
 }

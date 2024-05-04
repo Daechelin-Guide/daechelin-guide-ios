@@ -12,6 +12,7 @@
 		52141CF42BE0E03200551A94 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CF32BE0E03200551A94 /* ReactorKit */; };
 		52141CF72BE0E04000551A94 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CF62BE0E04000551A94 /* Then */; };
 		52141CFE2BE0E6C800551A94 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CFD2BE0E6C800551A94 /* SnapKit */; };
+		52F4EB082BE6600000582D33 /* ScaledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB072BE6600000582D33 /* ScaledButton.swift */; };
 		52FC14902BE36A6A00462B37 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC148F2BE36A6A00462B37 /* RxCocoa */; };
 		52FC14A12BE378A300462B37 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A02BE378A300462B37 /* RxGesture */; };
 		52FC14A92BE459C400462B37 /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A82BE459C400462B37 /* Cosmos */; };
@@ -52,6 +53,7 @@
 		52141CE12BE0D82500551A94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52141CE42BE0D82500551A94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52141CE62BE0D82500551A94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52F4EB072BE6600000582D33 /* ScaledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledButton.swift; sourceTree = "<group>"; };
 		52FC14E62BE47E1E00462B37 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52FC14E72BE47E1E00462B37 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		52FC14ED2BE47E5500462B37 /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -134,6 +136,14 @@
 				52141CE12BE0D82500551A94 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		52F4EB062BE65FF700582D33 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				52F4EB072BE6600000582D33 /* ScaledButton.swift */,
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		52FC14C62BE47CDF00462B37 /* Sources */ = {
@@ -263,6 +273,7 @@
 		52FC15162BE47FD200462B37 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				52F4EB062BE65FF700582D33 /* Component */,
 				52FC15202BE47FDF00462B37 /* Assets */,
 				52FC151D2BE47FDF00462B37 /* Enum */,
 				52FC152D2BE4803100462B37 /* Extension */,
@@ -409,6 +420,7 @@
 				52FC15272BE47FDF00462B37 /* UINavigationController+Ext.swift in Sources */,
 				52FC14E82BE47E1E00462B37 /* AppDelegate.swift in Sources */,
 				52FC150D2BE47ECF00462B37 /* ReviewViewController.swift in Sources */,
+				52F4EB082BE6600000582D33 /* ScaledButton.swift in Sources */,
 				52FC15262BE47FDF00462B37 /* Date+Ext.swift in Sources */,
 				52FC14EF2BE47E5500462B37 /* BaseView.swift in Sources */,
 				52FC150F2BE47ED300462B37 /* ReviewReactor.swift in Sources */,
@@ -593,7 +605,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.dgsw.mingyu.Guide-Daechelin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -630,7 +642,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.dgsw.mingyu.Guide-Daechelin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

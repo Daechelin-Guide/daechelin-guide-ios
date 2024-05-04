@@ -22,4 +22,15 @@ public class Color {
     public static let black: UIColor = .init(hex: "#292D32")
     public static let white: UIColor = .init(hex: "#FFFFFF")
     public static let error: UIColor = .init(hex: "#C52222")
+    
+    static func getMealColor(for type: MealType) -> UIColor {
+        switch type {
+        case .TYPE_BREAKFAST:
+            return Color.breakfast
+        case .TYPE_LUNCH:
+            return Color.lunch
+        case .TYPE_DINNER:
+            return Color.dinner
+        }
+    }
 }
