@@ -45,8 +45,9 @@ final class SettingViewController: BaseVC<SettingReactor> {
         $0.distribution = .fill
     }
     
-    private lazy var privacyPolicyButton = UIButton().then {
-        $0.backgroundColor = Color.white
+    private lazy var privacyPolicyButton = ScaledButton(
+        scale: 0.98, backgroundColor: Color.white
+    ).then {
         $0.layer.cornerRadius = 8
     }
     
@@ -62,8 +63,9 @@ final class SettingViewController: BaseVC<SettingReactor> {
         $0.tintColor = Color.black
     }
     
-    private lazy var appVersionButton = UIButton().then {
-        $0.backgroundColor = Color.white
+    private lazy var appVersionButton = ScaledButton(
+        scale: 0.98, backgroundColor: Color.white
+    ).then {
         $0.layer.cornerRadius = 12
     }
     

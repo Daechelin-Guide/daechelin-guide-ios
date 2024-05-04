@@ -172,7 +172,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     }
     
     /// review button
-    private lazy var reviewButton = UIButton().then {
+    private lazy var reviewButton = ScaledButton(scale: 0.94).then {
         $0.backgroundColor = Color.white
         $0.layer.cornerRadius = 32
         $0.layer.borderWidth = 1

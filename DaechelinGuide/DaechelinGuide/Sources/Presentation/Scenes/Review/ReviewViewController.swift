@@ -69,7 +69,7 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
         $0.textColor = Color.darkGray
     }
     
-    private lazy var reviewCompleteButton = UIButton().then {
+    private lazy var reviewCompleteButton = ScaledButton(scale: 0.95).then {
         $0.setTitle("완료", for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
         $0.setTitleColor(Color.darkGray, for: .normal)
