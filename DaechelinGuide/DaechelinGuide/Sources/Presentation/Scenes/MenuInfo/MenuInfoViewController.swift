@@ -131,9 +131,8 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         let gradientLayer = CAGradientLayer().then {
             guard let type = reactor?.currentState.type else { return }
             let color = Color.getMealColor(for: type)
-            $0.frame = CGRect(x: 0, y: 0, width: view.frame.width - 32, height: 20)
-            $0.colors = [color.withAlphaComponent(1).cgColor,
-                         color.withAlphaComponent(0.85).cgColor,
+            $0.frame = CGRect(x: 0, y: 0, width: view.frame.width - 32, height: 24)
+            $0.colors = [color.withAlphaComponent(0.6).cgColor,
                          color.withAlphaComponent(0).cgColor]
             $0.startPoint = CGPoint(x: 0.5, y: 0)
             $0.endPoint = CGPoint(x: 0.5, y: 1)
