@@ -53,10 +53,6 @@ class CommentCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("\(type(of: self)): \(#function)")
-    }
-    
     // MARK: - UI
     public func setComment(_ comment: String) {
         self.comment.text = comment

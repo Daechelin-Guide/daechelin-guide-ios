@@ -362,7 +362,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         /// comment
         commentTableView.snp.makeConstraints {
             $0.width.equalTo(scrollView.snp.width).inset(16)
-            $0.height.equalTo(400)
+            $0.height.equalTo(((reactor?.currentState.comments?.count ?? 1) * 70) + 100)
             $0.centerX.equalToSuperview()
         }
     }
