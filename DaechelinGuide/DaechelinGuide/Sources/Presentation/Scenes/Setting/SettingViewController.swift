@@ -38,6 +38,47 @@ final class SettingViewController: BaseVC<SettingReactor> {
         $0.textColor = Color.black
     }
     
+    /// setting
+    private lazy var settingButtonStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 20
+        $0.distribution = .fill
+    }
+    
+    private lazy var privacyPolicyButton = UIButton().then {
+        $0.backgroundColor = Color.white
+        $0.layer.cornerRadius = 8
+    }
+    
+    private lazy var privacyPolicyContainerLeadingItem = UILabel().then {
+        $0.text = "개인정보 처리방침"
+        $0.textColor = Color.black
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+    }
+    
+    private lazy var privacyPolicyContainerTrailingItem = UIImageView().then {
+        $0.image = UIImage(icon: .trailingArrow)
+        $0.contentMode = .scaleAspectFit
+        $0.tintColor = Color.black
+    }
+    
+    private lazy var appVersionButton = UIButton().then {
+        $0.backgroundColor = Color.white
+        $0.layer.cornerRadius = 12
+    }
+    
+    private lazy var appVersionLeadingItem = UILabel().then {
+        $0.text = "앱 버전"
+        $0.textColor = Color.black
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+    }
+    
+    private lazy var appVersionTrailingItem = UILabel().then {
+        $0.text = "2.2.0"
+        $0.textColor = Color.error
+        $0.font = .systemFont(ofSize: 15, weight: .regular)
+    }
+    
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -48,13 +89,23 @@ final class SettingViewController: BaseVC<SettingReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            navigationBarView
+            settingButtonStackView, navigationBarView
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
         )
         navigationBarItemView.addSubviews(
             backButton, navigationTitle
+        )
+        /// setting
+        settingButtonStackView.addArrangedSubviews(
+            privacyPolicyButton, appVersionButton
+        )
+        privacyPolicyButton.addSubviews(
+            privacyPolicyContainerLeadingItem, privacyPolicyContainerTrailingItem
+        )
+        appVersionButton.addSubviews(
+            appVersionLeadingItem, appVersionTrailingItem
         )
     }
     
@@ -83,11 +134,54 @@ final class SettingViewController: BaseVC<SettingReactor> {
             $0.height.equalToSuperview()
             $0.leading.equalTo(backButton.snp.trailing).offset(10)
         }
+        /// setting
+        settingButtonStackView.snp.makeConstraints {
+            $0.top.equalTo(navigationBarView.snp.bottom).offset(20)
+            $0.horizontalEdges.equalToSuperview().inset(16)
+        }
+        privacyPolicyButton.snp.makeConstraints {
+            $0.top.equalTo(settingButtonStackView.snp.top)
+            $0.height.equalTo(50)
+            $0.width.equalToSuperview()
+        }
+        privacyPolicyContainerLeadingItem.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(16)
+            $0.centerY.equalToSuperview()
+        }
+        privacyPolicyContainerTrailingItem.snp.makeConstraints {
+            $0.width.height.equalTo(20)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.centerY.equalToSuperview()
+        }
+        appVersionButton.snp.makeConstraints {
+            $0.height.equalTo(50)
+            $0.width.equalToSuperview()
+        }
+        appVersionLeadingItem.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(16)
+            $0.centerY.equalToSuperview()
+        }
+        appVersionTrailingItem.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(16)
+            $0.centerY.equalToSuperview()
+        }
     }
     
     // MARK: - Reactor
     override func bindView(reactor: SettingReactor) {
+        backButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
         
+        privacyPolicyButton.rx.tap
+            .subscribe(onNext: { _ in
+                if let url = URL(string: "https://min-gyu.notion.site/43f3fa6077c346c692359f790d79cd7a?pvs=74") {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     override func bindAction(reactor: SettingReactor) {
