@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MenuDetailResponse: Decodable {
+struct MenuDetailResponse: Codable {
     let id: Int
     let menu: String?
     let date: String

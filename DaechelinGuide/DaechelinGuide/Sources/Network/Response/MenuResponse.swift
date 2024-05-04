@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MenuResponse: Decodable {
+struct MenuResponse: Codable {
     let date: String
     let breakfast: String?
     let lunch: String?

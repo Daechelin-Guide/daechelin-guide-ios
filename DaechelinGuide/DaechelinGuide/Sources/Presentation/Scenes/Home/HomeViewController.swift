@@ -111,6 +111,12 @@ final class HomeViewController: BaseVC<HomeReactor> {
         super.viewWillAppear(true)
         
         print("\(type(of: self)): \(#function)")
+        MenuProvider.shared.getMenu("20240502"){
+            print($0)
+        }
+        MenuProvider.shared.getMenuDetail("20240502", .TYPE_BREAKFAST) {
+            print($0)
+        }
     }
     
     // MARK: - UI
