@@ -127,6 +127,17 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         )
     }
     
+    private lazy var bottomBlur = UIView().then { blur in
+        let gradientLayer = CAGradientLayer().then {
+            $0.frame = CGRect(x: 0, y: -10, width: view.frame.width - 32, height: 40)
+            $0.colors = [Color.lightGray.withAlphaComponent(1).cgColor,
+                         Color.lightGray.withAlphaComponent(0).cgColor,]
+            $0.startPoint = CGPoint(x: 0.5, y: 0)
+            $0.endPoint = CGPoint(x: 0.5, y: 1)
+        }
+        blur.layer.addSublayer(gradientLayer)
+    }
+    
     private lazy var fixedMenuLabel = UILabel().then {
         $0.text = menuLabel.text
         $0.textColor = Color.darkGray
@@ -168,7 +179,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     }
     
     /// comment
-    private lazy var test = UIView()
+    private lazy var commentTableView = UITableView().then {
+        $0.backgroundColor = .green
+        $0.isScrollEnabled = false
+        $0.delegate = self
+    }
     
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
@@ -190,7 +205,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            scrollView, fixedMenuInfoContainer, navigationBarView, reviewButton
+            scrollView, bottomBlur, fixedMenuInfoContainer, navigationBarView, reviewButton
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -200,7 +215,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         )
         scrollView.addSubview(scrollStackView)
         scrollStackView.addArrangedSubviews(
-            menuInfoContainer, test
+            menuInfoContainer, commentTableView
         )
         menuInfoContainer.addSubviews(
             menuDateLabel, mealView, starView,
@@ -323,6 +338,10 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             $0.top.equalTo(fixedKcalLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
+        bottomBlur.snp.makeConstraints {
+            $0.top.equalTo(fixedMenuInfoContainer.snp.bottom)
+            $0.horizontalEdges.equalToSuperview().inset(16)
+        }
         /// review button
         reviewButton.snp.makeConstraints {
             $0.width.height.equalTo(64)
@@ -334,9 +353,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             $0.centerY.centerX.equalToSuperview()
         }
         /// comment
-        test.snp.makeConstraints {
+        commentTableView.snp.makeConstraints {
             $0.width.equalTo(scrollView.snp.width).inset(16)
-            $0.bottom.equalTo(test.snp.top).offset(1200)
+            $0.height.equalTo(1000)
             $0.centerX.equalToSuperview()
         }
     }
@@ -443,18 +462,27 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     }
 }
 
+// MARK: - UIScrollViewDelegate
 extension MenuInfoViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let fixedPosition: CGFloat = 155
+    
         let currentPosition = scrollView.contentOffset.y + scrollView.safeAreaInsets.top
         
-        if currentPosition >= fixedPosition {
+        if currentPosition >= 155 {
+
             fixedMenuInfoContainer.isHidden = false
+            bottomBlur.isHidden = false
         } else {
             fixedMenuInfoContainer.isHidden = true
+            bottomBlur.isHidden = true
         }
     }
+    
+}
+
+// MARK: - UITableViewDelegate, UITableViewDataSource
+extension MenuInfoViewController: UITableViewDelegate {
+    
     
 }
