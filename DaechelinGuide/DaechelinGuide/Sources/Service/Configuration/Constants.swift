@@ -7,8 +7,8 @@
 
 import Foundation
 
-public let api: String = {
+public let baseURL: String = {
     let plist = NSDictionary(contentsOfFile: Bundle.main.path(forResource: "Info", ofType: "plist")!)
     let value = plist?.object(forKey: "URL") as? String
-    return value! + "api/"
+    return value!
 }()

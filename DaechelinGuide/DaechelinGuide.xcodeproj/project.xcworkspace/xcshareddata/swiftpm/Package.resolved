@@ -1,6 +1,15 @@
 {
-  "originHash" : "f8453d0a117d879bb0bd0598cfc657dd676beaffb3905c0260c0df0b07130a56",
+  "originHash" : "ccd4deea1248a68aa1dfe67daad7b9205a1867472d41662650bf3e96aa48f526",
   "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "f455c2975872ccd2d9c81594c658af65716e9b9a",
+        "version" : "5.9.1"
+      }
+    },
     {
       "identity" : "cosmos",
       "kind" : "remoteSourceControl",
@@ -8,6 +17,24 @@
       "state" : {
         "revision" : "40ba10aaf175bf50abefd0e518bd3b40862af3b1",
         "version" : "25.0.1"
+      }
+    },
+    {
+      "identity" : "moya",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Moya/Moya",
+      "state" : {
+        "revision" : "c263811c1f3dbf002be9bd83107f7cdc38992b26",
+        "version" : "15.0.3"
+      }
+    },
+    {
+      "identity" : "reactiveswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveCocoa/ReactiveSwift.git",
+      "state" : {
+        "revision" : "c43bae3dac73fdd3cb906bd5a1914686ca71ed3c",
+        "version" : "6.7.0"
       }
     },
     {

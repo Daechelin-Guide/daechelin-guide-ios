@@ -190,7 +190,7 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
             }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
-
+        
         starView.rx.didFinishTouchingCosmos
             .onNext { [weak reactor] score in
                 guard let reactor = reactor else { return }
@@ -210,6 +210,16 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
         reactor.state.map { $0.score }
             .bind(to: starView.rx.rating)
             .disposed(by: disposeBag)
+    }
+}
+
+extension ReviewViewController {
+    
+    /// keypad down
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        self.view.endEditing(true)
     }
 }
 
