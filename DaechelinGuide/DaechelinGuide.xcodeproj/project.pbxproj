@@ -44,6 +44,7 @@
 		52FC152A2BE47FDF00462B37 /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC151F2BE47FDF00462B37 /* Icon.swift */; };
 		52FC152B2BE47FDF00462B37 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC15212BE47FDF00462B37 /* UIImage+Ext.swift */; };
 		52FC152C2BE47FDF00462B37 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC15222BE47FDF00462B37 /* UIView+Ext.swift */; };
+		52FC15312BE5CD3000462B37 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FC15302BE5CD3000462B37 /* CommentCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		52FC151F2BE47FDF00462B37 /* Icon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		52FC15212BE47FDF00462B37 /* UIImage+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		52FC15222BE47FDF00462B37 /* UIView+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		52FC15302BE5CD3000462B37 /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +255,7 @@
 			children = (
 				52FC15122BE47EE100462B37 /* MenuInfoViewController.swift */,
 				52FC15112BE47EE100462B37 /* MenuInfoReactor.swift */,
+				52FC15302BE5CD3000462B37 /* CommentCell.swift */,
 			);
 			path = MenuInfo;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				52FC14F92BE47E7C00462B37 /* SettingViewController.swift in Sources */,
 				52FC14F02BE47E5500462B37 /* BaseViewController.swift in Sources */,
 				52FC15282BE47FDF00462B37 /* MealType.swift in Sources */,
+				52FC15312BE5CD3000462B37 /* CommentCell.swift in Sources */,
 				52FC152C2BE47FDF00462B37 /* UIView+Ext.swift in Sources */,
 				52FC15252BE47FDF00462B37 /* UILabel+Ext.swift in Sources */,
 				52FC14F32BE47E6200462B37 /* HomeReactor.swift in Sources */,

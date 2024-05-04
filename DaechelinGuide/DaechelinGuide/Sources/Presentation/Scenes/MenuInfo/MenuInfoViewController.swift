@@ -129,9 +129,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     
     private lazy var bottomBlur = UIView().then { blur in
         let gradientLayer = CAGradientLayer().then {
-            $0.frame = CGRect(x: 0, y: -10, width: view.frame.width - 32, height: 40)
+            $0.frame = CGRect(x: 0, y: -10, width: view.frame.width - 32, height: 30)
             $0.colors = [Color.lightGray.withAlphaComponent(1).cgColor,
-                         Color.lightGray.withAlphaComponent(0).cgColor,]
+                         Color.white.withAlphaComponent(0).cgColor,]
             $0.startPoint = CGPoint(x: 0.5, y: 0)
             $0.endPoint = CGPoint(x: 0.5, y: 1)
         }
@@ -180,8 +180,14 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     
     /// comment
     private lazy var commentTableView = UITableView().then {
-        $0.backgroundColor = .green
+        $0.backgroundColor = Color.background
+        $0.register(
+            CommentCell.self,
+            forCellReuseIdentifier: CommentCell.reuseIdentifier
+        )
         $0.isScrollEnabled = false
+        $0.allowsSelection = false
+        $0.separatorStyle = .none
         $0.delegate = self
     }
     
@@ -205,7 +211,8 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            scrollView, bottomBlur, fixedMenuInfoContainer, navigationBarView, reviewButton
+            scrollView, bottomBlur, fixedMenuInfoContainer,
+            navigationBarView, reviewButton
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -355,7 +362,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         /// comment
         commentTableView.snp.makeConstraints {
             $0.width.equalTo(scrollView.snp.width).inset(16)
-            $0.height.equalTo(1000)
+            $0.height.equalTo(400)
             $0.centerX.equalToSuperview()
         }
     }
@@ -414,7 +421,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     
     override func bindAction(reactor: MenuInfoReactor) {
         reactor.action.onNext(.fetchMenuDetail)
-        
+        reactor.action.onNext(.fetchComments)
     }
     
     override func bindState(reactor: MenuInfoReactor) {
@@ -459,6 +466,15 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             .bind(to: nutrientsLabel.rx.text)
             .disposed(by: disposeBag)
         
+        reactor.state
+            .map { _ in reactor.currentState.comments ?? ["awdawd"]}
+            .bind(to: commentTableView.rx.items(
+                cellIdentifier: CommentCell.reuseIdentifier,
+                cellType: CommentCell.self)
+            ) { _, comment, cell in
+                cell.setComment(comment)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -466,11 +482,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
 extension MenuInfoViewController: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    
+        
         let currentPosition = scrollView.contentOffset.y + scrollView.safeAreaInsets.top
         
         if currentPosition >= 155 {
-
+            
             fixedMenuInfoContainer.isHidden = false
             bottomBlur.isHidden = false
         } else {
@@ -481,8 +497,10 @@ extension MenuInfoViewController: UIScrollViewDelegate {
     
 }
 
-// MARK: - UITableViewDelegate, UITableViewDataSource
+// MARK: - UITableViewDelegate
 extension MenuInfoViewController: UITableViewDelegate {
     
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
 }
