@@ -55,23 +55,25 @@ final class RankingViewController: BaseVC<RankingReactor> {
     }
     
     /// ranking
-    private lazy var breakfastButton = UIButton().then {
+    private lazy var breakfastButton = ScaledButton(scale: 0.95).then {
         $0.setTitle("조식 랭킹", for: .normal)
         $0.setTitleColor(Color.white, for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         $0.backgroundColor = Color.breakfast
         $0.layer.cornerRadius = 8
     }
-    
-    private lazy var lunchButton = UIButton().then {
+    private lazy var lunchButton = ScaledButton(scale: 0.95).then {
         $0.setTitle("중식 랭킹", for: .normal)
         $0.setTitleColor(Color.white, for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         $0.backgroundColor = Color.lunch
         $0.layer.cornerRadius = 8
     }
     
-    private lazy var dinnerButton = UIButton().then {
+    private lazy var dinnerButton = ScaledButton(scale: 0.95).then {
         $0.setTitle("석식 랭킹", for: .normal)
         $0.setTitleColor(Color.white, for: .normal)
+        $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         $0.backgroundColor = Color.dinner
         $0.layer.cornerRadius = 8
     }
@@ -148,25 +150,25 @@ final class RankingViewController: BaseVC<RankingReactor> {
         }
         /// ranking
         breakfastButton.snp.makeConstraints {
-            $0.top.equalTo(scrollStackView.snp.top)
+            $0.top.equalTo(navigationBarView.snp.bottom).offset(20)
             $0.leading.equalTo(scrollStackView.snp.leading)
             $0.width.equalTo(bound.width / 3 - 20)
             $0.height.equalTo(26)
         }
         lunchButton.snp.makeConstraints {
-            $0.top.equalTo(scrollStackView.snp.top)
+            $0.top.equalTo(navigationBarView.snp.bottom).offset(20)
             $0.width.equalTo(bound.width / 3 - 20)
             $0.height.equalTo(26)
             $0.centerX.equalToSuperview()
         }
         dinnerButton.snp.makeConstraints {
-            $0.top.equalTo(scrollStackView.snp.top)
+            $0.top.equalTo(navigationBarView.snp.bottom).offset(20)
             $0.trailing.equalTo(scrollStackView.snp.trailing)
             $0.width.equalTo(bound.width / 3 - 20)
             $0.height.equalTo(26)
         }
         rankingTableView.snp.makeConstraints {
-            $0.top.equalTo(breakfastButton.snp.bottom).offset(30)
+            $0.top.equalTo(scrollView.snp.top).offset(55)
             $0.width.equalTo(scrollView.snp.width).inset(16)
             $0.height.equalTo(1440)
             $0.centerX.equalToSuperview()
