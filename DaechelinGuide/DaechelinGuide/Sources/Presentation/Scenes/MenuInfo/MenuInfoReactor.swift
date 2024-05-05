@@ -70,7 +70,10 @@ extension MenuInfoReactor {
                         .flatMap { result -> Observable<Mutation> in
                             switch result {
                             case .success(let data):
-                                return Observable.just(.setComments(data.reversed()))
+                                return Observable.just(.setComments(
+                                    data.reversed()
+                                        .filter { !($0.comment.isEmpty) }
+                                ))
                             case .failure(_):
                                 return Observable.just(.setComments([]))
                             }
