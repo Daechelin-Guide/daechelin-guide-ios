@@ -17,33 +17,64 @@ final class RankingReactor: Reactor {
     enum Action {
         case refresh
         case fetchRanking
+        case setMealType(MealType)
     }
     
     // MARK: - Mutation
     enum Mutation {
         case setMealType(MealType)
-        case setRanking(RankingResponse?)
+        case setBreakfastRanking(RankingResponse?)
+        case setLunchRanking(RankingResponse?)
+        case setDinnerRanking(RankingResponse?)
     }
     
     // MARK: - State
     struct State {
-        var mealType: MealType = .TYPE_BREAKFAST
-        var ranking: RankingResponse?
+        var mealType: MealType = .TYPE_LUNCH
+        var breakfastRanking: RankingResponse?
+        var lunchRanking: RankingResponse?
+        var dinnerRanking: RankingResponse?
     }
 }
 
 // MARK: - Mutate
 extension RankingReactor {
     
-    private func fetchRanking() -> Observable<Mutation> {
+    private func fetchBreakfastRanking() -> Observable<Mutation> {
         return RankingProvider.shared
-            .getRating(currentState.mealType)
-            .flatMap { result -> Observable<Mutation> in
+            .getRating(.TYPE_BREAKFAST)
+            .map { result -> Mutation in
                 switch result {
                 case .success(let data):
-                    return Observable.just(.setRanking(data))
-                case .failure(_):
-                    return Observable.just(.setRanking(nil))
+                    return .setBreakfastRanking(data)
+                case .failure:
+                    return .setBreakfastRanking(nil)
+                }
+            }
+    }
+    
+    private func fetchLunchRanking() -> Observable<Mutation> {
+        return RankingProvider.shared
+            .getRating(.TYPE_LUNCH)
+            .map { result -> Mutation in
+                switch result {
+                case .success(let data):
+                    return .setLunchRanking(data)
+                case .failure:
+                    return .setLunchRanking(nil)
+                }
+            }
+    }
+    
+    private func fetchDinnerRanking() -> Observable<Mutation> {
+        return RankingProvider.shared
+            .getRating(.TYPE_DINNER)
+            .map { result -> Mutation in
+                switch result {
+                case .success(let data):
+                    return .setDinnerRanking(data)
+                case .failure:
+                    return .setDinnerRanking(nil)
                 }
             }
     }
@@ -54,7 +85,14 @@ extension RankingReactor {
             return .empty()
             
         case .fetchRanking:
-            return fetchRanking()
+            let breakfastObservable = fetchBreakfastRanking()
+            let lunchObservable = fetchLunchRanking()
+            let dinnerObservable = fetchDinnerRanking()
+            
+            return Observable.merge(breakfastObservable, lunchObservable, dinnerObservable)
+            
+        case .setMealType(let mealType):
+            return .just(.setMealType(mealType))
         }
     }
     
@@ -66,8 +104,14 @@ extension RankingReactor {
         case .setMealType(let mealType):
             newState.mealType = mealType
             
-        case .setRanking(let ranking):
-            newState.ranking = ranking
+        case .setBreakfastRanking(let ranking):
+            newState.breakfastRanking = ranking
+            
+        case .setLunchRanking(let ranking):
+            newState.lunchRanking = ranking
+            
+        case .setDinnerRanking(let ranking):
+            newState.dinnerRanking = ranking
         }
         return newState
     }

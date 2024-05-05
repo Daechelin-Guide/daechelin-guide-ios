@@ -24,6 +24,10 @@ class RankingCell: UITableViewCell {
         $0.clipsToBounds = false
     }
     
+    private lazy var spacer = UIView().then {
+        $0.backgroundColor = Color.background
+    }
+    
     private lazy var crownImage = UIImageView().then {
         $0.image = UIImage(icon: .crown)
         $0.contentMode = .scaleAspectFit
@@ -63,29 +67,27 @@ class RankingCell: UITableViewCell {
         setLayout()
     }
     
-    deinit {
-        print(container.frame.height)
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - UI
-    public func configuration(_ data: Ranking) {
+    public func configuration(_ data: Ranking, _ mealType: MealType) {
         contentView.backgroundColor = Color.background
-        let color = Color.getMealColor(for: .TYPE_BREAKFAST)
+        let color = Color.getMealColor(for: mealType)
         
         container.layer.shadowColor = color.cgColor
         crownImage.tintColor = color
         rankingLabel.text = "\(data.ranking)위"
+        rankingLabel.textColor = color
         starView.rating = data.totalScore
         menuLabel.text = data.menu
         dateLabel.text = data.date
     }
     
     func addView() {
-        contentView.addSubview(container)
+        contentView.addSubview(spacer)
+        spacer.addSubview(container)
         container.addSubviews(
             crownImage, rankingLabel, starView,
             menuLabel, dateLabel
@@ -93,8 +95,13 @@ class RankingCell: UITableViewCell {
     }
     
     func setLayout() {
+        spacer.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.height.equalTo(144)
+        }
         container.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(1)
+            $0.top.equalTo(spacer.snp.top).inset(2)
+            $0.horizontalEdges.equalTo(spacer).inset(2)
             $0.bottom.equalTo(dateLabel.snp.bottom).offset(16)
         }
         crownImage.snp.makeConstraints {

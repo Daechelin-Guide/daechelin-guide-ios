@@ -54,7 +54,28 @@ final class RankingViewController: BaseVC<RankingReactor> {
         $0.distribution = .fill
     }
     
-    /// comment
+    /// ranking
+    private lazy var breakfastButton = UIButton().then {
+        $0.setTitle("조식 랭킹", for: .normal)
+        $0.setTitleColor(Color.white, for: .normal)
+        $0.backgroundColor = Color.breakfast
+        $0.layer.cornerRadius = 8
+    }
+    
+    private lazy var lunchButton = UIButton().then {
+        $0.setTitle("중식 랭킹", for: .normal)
+        $0.setTitleColor(Color.white, for: .normal)
+        $0.backgroundColor = Color.lunch
+        $0.layer.cornerRadius = 8
+    }
+    
+    private lazy var dinnerButton = UIButton().then {
+        $0.setTitle("석식 랭킹", for: .normal)
+        $0.setTitleColor(Color.white, for: .normal)
+        $0.backgroundColor = Color.dinner
+        $0.layer.cornerRadius = 8
+    }
+    
     private lazy var rankingTableView = UITableView().then {
         $0.backgroundColor = Color.background
         $0.register(
@@ -66,7 +87,6 @@ final class RankingViewController: BaseVC<RankingReactor> {
         $0.separatorStyle = .none
     }
     
-    
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -77,7 +97,7 @@ final class RankingViewController: BaseVC<RankingReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            scrollView, navigationBarView
+            scrollView, breakfastButton, lunchButton, dinnerButton, navigationBarView
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -127,8 +147,28 @@ final class RankingViewController: BaseVC<RankingReactor> {
             $0.horizontalEdges.equalToSuperview().inset(16)
         }
         /// ranking
+        breakfastButton.snp.makeConstraints {
+            $0.top.equalTo(scrollStackView.snp.top)
+            $0.leading.equalTo(scrollStackView.snp.leading)
+            $0.width.equalTo(bound.width / 3 - 20)
+            $0.height.equalTo(26)
+        }
+        lunchButton.snp.makeConstraints {
+            $0.top.equalTo(scrollStackView.snp.top)
+            $0.width.equalTo(bound.width / 3 - 20)
+            $0.height.equalTo(26)
+            $0.centerX.equalToSuperview()
+        }
+        dinnerButton.snp.makeConstraints {
+            $0.top.equalTo(scrollStackView.snp.top)
+            $0.trailing.equalTo(scrollStackView.snp.trailing)
+            $0.width.equalTo(bound.width / 3 - 20)
+            $0.height.equalTo(26)
+        }
         rankingTableView.snp.makeConstraints {
+            $0.top.equalTo(breakfastButton.snp.bottom).offset(30)
             $0.width.equalTo(scrollView.snp.width).inset(16)
+            $0.height.equalTo(1440)
             $0.centerX.equalToSuperview()
         }
     }
@@ -140,6 +180,21 @@ final class RankingViewController: BaseVC<RankingReactor> {
                 self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
+        
+        breakfastButton.rx.tap
+            .map { Reactor.Action.setMealType(.TYPE_BREAKFAST) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        lunchButton.rx.tap
+            .map { Reactor.Action.setMealType(.TYPE_LUNCH) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        dinnerButton.rx.tap
+            .map { Reactor.Action.setMealType(.TYPE_DINNER) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
     
     override func bindAction(reactor: RankingReactor) {
@@ -147,24 +202,32 @@ final class RankingViewController: BaseVC<RankingReactor> {
     }
     
     override func bindState(reactor: RankingReactor) {
-        reactor.state.map { $0.ranking?.ranking }
-            .compactMap { $0 }
+        reactor.state
+            .map { $0.mealType }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] _ in
+                self?.rankingTableView.reloadData()
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.mealType }
+            .compactMap { mealType -> [Ranking]? in
+                switch mealType {
+                case .TYPE_BREAKFAST:
+                    return reactor.currentState.breakfastRanking?.ranking
+                case .TYPE_LUNCH:
+                    return reactor.currentState.lunchRanking?.ranking
+                case .TYPE_DINNER:
+                    return reactor.currentState.dinnerRanking?.ranking
+                }
+            }
             .bind(to: rankingTableView.rx.items(
                 cellIdentifier: RankingCell.reuseIdentifier,
                 cellType: RankingCell.self)
             ) { _, ranking, cell in
-                cell.configuration(ranking)
+                cell.configuration(ranking, reactor.currentState.mealType)
             }
             .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.ranking?.ranking }
-            .subscribe(onNext: { [weak self] comments in
-                
-                self?.rankingTableView.snp.updateConstraints {
-                    $0.height.equalTo(1440)
-                }
-                self?.rankingTableView.layoutIfNeeded()
-            })
-            .disposed(by: disposeBag)
     }
+    
 }
