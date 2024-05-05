@@ -129,7 +129,6 @@ final class RankingViewController: BaseVC<RankingReactor> {
         /// ranking
         rankingTableView.snp.makeConstraints {
             $0.width.equalTo(scrollView.snp.width).inset(16)
-            $0.height.equalTo(100)
             $0.centerX.equalToSuperview()
         }
     }
@@ -156,6 +155,16 @@ final class RankingViewController: BaseVC<RankingReactor> {
             ) { _, ranking, cell in
                 cell.configuration(ranking)
             }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.ranking?.ranking }
+            .subscribe(onNext: { [weak self] comments in
+                
+                self?.rankingTableView.snp.updateConstraints {
+                    $0.height.equalTo(1440)
+                }
+                self?.rankingTableView.layoutIfNeeded()
+            })
             .disposed(by: disposeBag)
     }
 }

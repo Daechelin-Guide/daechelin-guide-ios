@@ -125,6 +125,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5204AA602BE77374005EAAB8 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				52FC151E2BE47FDF00462B37 /* Color.swift */,
+			);
+			path = Color;
+			sourceTree = "<group>";
+		};
+		5204AA612BE77378005EAAB8 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				52FC151F2BE47FDF00462B37 /* Icon.swift */,
+				52FC15212BE47FDF00462B37 /* UIImage+Ext.swift */,
+			);
+			path = Icon;
+			sourceTree = "<group>";
+		};
 		52141CCC2BE0D82400551A94 = {
 			isa = PBXGroup;
 			children = (
@@ -348,8 +365,8 @@
 		52FC15202BE47FDF00462B37 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				52FC151E2BE47FDF00462B37 /* Color.swift */,
-				52FC151F2BE47FDF00462B37 /* Icon.swift */,
+				5204AA612BE77378005EAAB8 /* Icon */,
+				5204AA602BE77374005EAAB8 /* Color */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -367,7 +384,6 @@
 			isa = PBXGroup;
 			children = (
 				52FC15172BE47FDE00462B37 /* UIColor+Ext.swift */,
-				52FC15212BE47FDF00462B37 /* UIImage+Ext.swift */,
 				52FC15192BE47FDF00462B37 /* UILabel+Ext.swift */,
 				52FC151B2BE47FDF00462B37 /* UINavigationController+Ext.swift */,
 				52FC15182BE47FDE00462B37 /* UIStackView+Ext.swift */,
