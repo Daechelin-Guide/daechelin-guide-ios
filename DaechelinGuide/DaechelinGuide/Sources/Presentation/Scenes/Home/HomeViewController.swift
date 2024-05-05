@@ -277,6 +277,11 @@ final class HomeViewController: BaseVC<HomeReactor> {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        calendarButton.rx.tap
+            .map { Reactor.Action.calendarButtonDidTap }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         tomorrowButton.rx.tap
             .map { Reactor.Action.tomorrowButtonDidTap }
             .bind(to: reactor.action)

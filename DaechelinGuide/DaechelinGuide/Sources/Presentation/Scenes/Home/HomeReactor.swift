@@ -27,7 +27,7 @@ final class HomeReactor: Reactor {
     // MARK: - Mutation
     enum Mutation {
         case setDate(Date)
-        case setMenu(MenuResponse)
+        case setMenu(MenuResponse?)
         case setRefreshing(Bool)
     }
     
@@ -43,10 +43,9 @@ final class HomeReactor: Reactor {
 extension HomeReactor {
     
     // MARK: - Mutate
-    private func fetchMenuForCurrentDate(date: Date? = nil) -> Observable<Mutation> {
-        let targetDate = date ?? currentState.date
+    private func fetchMenu(date: Date) -> Observable<Mutation> {
         return MenuProvider.shared
-            .getMenu(targetDate.formattingDate(format: "yyyyMMdd"))
+            .getMenu(date.formattingDate(format: "yyyyMMdd"))
             .flatMap { result -> Observable<Mutation> in
                 switch result {
                 case .success(let data):
@@ -61,27 +60,29 @@ extension HomeReactor {
         switch action {
             
         case .fetchMenu:
-            return fetchMenuForCurrentDate()
+            return fetchMenu(date: currentState.date)
             
         case .refresh:
-            return Observable.just(Mutation.setRefreshing(false))
-                .delay(.milliseconds(500), scheduler: MainScheduler.instance)
-                .startWith(Mutation.setRefreshing(true))
-                .concat(Observable.just(Mutation.setDate(Date())))
-                .concat(fetchMenuForCurrentDate())
+            return Observable.concat([
+                Observable.just(Mutation.setMenu(nil)),
+                Observable.just(Mutation.setRefreshing(true)),
+                fetchMenu(date: currentState.date),
+                Observable.just(Mutation.setRefreshing(false))
+            ])
             
         case .calendarButtonDidTap:
-            return .empty()
+            return Observable.just(Mutation.setDate(Date()))
+                .concat(fetchMenu(date: Date()))
             
         case .tomorrowButtonDidTap:
             let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: currentState.date) ?? Date()
             return Observable.just(Mutation.setDate(tomorrow))
-                .concat(fetchMenuForCurrentDate())
+                .concat(fetchMenu(date: tomorrow))
             
         case .yesterdayButtonDidTap:
             let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: currentState.date) ?? Date()
             return Observable.just(Mutation.setDate(yesterday))
-                .concat(fetchMenuForCurrentDate())
+                .concat(fetchMenu(date: yesterday))
         }
     }
     
