@@ -21,6 +21,9 @@
 		52F8CE8C2BE715FD009D0663 /* RatingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8CE8B2BE715FD009D0663 /* RatingProvider.swift */; };
 		52F8CE8E2BE71619009D0663 /* RatingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8CE8D2BE71619009D0663 /* RatingService.swift */; };
 		52F8CE922BE7442F009D0663 /* RatingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8CE912BE7442F009D0663 /* RatingResponse.swift */; };
+		52F8CE962BE765F7009D0663 /* RankingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8CE952BE765F7009D0663 /* RankingResponse.swift */; };
+		52F8CE982BE76665009D0663 /* RankingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8CE972BE76665009D0663 /* RankingService.swift */; };
+		52F8CE9A2BE7676B009D0663 /* RankingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8CE992BE7676B009D0663 /* RankingProvider.swift */; };
 		52FC14902BE36A6A00462B37 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC148F2BE36A6A00462B37 /* RxCocoa */; };
 		52FC14A12BE378A300462B37 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A02BE378A300462B37 /* RxGesture */; };
 		52FC14A92BE459C400462B37 /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A82BE459C400462B37 /* Cosmos */; };
@@ -68,6 +71,9 @@
 		52F8CE8B2BE715FD009D0663 /* RatingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RatingProvider.swift; path = DaechelinGuide/Sources/Network/Provider/RatingProvider.swift; sourceTree = SOURCE_ROOT; };
 		52F8CE8D2BE71619009D0663 /* RatingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingService.swift; sourceTree = "<group>"; };
 		52F8CE912BE7442F009D0663 /* RatingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingResponse.swift; sourceTree = "<group>"; };
+		52F8CE952BE765F7009D0663 /* RankingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingResponse.swift; sourceTree = "<group>"; };
+		52F8CE972BE76665009D0663 /* RankingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingService.swift; sourceTree = "<group>"; };
+		52F8CE992BE7676B009D0663 /* RankingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingProvider.swift; sourceTree = "<group>"; };
 		52FC14E62BE47E1E00462B37 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52FC14E72BE47E1E00462B37 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		52FC14ED2BE47E5500462B37 /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -172,18 +178,11 @@
 			isa = PBXGroup;
 			children = (
 				52F4EB162BE67A2000582D33 /* ProviderWrapper.swift */,
-				52F4EB182BE67A3200582D33 /* Menu */,
-				52F8CE8A2BE715E9009D0663 /* Rating */,
+				52F4EB142BE679BE00582D33 /* MenuProvider.swift */,
+				52F8CE8B2BE715FD009D0663 /* RatingProvider.swift */,
+				52F8CE992BE7676B009D0663 /* RankingProvider.swift */,
 			);
 			path = Provider;
-			sourceTree = "<group>";
-		};
-		52F4EB182BE67A3200582D33 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				52F4EB142BE679BE00582D33 /* MenuProvider.swift */,
-			);
-			path = Menu;
 			sourceTree = "<group>";
 		};
 		52F8CE892BE68920009D0663 /* Service */ = {
@@ -191,16 +190,9 @@
 			children = (
 				52F4EB0B2BE6718000582D33 /* MenuService.swift */,
 				52F8CE8D2BE71619009D0663 /* RatingService.swift */,
+				52F8CE972BE76665009D0663 /* RankingService.swift */,
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		52F8CE8A2BE715E9009D0663 /* Rating */ = {
-			isa = PBXGroup;
-			children = (
-				52F8CE8B2BE715FD009D0663 /* RatingProvider.swift */,
-			);
-			path = Rating;
 			sourceTree = "<group>";
 		};
 		52FC14C62BE47CDF00462B37 /* Sources */ = {
@@ -290,6 +282,7 @@
 				52FC14FE2BE47E9300462B37 /* MenuResponse.swift */,
 				52FC14FF2BE47E9300462B37 /* MenuDetailResponse.swift */,
 				52F8CE912BE7442F009D0663 /* RatingResponse.swift */,
+				52F8CE952BE765F7009D0663 /* RankingResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -499,16 +492,19 @@
 				52FC15312BE5CD3000462B37 /* CommentCell.swift in Sources */,
 				52FC152C2BE47FDF00462B37 /* UIView+Ext.swift in Sources */,
 				52F4EB172BE67A2000582D33 /* ProviderWrapper.swift in Sources */,
+				52F8CE962BE765F7009D0663 /* RankingResponse.swift in Sources */,
 				52F8CE922BE7442F009D0663 /* RatingResponse.swift in Sources */,
 				52FC15252BE47FDF00462B37 /* UILabel+Ext.swift in Sources */,
 				52FC14F32BE47E6200462B37 /* HomeReactor.swift in Sources */,
 				52F8CE8E2BE71619009D0663 /* RatingService.swift in Sources */,
 				52FC15292BE47FDF00462B37 /* Color.swift in Sources */,
 				52FC14F42BE47E6200462B37 /* HomeViewController.swift in Sources */,
+				52F8CE9A2BE7676B009D0663 /* RankingProvider.swift in Sources */,
 				52FC15022BE47E9300462B37 /* MenuDetailResponse.swift in Sources */,
 				52FC14E92BE47E1E00462B37 /* SceneDelegate.swift in Sources */,
 				52FC152B2BE47FDF00462B37 /* UIImage+Ext.swift in Sources */,
 				52FC152A2BE47FDF00462B37 /* Icon.swift in Sources */,
+				52F8CE982BE76665009D0663 /* RankingService.swift in Sources */,
 				52FC15012BE47E9300462B37 /* MenuResponse.swift in Sources */,
 				52FC14F62BE47E6E00462B37 /* MenuContainer.swift in Sources */,
 				52FC15232BE47FDF00462B37 /* UIColor+Ext.swift in Sources */,
@@ -673,7 +669,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.dgsw.mingyu.Guide-Daechelin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -710,7 +706,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.dgsw.mingyu.Guide-Daechelin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -11,12 +11,15 @@ import RxSwift
 
 final class RatingProvider {
     static let shared = RatingProvider()
-
+    
     private let wrapper = ProviderWrapper<RatingService>()
-
+    
     func getRating(_ menuId: Int) -> Observable<Result<[RatingResponse], Error>> {
         return Observable.create { observer in
-            self.wrapper.daechelinRequest(target: .getRating(menuId), instance: [RatingResponse].self) { result in
+            self.wrapper.daechelinRequest(
+                target: .getRating(menuId),
+                instance: [RatingResponse].self
+            ) { result in
                 switch result {
                 case .success(let data):
                     observer.onNext(.success(data))
@@ -27,12 +30,14 @@ final class RatingProvider {
             return Disposables.create()
         }
     }
-
+    
     
     func postRating(_ menuId: Int, _ request: RatingRequest) -> Observable<Result<Data, Error>> {
         
         return Observable.create { observer in
-            self.wrapper.daechelinSimpleRequest(target: .postRating(menuId, request)) { result in
+            self.wrapper.daechelinSimpleRequest(
+                target: .postRating(menuId, request)
+            ) { result in
                 switch result {
                 case .success(let data):
                     observer.onNext(.success(data.data))
