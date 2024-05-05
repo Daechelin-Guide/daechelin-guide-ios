@@ -145,11 +145,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     }
     
     private lazy var fixedMenuLabel = UILabel().then {
-        $0.text = menuLabel.text
         $0.textColor = Color.darkGray
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.numberOfLines = 0
-        $0.setLineSpacing(lineSpacing: 2, alignment: .center)
     }
     
     private lazy var fixedBottomSeparateLine = UIView().then {
@@ -157,18 +155,15 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     }
     
     private lazy var fixedKcalLabel = UILabel().then {
-        $0.text = kcalLabel.text
         $0.textColor = Color.gray
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.numberOfLines = 0
     }
     
     private lazy var fixedNutrientsLabel = UILabel().then {
-        $0.text = nutrientsLabel.text
         $0.textColor = Color.darkGray
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.numberOfLines = 0
-        $0.setLineSpacing(lineSpacing: 2, alignment: .center)
     }
     
     /// review button
@@ -439,27 +434,31 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.menuDetail?.menu }
-            .distinctUntilChanged()
-            .map { $0?.replacingOccurrences(of: " ", with: "\n") }
-            .bind(to: menuLabel.rx.text)
+            .subscribe(onNext: { [weak self] menu in
+                let menu = menu?.replacingOccurrences(of: " ", with: "\n")
+                self?.menuLabel.text = menu
+                self?.fixedMenuLabel.text = menu
+                self?.fixedMenuLabel.setLineSpacing(lineSpacing: 2, alignment: .center)
+            })
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.menuDetail?.cal }
-            .distinctUntilChanged()
-            .bind(to: kcalLabel.rx.text)
+            .subscribe(onNext: { [weak self] cal in
+                self?.kcalLabel.text = cal
+                self?.fixedKcalLabel.text = cal
+            })
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.menuDetail?.nutrients }
-            .distinctUntilChanged()
-            .map {
-                guard let nutrients = $0 else { return "" }
-                let nutrientsArray = nutrients.components(separatedBy: ", ")[0...2]
-                let replacingArray = nutrientsArray.map {
+            .subscribe(onNext: { [weak self] nutrients in
+                let nutrientsArray = nutrients?.components(separatedBy: ", ")[0...2]
+                let replacingNutrients = nutrientsArray?.map {
                     $0.replacingOccurrences(of: "(g)", with: "") + "g"
-                }
-                return replacingArray.joined(separator: "\n")
-            }
-            .bind(to: nutrientsLabel.rx.text)
+                }.joined(separator: "\n")
+                self?.nutrientsLabel.text = replacingNutrients
+                self?.fixedNutrientsLabel.text = replacingNutrients
+                self?.fixedNutrientsLabel.setLineSpacing(lineSpacing: 2, alignment: .center)
+            })
             .disposed(by: disposeBag)
         
         reactor.state

@@ -22,7 +22,7 @@ final class MenuInfoReactor: Reactor {
     
     // MARK: - Mutation
     enum Mutation {
-        case setMenuDetail(MenuDetailResponse)
+        case setMenuDetail(MenuDetailResponse?)
         case setComments([String])
         case setRefreshing(Bool)
     }
@@ -44,17 +44,20 @@ final class MenuInfoReactor: Reactor {
 // MARK: - Mutate
 extension MenuInfoReactor {
     
-    //test
-    func fetchMenuDetail() -> MenuDetailResponse {
-        return MenuDetailResponse(
-            id: 99,
-            menu: "*브리오슈싸이버거 유부초밥/크래미 미소된장국 모듬야채피클 오렌지주스",
-            date: "2024년 05월 03일 (금)",
-            cal: "796.3 Kcal",
-            totalScore: 2.6,
-            nutrients: "탄수화물(g) : 74.2, 단백질(g) : 39.0, 지방(g) : 38.1, 비타민A(R.E) : 48.2, 티아민(mg) : 0.4, 리보플라빈(mg) : 0.4, 비타민C(mg) : 120.7, 칼슘(mg) : 859.6, 철분(mg) : 7.9",
-            mealType: .TYPE_LUNCH
-        )
+    private func fetchMenuDetail() -> Observable<Mutation> {
+        return MenuProvider.shared
+            .getMenuDetail(
+                currentState.date.formattingDate(format: "yyyyMMdd"),
+                currentState.type
+            )
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let data):
+                    return Observable.just(.setMenuDetail(data))
+                case .failure(_):
+                    return Observable.empty()
+                }
+            }
     }
     
     func fetchComments() -> [String] {
@@ -72,25 +75,14 @@ extension MenuInfoReactor {
         switch action {
             
         case .refresh:
-            return Observable.just(Mutation.setRefreshing(false))
-                .delay(.milliseconds(500), scheduler: MainScheduler.instance)
-                .startWith(Mutation.setRefreshing(true))
-                .concat(Observable.just(Mutation.setMenuDetail(fetchMenuDetail())))
+            return Observable.concat([
+                Observable.just(Mutation.setRefreshing(true)),
+                fetchMenuDetail(),
+                Observable.just(Mutation.setRefreshing(false))
+            ])
             
         case .fetchMenuDetail:
-            return MenuProvider.shared
-                .getMenuDetail(
-                    currentState.date.formattingDate(format: "yyyyMMdd"),
-                    currentState.type
-                )
-                .flatMap { result -> Observable<Mutation> in
-                    switch result {
-                    case .success(let data):
-                        return Observable.just(.setMenuDetail(data))
-                    case .failure(_):
-                        return Observable.empty()
-                    }
-                }
+            return fetchMenuDetail()
             
         case .fetchComments:
             return Observable.just(Mutation.setComments(fetchComments()))

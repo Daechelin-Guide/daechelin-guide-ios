@@ -42,7 +42,6 @@ final class HomeReactor: Reactor {
 // MARK: - Mutate
 extension HomeReactor {
     
-    // MARK: - Mutate
     private func fetchMenu(date: Date) -> Observable<Mutation> {
         return MenuProvider.shared
             .getMenu(date.formattingDate(format: "yyyyMMdd"))
