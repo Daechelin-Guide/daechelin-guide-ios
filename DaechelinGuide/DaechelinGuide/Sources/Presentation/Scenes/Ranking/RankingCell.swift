@@ -37,7 +37,7 @@ class RankingCell: UITableViewCell {
     }
     
     // MARK: - UI
-    public func configuration(_ data: RankingResponse) {
+    public func configuration(_ data: Ranking) {
         self.container.layer.shadowColor = Color.getMealColor(for: .TYPE_BREAKFAST).cgColor
     }
     

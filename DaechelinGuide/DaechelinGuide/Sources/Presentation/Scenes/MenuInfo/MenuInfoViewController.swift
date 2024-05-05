@@ -244,9 +244,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         navigationBarItemView.addSubviews(
             backButton, navigationTitle
         )
+        /// scroll view
         scrollView.addSubview(scrollStackView)
         scrollStackView.addArrangedSubviews(
-            menuInfoContainer,  emptyCommentsLabel, emptyCommentsSubLabel, commentTableView
+            menuInfoContainer, emptyCommentsLabel,
+            emptyCommentsSubLabel, commentTableView
         )
         menuInfoContainer.addSubviews(
             menuDateLabel, mealView, starView,
@@ -515,8 +517,6 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
                 self?.commentTableView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
-
-        
     }
 }
 

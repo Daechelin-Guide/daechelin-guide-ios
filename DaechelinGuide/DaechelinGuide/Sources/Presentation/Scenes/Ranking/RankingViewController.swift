@@ -38,6 +38,34 @@ final class RankingViewController: BaseVC<RankingReactor> {
         $0.textColor = Color.black
     }
     
+    /// scroll view
+    private lazy var scrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+        $0.alwaysBounceVertical = true
+        $0.contentInsetAdjustmentBehavior = .always
+        $0.clipsToBounds = false
+    }
+    
+    private let refreshControl = UIRefreshControl()
+    
+    private lazy var scrollStackView = UIStackView().then {
+        $0.axis = .vertical
+        $0.spacing = 20
+        $0.distribution = .fill
+    }
+    
+    /// comment
+    private lazy var rankingTableView = UITableView().then {
+        $0.backgroundColor = Color.background
+        $0.register(
+            RankingCell.self,
+            forCellReuseIdentifier: RankingCell.reuseIdentifier
+        )
+        $0.isScrollEnabled = false
+        $0.allowsSelection = false
+        $0.separatorStyle = .none
+    }
+    
     
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
@@ -49,13 +77,18 @@ final class RankingViewController: BaseVC<RankingReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            navigationBarView
+            scrollView, navigationBarView
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
         )
         navigationBarItemView.addSubviews(
             backButton, navigationTitle
+        )
+        /// scroll view
+        scrollView.addSubview(scrollStackView)
+        scrollStackView.addArrangedSubviews(
+            rankingTableView
         )
     }
     
@@ -84,6 +117,21 @@ final class RankingViewController: BaseVC<RankingReactor> {
             $0.height.equalToSuperview()
             $0.leading.equalTo(backButton.snp.trailing).offset(10)
         }
+        /// scroll view
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(navigationBarView.snp.bottom).offset(20)
+            $0.horizontalEdges.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        scrollStackView.snp.makeConstraints {
+            $0.verticalEdges.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(16)
+        }
+        /// ranking
+        rankingTableView.snp.makeConstraints {
+            $0.width.equalTo(scrollView.snp.width).inset(16)
+            $0.height.equalTo(100)
+            $0.centerX.equalToSuperview()
+        }
     }
     
     // MARK: - Reactor
@@ -100,6 +148,14 @@ final class RankingViewController: BaseVC<RankingReactor> {
     }
     
     override func bindState(reactor: RankingReactor) {
-        
+        reactor.state.map { $0.ranking?.ranking }
+            .compactMap { $0 }
+            .bind(to: rankingTableView.rx.items(
+                cellIdentifier: RankingCell.reuseIdentifier,
+                cellType: RankingCell.self)
+            ) { _, ranking, cell in
+                cell.configuration(ranking)
+            }
+            .disposed(by: disposeBag)
     }
 }
