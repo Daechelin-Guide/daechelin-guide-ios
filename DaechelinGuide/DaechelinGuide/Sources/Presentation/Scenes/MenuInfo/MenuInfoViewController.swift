@@ -60,7 +60,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     private lazy var menuInfoContainer = UIView().then {
         $0.backgroundColor = Color.white
         $0.layer.cornerRadius = 12
-        $0.layer.borderWidth = 1
+        $0.layer.cornerRadius = 12
+        $0.layer.shadowRadius = 2
+        $0.layer.shadowOpacity = 0.9
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.clipsToBounds = false
     }
     
     private lazy var menuDateLabel = UILabel().then {
@@ -119,12 +123,15 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     ///fixed menu info container
     private lazy var fixedMenuInfoContainer = UIView().then {
         $0.backgroundColor = Color.white
+        $0.layer.shadowColor = menuInfoContainer.layer.shadowColor
         $0.layer.cornerRadius = 12
-        $0.layer.borderColor = menuInfoContainer.layer.borderColor
-        $0.layer.borderWidth = 1
+        $0.layer.shadowRadius = 2
+        $0.layer.shadowOpacity = 0.9
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
         $0.layer.maskedCorners = CACornerMask(
             arrayLiteral: .layerMinXMaxYCorner, .layerMaxXMaxYCorner
         )
+        $0.clipsToBounds = false
     }
     
     private lazy var bottomShadow = UIView().then { blur in
@@ -168,7 +175,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     private lazy var reviewButton = ScaledButton(scale: 0.94).then {
         $0.backgroundColor = Color.white
         $0.layer.cornerRadius = 32
-        $0.layer.borderWidth = 1
+        $0.layer.shadowRadius = 2
+        $0.layer.shadowOpacity = 0.9
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
     private lazy var reviewButtonImage = UIImageView().then {
@@ -235,9 +244,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         navigationBarItemView.addSubviews(
             backButton, navigationTitle
         )
+        /// scroll view
         scrollView.addSubview(scrollStackView)
         scrollStackView.addArrangedSubviews(
-            menuInfoContainer,  emptyCommentsLabel, emptyCommentsSubLabel, commentTableView
+            menuInfoContainer, emptyCommentsLabel,
+            emptyCommentsSubLabel, commentTableView
         )
         menuInfoContainer.addSubviews(
             menuDateLabel, mealView, starView,
@@ -395,7 +406,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         let color = Color.getMealColor(for: reactor!.currentState.type)
         
         [menuInfoContainer, reviewButton].forEach {
-            $0.layer.borderColor = color.cgColor
+            $0.layer.shadowColor = color.cgColor
         }
         [bottomSeparateLine, topSeparateLine].forEach {
             $0.backgroundColor = color.withAlphaComponent(0.7)
@@ -489,7 +500,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
                 cellIdentifier: CommentCell.reuseIdentifier,
                 cellType: CommentCell.self)
             ) { _, comment, cell in
-                cell.setComment(comment)
+                cell.configuration(comment)
             }
             .disposed(by: disposeBag)
         
@@ -506,8 +517,6 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
                 self?.commentTableView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)
-
-        
     }
 }
 

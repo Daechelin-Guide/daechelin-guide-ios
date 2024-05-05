@@ -16,6 +16,7 @@ public enum Icon: String {
     case ranking = "ranking"
     case setting = "setting"
     case review = "review"
+    case crown = "crown"
     
     /// start
     case emptyStar = "star_empty"

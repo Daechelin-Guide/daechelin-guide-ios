@@ -36,8 +36,6 @@ final class HomeViewController: BaseVC<HomeReactor> {
         $0.setImage(UIImage(icon: .ranking), for: .normal)
         $0.imageView!.contentMode = .scaleAspectFit
         $0.tintColor = Color.darkGray
-        /// disable
-        $0.isHidden = true
     }
     
     private lazy var settingButton = UIButton().then {
