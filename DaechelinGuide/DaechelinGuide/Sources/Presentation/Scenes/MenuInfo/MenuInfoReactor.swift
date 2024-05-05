@@ -55,15 +55,15 @@ extension MenuInfoReactor {
                 case .success(let data):
                     return Observable.just(.setMenuDetail(data))
                 case .failure(_):
-                    return Observable.empty()
+                    return Observable.just(.setMenuDetail(nil))
                 }
             }
     }
     
     private func fetchComments() -> Observable<Mutation> {
         return self.fetchMenuDetail()
-            .flatMapLatest { mutation -> Observable<Mutation> in
-                switch mutation {
+            .flatMapLatest { result -> Observable<Mutation> in
+                switch result {
                 case .setMenuDetail(let menuDetail):
                     guard let id = menuDetail?.id else { return .empty() }
                     return RatingProvider.shared.getRating(id)
@@ -72,11 +72,11 @@ extension MenuInfoReactor {
                             case .success(let data):
                                 return Observable.just(.setComments(data.reversed()))
                             case .failure(_):
-                                return Observable.empty()
+                                return Observable.just(.setComments([]))
                             }
                         }
                 default:
-                    return .empty()
+                    return Observable.just(.setMenuDetail(nil))
                 }
             }
     }
@@ -87,7 +87,7 @@ extension MenuInfoReactor {
         case .refresh:
             return Observable.concat([
                 Observable.just(Mutation.setRefreshing(true)),
-                fetchMenuDetail(),
+                Observable.merge(fetchMenuDetail()),
                 Observable.just(Mutation.setRefreshing(false))
             ])
             

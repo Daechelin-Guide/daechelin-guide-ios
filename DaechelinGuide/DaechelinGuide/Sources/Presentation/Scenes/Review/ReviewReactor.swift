@@ -46,7 +46,10 @@ extension ReviewReactor {
         return RatingProvider.shared
             .postRating(
                 currentState.menuId,
-                RatingRequest(score: currentState.score, comment: currentState.reviewText)
+                RatingRequest(
+                    score: currentState.score,
+                    comment: currentState.reviewText
+                )
             )
             .flatMap { result -> Observable<Mutation> in
                 switch result {

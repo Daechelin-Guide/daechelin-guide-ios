@@ -129,11 +129,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     
     private lazy var bottomShadow = UIView().then { blur in
         let gradientLayer = CAGradientLayer().then {
-            guard let type = reactor?.currentState.type else { return }
-            let color = Color.getMealColor(for: type)
             $0.frame = CGRect(x: 0, y: 0, width: view.frame.width - 32, height: 24)
-            $0.colors = [color.withAlphaComponent(0.6).cgColor,
-                         color.withAlphaComponent(0).cgColor]
+            $0.colors = [Color.darkGray.withAlphaComponent(0.3).cgColor,
+                         Color.darkGray.withAlphaComponent(0).cgColor]
             $0.startPoint = CGPoint(x: 0.5, y: 0)
             $0.endPoint = CGPoint(x: 0.5, y: 1)
             $0.cornerRadius = 12
@@ -211,6 +209,8 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         super.viewWillAppear(true)
         
         print("\(type(of: self)): \(#function)")
+        reactor?.action.onNext(.fetchMenuDetail)
+        reactor?.action.onNext(.fetchComments)
     }
     
     // MARK: - UI
@@ -500,12 +500,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
                 self?.emptyCommentsSubLabel.removeFromSuperview()
                 
                 let commentsCount = comments?.count ?? 0
-                let tableViewHeight = (commentsCount * 70) + 100
-                
                 self?.commentTableView.snp.updateConstraints {
-                    $0.height.equalTo(tableViewHeight)
+                    $0.height.equalTo((commentsCount * 70) + 100)
                 }
-                
                 self?.commentTableView.layoutIfNeeded()
             })
             .disposed(by: disposeBag)

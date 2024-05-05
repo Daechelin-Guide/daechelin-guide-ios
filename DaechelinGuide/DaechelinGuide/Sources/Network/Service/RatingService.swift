@@ -42,8 +42,11 @@ extension RatingService: TargetType {
         case .getRating(_):
             return .requestPlain
         case let .postRating(_, request):
+            let params = request.comment.isEmpty
+            ? ["score": request.score]
+            : ["score": request.score, "comment": request.comment]
             return .requestParameters(
-                parameters: ["score": request.score, "comment": request.comment],
+                parameters: params,
                 encoding: JSONEncoding.default
             )
         }
