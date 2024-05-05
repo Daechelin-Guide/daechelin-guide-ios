@@ -54,7 +54,7 @@ class CommentCell: UITableViewCell {
     }
     
     // MARK: - UI
-    public func setComment(_ comment: RatingResponse) {
+    public func configuration(_ comment: RatingResponse) {
         self.comment.text = comment.comment
     }
     

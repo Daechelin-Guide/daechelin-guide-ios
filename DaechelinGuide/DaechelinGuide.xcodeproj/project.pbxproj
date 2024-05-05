@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5204AA5F2BE76F5A005EAAB8 /* RankingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204AA5E2BE76F5A005EAAB8 /* RankingCell.swift */; };
 		52141CE22BE0D82500551A94 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52141CE12BE0D82500551A94 /* Assets.xcassets */; };
 		52141CE52BE0D82500551A94 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 52141CE42BE0D82500551A94 /* Base */; };
 		52141CF42BE0E03200551A94 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CF32BE0E03200551A94 /* ReactorKit */; };
@@ -59,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5204AA5E2BE76F5A005EAAB8 /* RankingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingCell.swift; sourceTree = "<group>"; };
 		52141CD52BE0D82400551A94 /* DaechelinGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaechelinGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52141CE12BE0D82500551A94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52141CE42BE0D82500551A94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 			children = (
 				52FC15072BE47EBF00462B37 /* RankingViewController.swift */,
 				52FC15092BE47EC300462B37 /* RankingReactor.swift */,
+				5204AA5E2BE76F5A005EAAB8 /* RankingCell.swift */,
 			);
 			path = Ranking;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 			files = (
 				52FC15242BE47FDF00462B37 /* UIStackView+Ext.swift in Sources */,
 				52FC14FB2BE47E7F00462B37 /* SettingReactor.swift in Sources */,
+				5204AA5F2BE76F5A005EAAB8 /* RankingCell.swift in Sources */,
 				52FC15272BE47FDF00462B37 /* UINavigationController+Ext.swift in Sources */,
 				52F4EB122BE6731E00582D33 /* RatingRequest.swift in Sources */,
 				52F4EB0C2BE6718000582D33 /* MenuService.swift in Sources */,

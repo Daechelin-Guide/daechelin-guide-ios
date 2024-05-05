@@ -38,6 +38,7 @@ final class RankingViewController: BaseVC<RankingReactor> {
         $0.textColor = Color.black
     }
     
+    
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -87,7 +88,11 @@ final class RankingViewController: BaseVC<RankingReactor> {
     
     // MARK: - Reactor
     override func bindView(reactor: RankingReactor) {
-        
+        backButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func bindAction(reactor: RankingReactor) {

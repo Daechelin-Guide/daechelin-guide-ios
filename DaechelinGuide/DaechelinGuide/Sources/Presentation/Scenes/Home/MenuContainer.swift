@@ -30,9 +30,12 @@ final class MenuContainer: BaseView {
     private lazy var container = UIView().then {
         $0.backgroundColor = Color.white
         $0.layer.cornerRadius = 12
-        $0.layer.borderWidth = 1
-        $0.clipsToBounds = true
+        $0.layer.shadowRadius = 2
+        $0.layer.shadowOpacity = 0.9
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.clipsToBounds = false
     }
+
     
     private lazy var foodIcon = UIImageView().then {
         $0.contentMode = .scaleAspectFit
@@ -91,7 +94,7 @@ final class MenuContainer: BaseView {
     }
     
     private func setUI(for type: MealType) {
-        self.container.layer.borderColor = Color.getMealColor(for: type).cgColor
+        self.container.layer.shadowColor = Color.getMealColor(for: type).cgColor
         self.mealView.backgroundColor = Color.getMealColor(for: type)
         
         switch type {
