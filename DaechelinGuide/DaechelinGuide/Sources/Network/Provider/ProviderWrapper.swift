@@ -33,7 +33,7 @@ class ProviderWrapper<P: TargetType>: MoyaProvider<P> {
     ) {
         self.request(target) { result in
             switch result {
-                
+            
             case .success(let response):
                 if (200 ..< 300).contains(response.statusCode),
                    let data = try? JSONDecoder().decode(instance, from: response.data) {
@@ -46,4 +46,24 @@ class ProviderWrapper<P: TargetType>: MoyaProvider<P> {
             }
         }
     }
+    
+    func daechelinSimpleRequest(
+        target: P,
+        completion: @escaping (Result<Response, MoyaError>) -> Void
+    ) {
+        self.request(target) { result in
+            switch result {
+                
+            case .success(let response):
+                if let data = try? response.map(Data.self) {
+                    print(String(data: data, encoding: .utf8)!)
+                }
+            case .failure(let moyaError):
+                print("code: \(moyaError.errorCode)\n", moyaError.localizedDescription)
+            }
+
+            completion(result)
+        }
+    }
+    
 }

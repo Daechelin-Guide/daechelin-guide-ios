@@ -9,6 +9,7 @@ import UIKit
 import RxCocoa
 import SnapKit
 import Then
+import StoreKit
 
 final class SettingViewController: BaseVC<SettingReactor> {
     
@@ -63,6 +64,24 @@ final class SettingViewController: BaseVC<SettingReactor> {
         $0.tintColor = Color.black
     }
     
+    private lazy var deleteReviewButton = ScaledButton(
+        scale: 0.98, backgroundColor: Color.white
+    ).then {
+        $0.layer.cornerRadius = 12
+    }
+    
+    private lazy var deleteReviewLeadingItem = UILabel().then {
+        $0.text = "작성한 리뷰 삭제 요청"
+        $0.textColor = Color.black
+        $0.font = .systemFont(ofSize: 16, weight: .regular)
+    }
+    
+    private lazy var deleteReviewTrailingItem = UIImageView().then {
+        $0.image = UIImage(icon: .trailingArrow)
+        $0.contentMode = .scaleAspectFit
+        $0.tintColor = Color.black
+    }
+    
     private lazy var appVersionButton = ScaledButton(
         scale: 0.98, backgroundColor: Color.white
     ).then {
@@ -101,10 +120,13 @@ final class SettingViewController: BaseVC<SettingReactor> {
         )
         /// setting
         settingButtonStackView.addArrangedSubviews(
-            privacyPolicyButton, appVersionButton
+            privacyPolicyButton, deleteReviewButton, appVersionButton
         )
         privacyPolicyButton.addSubviews(
             privacyPolicyContainerLeadingItem, privacyPolicyContainerTrailingItem
+        )
+        deleteReviewButton.addSubviews(
+            deleteReviewLeadingItem, deleteReviewTrailingItem
         )
         appVersionButton.addSubviews(
             appVersionLeadingItem, appVersionTrailingItem
@@ -155,6 +177,18 @@ final class SettingViewController: BaseVC<SettingReactor> {
             $0.trailing.equalToSuperview().inset(16)
             $0.centerY.equalToSuperview()
         }
+        deleteReviewButton.snp.makeConstraints {
+            $0.height.equalTo(50)
+            $0.width.equalToSuperview()
+        }
+        deleteReviewLeadingItem.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(16)
+            $0.centerY.equalToSuperview()
+        }
+        deleteReviewTrailingItem.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(16)
+            $0.centerY.equalToSuperview()
+        }
         appVersionButton.snp.makeConstraints {
             $0.height.equalTo(50)
             $0.width.equalToSuperview()
@@ -182,6 +216,23 @@ final class SettingViewController: BaseVC<SettingReactor> {
                 if let url = URL(string: "https://min-gyu.notion.site/43f3fa6077c346c692359f790d79cd7a?pvs=74") {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        deleteReviewButton.rx.tap
+            .subscribe(onNext: { _ in
+                let subjectEncoded = "[대슐랭 가이드] 리뷰 삭제 요청".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+                let bodyEncoded = "예시 20240101 / 점심 / 내용 -> 삭제 부탁드립니다".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+                let mailtoString = "mailto:dev.gyuuu@gmail.com?subject=\(subjectEncoded)&body=\(bodyEncoded)"
+                if let mailtoURL = URL(string: mailtoString), UIApplication.shared.canOpenURL(mailtoURL) {
+                    UIApplication.shared.open(mailtoURL, options: [:], completionHandler: nil)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        appVersionButton.rx.tap
+            .subscribe(onNext: { _ in
+                SKStoreReviewController.requestReview()
             })
             .disposed(by: disposeBag)
     }

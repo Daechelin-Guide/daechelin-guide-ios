@@ -129,11 +129,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     
     private lazy var bottomShadow = UIView().then { blur in
         let gradientLayer = CAGradientLayer().then {
-            guard let type = reactor?.currentState.type else { return }
-            let color = Color.getMealColor(for: type)
             $0.frame = CGRect(x: 0, y: 0, width: view.frame.width - 32, height: 24)
-            $0.colors = [color.withAlphaComponent(0.6).cgColor,
-                         color.withAlphaComponent(0).cgColor]
+            $0.colors = [Color.darkGray.withAlphaComponent(0.3).cgColor,
+                         Color.darkGray.withAlphaComponent(0).cgColor]
             $0.startPoint = CGPoint(x: 0.5, y: 0)
             $0.endPoint = CGPoint(x: 0.5, y: 1)
             $0.cornerRadius = 12
@@ -145,11 +143,9 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     }
     
     private lazy var fixedMenuLabel = UILabel().then {
-        $0.text = menuLabel.text
         $0.textColor = Color.darkGray
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.numberOfLines = 0
-        $0.setLineSpacing(lineSpacing: 2, alignment: .center)
     }
     
     private lazy var fixedBottomSeparateLine = UIView().then {
@@ -157,18 +153,15 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     }
     
     private lazy var fixedKcalLabel = UILabel().then {
-        $0.text = kcalLabel.text
         $0.textColor = Color.gray
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.numberOfLines = 0
     }
     
     private lazy var fixedNutrientsLabel = UILabel().then {
-        $0.text = nutrientsLabel.text
         $0.textColor = Color.darkGray
         $0.font = .systemFont(ofSize: 16, weight: .regular)
         $0.numberOfLines = 0
-        $0.setLineSpacing(lineSpacing: 2, alignment: .center)
     }
     
     /// review button
@@ -197,11 +190,27 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.delegate = self
     }
     
+    private lazy var emptyCommentsLabel = UILabel().then {
+        $0.text = "아직 리뷰가 하나도 없어요"
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 16, weight: .medium)
+        $0.textAlignment = .center
+    }
+    
+    private lazy var emptyCommentsSubLabel = UILabel().then {
+        $0.text = "직접 리뷰를 작성해 보는 건 어떠신가요??"
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 14, weight: .light)
+        $0.textAlignment = .center
+    }
+    
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         print("\(type(of: self)): \(#function)")
+        reactor?.action.onNext(.fetchMenuDetail)
+        reactor?.action.onNext(.fetchComments)
     }
     
     // MARK: - UI
@@ -228,7 +237,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         )
         scrollView.addSubview(scrollStackView)
         scrollStackView.addArrangedSubviews(
-            menuInfoContainer, commentTableView
+            menuInfoContainer,  emptyCommentsLabel, emptyCommentsSubLabel, commentTableView
         )
         menuInfoContainer.addSubviews(
             menuDateLabel, mealView, starView,
@@ -369,7 +378,14 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         /// comment
         commentTableView.snp.makeConstraints {
             $0.width.equalTo(scrollView.snp.width).inset(16)
-            $0.height.equalTo(((reactor?.currentState.comments?.count ?? 1) * 70) + 100)
+            $0.height.equalTo(100)
+            $0.centerX.equalToSuperview()
+        }
+        emptyCommentsLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+        }
+        emptyCommentsSubLabel.snp.makeConstraints {
+            $0.top.equalTo(emptyCommentsLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
     }
@@ -409,7 +425,8 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         
         reviewButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                let vc = ReviewViewController(reactor: ReviewReactor())
+                let menuId = reactor.currentState.menuDetail?.id ?? 0
+                let vc = ReviewViewController(reactor: ReviewReactor(menuId: menuId))
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
@@ -439,31 +456,35 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.menuDetail?.menu }
-            .distinctUntilChanged()
-            .map { $0?.replacingOccurrences(of: " ", with: "\n") }
-            .bind(to: menuLabel.rx.text)
+            .subscribe(onNext: { [weak self] menu in
+                let menu = menu?.replacingOccurrences(of: " ", with: "\n")
+                self?.menuLabel.text = menu
+                self?.fixedMenuLabel.text = menu
+                self?.fixedMenuLabel.setLineSpacing(lineSpacing: 2, alignment: .center)
+            })
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.menuDetail?.cal }
-            .distinctUntilChanged()
-            .bind(to: kcalLabel.rx.text)
+            .subscribe(onNext: { [weak self] cal in
+                self?.kcalLabel.text = cal
+                self?.fixedKcalLabel.text = cal
+            })
             .disposed(by: disposeBag)
         
         reactor.state.map { $0.menuDetail?.nutrients }
-            .distinctUntilChanged()
-            .map {
-                guard let nutrients = $0 else { return "" }
-                let nutrientsArray = nutrients.components(separatedBy: ", ")[0...2]
-                let replacingArray = nutrientsArray.map {
+            .subscribe(onNext: { [weak self] nutrients in
+                let nutrientsArray = nutrients?.components(separatedBy: ", ")[0...2]
+                let replacingNutrients = nutrientsArray?.map {
                     $0.replacingOccurrences(of: "(g)", with: "") + "g"
-                }
-                return replacingArray.joined(separator: "\n")
-            }
-            .bind(to: nutrientsLabel.rx.text)
+                }.joined(separator: "\n")
+                self?.nutrientsLabel.text = replacingNutrients
+                self?.fixedNutrientsLabel.text = replacingNutrients
+                self?.fixedNutrientsLabel.setLineSpacing(lineSpacing: 2, alignment: .center)
+            })
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { _ in reactor.currentState.comments ?? ["awdawd"]}
+        reactor.state.map { $0.comments }
+            .compactMap { $0 }
             .bind(to: commentTableView.rx.items(
                 cellIdentifier: CommentCell.reuseIdentifier,
                 cellType: CommentCell.self)
@@ -471,6 +492,22 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
                 cell.setComment(comment)
             }
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.comments }
+            .filter { !($0?.isEmpty ?? true) }
+            .subscribe(onNext: { [weak self] comments in
+                self?.emptyCommentsLabel.removeFromSuperview()
+                self?.emptyCommentsSubLabel.removeFromSuperview()
+                
+                let commentsCount = comments?.count ?? 0
+                self?.commentTableView.snp.updateConstraints {
+                    $0.height.equalTo((commentsCount * 70) + 100)
+                }
+                self?.commentTableView.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
+
+        
     }
 }
 

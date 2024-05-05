@@ -54,8 +54,8 @@ class CommentCell: UITableViewCell {
     }
     
     // MARK: - UI
-    public func setComment(_ comment: String) {
-        self.comment.text = comment
+    public func setComment(_ comment: RatingResponse) {
+        self.comment.text = comment.comment
     }
     
     func addView() {

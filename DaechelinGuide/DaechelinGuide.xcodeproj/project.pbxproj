@@ -15,9 +15,12 @@
 		52F4EB082BE6600000582D33 /* ScaledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB072BE6600000582D33 /* ScaledButton.swift */; };
 		52F4EB0C2BE6718000582D33 /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB0B2BE6718000582D33 /* MenuService.swift */; };
 		52F4EB0F2BE671E400582D33 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 52F4EB0E2BE671E400582D33 /* Moya */; };
-		52F4EB122BE6731E00582D33 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB112BE6731E00582D33 /* Request.swift */; };
+		52F4EB122BE6731E00582D33 /* RatingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB112BE6731E00582D33 /* RatingRequest.swift */; };
 		52F4EB152BE679BE00582D33 /* MenuProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB142BE679BE00582D33 /* MenuProvider.swift */; };
 		52F4EB172BE67A2000582D33 /* ProviderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB162BE67A2000582D33 /* ProviderWrapper.swift */; };
+		52F8CE8C2BE715FD009D0663 /* RatingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8CE8B2BE715FD009D0663 /* RatingProvider.swift */; };
+		52F8CE8E2BE71619009D0663 /* RatingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8CE8D2BE71619009D0663 /* RatingService.swift */; };
+		52F8CE922BE7442F009D0663 /* RatingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F8CE912BE7442F009D0663 /* RatingResponse.swift */; };
 		52FC14902BE36A6A00462B37 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC148F2BE36A6A00462B37 /* RxCocoa */; };
 		52FC14A12BE378A300462B37 /* RxGesture in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A02BE378A300462B37 /* RxGesture */; };
 		52FC14A92BE459C400462B37 /* Cosmos in Frameworks */ = {isa = PBXBuildFile; productRef = 52FC14A82BE459C400462B37 /* Cosmos */; };
@@ -59,9 +62,12 @@
 		52141CE62BE0D82500551A94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52F4EB072BE6600000582D33 /* ScaledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledButton.swift; sourceTree = "<group>"; };
 		52F4EB0B2BE6718000582D33 /* MenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuService.swift; path = DaechelinGuide/Sources/Network/Service/MenuService.swift; sourceTree = SOURCE_ROOT; };
-		52F4EB112BE6731E00582D33 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		52F4EB112BE6731E00582D33 /* RatingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingRequest.swift; sourceTree = "<group>"; };
 		52F4EB142BE679BE00582D33 /* MenuProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuProvider.swift; sourceTree = "<group>"; };
 		52F4EB162BE67A2000582D33 /* ProviderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderWrapper.swift; sourceTree = "<group>"; };
+		52F8CE8B2BE715FD009D0663 /* RatingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RatingProvider.swift; path = DaechelinGuide/Sources/Network/Provider/RatingProvider.swift; sourceTree = SOURCE_ROOT; };
+		52F8CE8D2BE71619009D0663 /* RatingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingService.swift; sourceTree = "<group>"; };
+		52F8CE912BE7442F009D0663 /* RatingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingResponse.swift; sourceTree = "<group>"; };
 		52FC14E62BE47E1E00462B37 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52FC14E72BE47E1E00462B37 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		52FC14ED2BE47E5500462B37 /* BaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -157,7 +163,7 @@
 		52F4EB102BE672B600582D33 /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				52F4EB112BE6731E00582D33 /* Request.swift */,
+				52F4EB112BE6731E00582D33 /* RatingRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -167,6 +173,7 @@
 			children = (
 				52F4EB162BE67A2000582D33 /* ProviderWrapper.swift */,
 				52F4EB182BE67A3200582D33 /* Menu */,
+				52F8CE8A2BE715E9009D0663 /* Rating */,
 			);
 			path = Provider;
 			sourceTree = "<group>";
@@ -183,8 +190,17 @@
 			isa = PBXGroup;
 			children = (
 				52F4EB0B2BE6718000582D33 /* MenuService.swift */,
+				52F8CE8D2BE71619009D0663 /* RatingService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		52F8CE8A2BE715E9009D0663 /* Rating */ = {
+			isa = PBXGroup;
+			children = (
+				52F8CE8B2BE715FD009D0663 /* RatingProvider.swift */,
+			);
+			path = Rating;
 			sourceTree = "<group>";
 		};
 		52FC14C62BE47CDF00462B37 /* Sources */ = {
@@ -219,9 +235,9 @@
 		52FC14CC2BE47D8A00462B37 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				52F4EB132BE679AD00582D33 /* Provider */,
-				52F8CE892BE68920009D0663 /* Service */,
 				52FC15032BE47E9900462B37 /* Configuration */,
+				52F8CE892BE68920009D0663 /* Service */,
+				52F4EB132BE679AD00582D33 /* Provider */,
 				52FC14FC2BE47E8D00462B37 /* Response */,
 				52F4EB102BE672B600582D33 /* Request */,
 			);
@@ -273,6 +289,7 @@
 			children = (
 				52FC14FE2BE47E9300462B37 /* MenuResponse.swift */,
 				52FC14FF2BE47E9300462B37 /* MenuDetailResponse.swift */,
+				52F8CE912BE7442F009D0663 /* RatingResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -463,7 +480,7 @@
 				52FC15242BE47FDF00462B37 /* UIStackView+Ext.swift in Sources */,
 				52FC14FB2BE47E7F00462B37 /* SettingReactor.swift in Sources */,
 				52FC15272BE47FDF00462B37 /* UINavigationController+Ext.swift in Sources */,
-				52F4EB122BE6731E00582D33 /* Request.swift in Sources */,
+				52F4EB122BE6731E00582D33 /* RatingRequest.swift in Sources */,
 				52F4EB0C2BE6718000582D33 /* MenuService.swift in Sources */,
 				52FC14E82BE47E1E00462B37 /* AppDelegate.swift in Sources */,
 				52F4EB152BE679BE00582D33 /* MenuProvider.swift in Sources */,
@@ -473,6 +490,7 @@
 				52FC14EF2BE47E5500462B37 /* BaseView.swift in Sources */,
 				52FC150F2BE47ED300462B37 /* ReviewReactor.swift in Sources */,
 				52FC150A2BE47EC300462B37 /* RankingReactor.swift in Sources */,
+				52F8CE8C2BE715FD009D0663 /* RatingProvider.swift in Sources */,
 				52FC15132BE47EE100462B37 /* MenuInfoReactor.swift in Sources */,
 				52FC15052BE47EA300462B37 /* Constants.swift in Sources */,
 				52FC14F92BE47E7C00462B37 /* SettingViewController.swift in Sources */,
@@ -481,8 +499,10 @@
 				52FC15312BE5CD3000462B37 /* CommentCell.swift in Sources */,
 				52FC152C2BE47FDF00462B37 /* UIView+Ext.swift in Sources */,
 				52F4EB172BE67A2000582D33 /* ProviderWrapper.swift in Sources */,
+				52F8CE922BE7442F009D0663 /* RatingResponse.swift in Sources */,
 				52FC15252BE47FDF00462B37 /* UILabel+Ext.swift in Sources */,
 				52FC14F32BE47E6200462B37 /* HomeReactor.swift in Sources */,
+				52F8CE8E2BE71619009D0663 /* RatingService.swift in Sources */,
 				52FC15292BE47FDF00462B37 /* Color.swift in Sources */,
 				52FC14F42BE47E6200462B37 /* HomeViewController.swift in Sources */,
 				52FC15022BE47E9300462B37 /* MenuDetailResponse.swift in Sources */,
