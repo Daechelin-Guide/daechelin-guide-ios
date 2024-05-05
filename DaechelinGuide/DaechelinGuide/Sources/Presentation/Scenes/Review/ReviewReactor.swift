@@ -11,7 +11,7 @@ import ReactorKit
 final class ReviewReactor: Reactor {
     
     // MARK: - Properties
-    var initialState: State = State()
+    var initialState: State
     
     // MARK: - Action
     enum Action {
@@ -28,13 +28,35 @@ final class ReviewReactor: Reactor {
     
     // MARK: - State
     struct State {
+        var menuId: Int
         var reviewText: String = ""
         var score: Double = 0.0
+    }
+    
+    init(menuId: Int) {
+        self.initialState = State(menuId: menuId)
     }
 }
 
 // MARK: - Mutate
 extension ReviewReactor {
+    
+    private func postReview() -> Observable<Mutation> {
+        
+        return RatingProvider.shared
+            .postRating(
+                currentState.menuId,
+                RatingRequest(score: currentState.score, comment: currentState.reviewText)
+            )
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(_):
+                    return Observable.empty()
+                case .failure(_):
+                    return Observable.empty()
+                }
+            }
+    }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
@@ -46,7 +68,7 @@ extension ReviewReactor {
             return .just(.setReviewScore(rating))
             
         case .completeReview:
-            return .empty()
+            return postReview()
         }
     }
     

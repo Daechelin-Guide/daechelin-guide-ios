@@ -192,6 +192,20 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.delegate = self
     }
     
+    private lazy var emptyCommentsLabel = UILabel().then {
+        $0.text = "아직 리뷰가 하나도 없어요"
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 16, weight: .medium)
+        $0.textAlignment = .center
+    }
+    
+    private lazy var emptyCommentsSubLabel = UILabel().then {
+        $0.text = "직접 리뷰를 작성해 보는 건 어떠신가요??"
+        $0.textColor = Color.darkGray
+        $0.font = .systemFont(ofSize: 14, weight: .light)
+        $0.textAlignment = .center
+    }
+    
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -223,7 +237,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         )
         scrollView.addSubview(scrollStackView)
         scrollStackView.addArrangedSubviews(
-            menuInfoContainer, commentTableView
+            menuInfoContainer,  emptyCommentsLabel, emptyCommentsSubLabel, commentTableView
         )
         menuInfoContainer.addSubviews(
             menuDateLabel, mealView, starView,
@@ -364,7 +378,14 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         /// comment
         commentTableView.snp.makeConstraints {
             $0.width.equalTo(scrollView.snp.width).inset(16)
-            $0.height.equalTo(((reactor?.currentState.comments?.count ?? 1) * 70) + 100)
+            $0.height.equalTo(100)
+            $0.centerX.equalToSuperview()
+        }
+        emptyCommentsLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+        }
+        emptyCommentsSubLabel.snp.makeConstraints {
+            $0.top.equalTo(emptyCommentsLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
     }
@@ -404,7 +425,8 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         
         reviewButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                let vc = ReviewViewController(reactor: ReviewReactor())
+                let menuId = reactor.currentState.menuDetail?.id ?? 0
+                let vc = ReviewViewController(reactor: ReviewReactor(menuId: menuId))
                 self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
@@ -461,8 +483,8 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             })
             .disposed(by: disposeBag)
         
-        reactor.state
-            .map { _ in reactor.currentState.comments ?? ["awdawd"]}
+        reactor.state.map { $0.comments }
+            .compactMap { $0 }
             .bind(to: commentTableView.rx.items(
                 cellIdentifier: CommentCell.reuseIdentifier,
                 cellType: CommentCell.self)
@@ -470,6 +492,25 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
                 cell.setComment(comment)
             }
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.comments }
+            .filter { !($0?.isEmpty ?? true) }
+            .subscribe(onNext: { [weak self] comments in
+                self?.emptyCommentsLabel.removeFromSuperview()
+                self?.emptyCommentsSubLabel.removeFromSuperview()
+                
+                let commentsCount = comments?.count ?? 0
+                let tableViewHeight = (commentsCount * 70) + 100
+                
+                self?.commentTableView.snp.updateConstraints {
+                    $0.height.equalTo(tableViewHeight)
+                }
+                
+                self?.commentTableView.layoutIfNeeded()
+            })
+            .disposed(by: disposeBag)
+
+        
     }
 }
 

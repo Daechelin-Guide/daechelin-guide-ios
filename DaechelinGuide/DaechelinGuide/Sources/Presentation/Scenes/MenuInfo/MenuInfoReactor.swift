@@ -23,7 +23,7 @@ final class MenuInfoReactor: Reactor {
     // MARK: - Mutation
     enum Mutation {
         case setMenuDetail(MenuDetailResponse?)
-        case setComments([String])
+        case setComments([RatingResponse]?)
         case setRefreshing(Bool)
     }
     
@@ -32,7 +32,7 @@ final class MenuInfoReactor: Reactor {
         var date: Date
         var type: MealType
         var menuDetail: MenuDetailResponse?
-        var comments: [String]?
+        var comments: [RatingResponse]?
         var isRefreshing: Bool = false
     }
     
@@ -61,14 +61,22 @@ extension MenuInfoReactor {
     }
     
     private func fetchComments() -> Observable<Mutation> {
-        return RatingProvider.shared
-            .getRating(currentState.menuDetail?.id ?? 0)
-            .flatMap { result -> Observable<Mutation> in
-                switch result {
-                case .success(let data):
-                    return Observable.just(.setComments(data))
-                case .failure(_):
-                    return Observable.empty()
+        return self.fetchMenuDetail()
+            .flatMapLatest { mutation -> Observable<Mutation> in
+                switch mutation {
+                case .setMenuDetail(let menuDetail):
+                    guard let id = menuDetail?.id else { return .empty() }
+                    return RatingProvider.shared.getRating(id)
+                        .flatMap { result -> Observable<Mutation> in
+                            switch result {
+                            case .success(let data):
+                                return Observable.just(.setComments(data.reversed()))
+                            case .failure(_):
+                                return Observable.empty()
+                            }
+                        }
+                default:
+                    return .empty()
                 }
             }
     }

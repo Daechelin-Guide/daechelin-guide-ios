@@ -14,9 +14,9 @@ final class RatingProvider {
 
     private let wrapper = ProviderWrapper<RatingService>()
 
-    func getRating(_ menuId: Int) -> Observable<Result<[String], Error>> {
+    func getRating(_ menuId: Int) -> Observable<Result<[RatingResponse], Error>> {
         return Observable.create { observer in
-            self.wrapper.daechelinRequest(target: .getRating(menuId), instance: [String].self) { result in
+            self.wrapper.daechelinRequest(target: .getRating(menuId), instance: [RatingResponse].self) { result in
                 switch result {
                 case .success(let data):
                     observer.onNext(.success(data))

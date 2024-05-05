@@ -8,6 +8,6 @@
 import Foundation
 
 struct RatingRequest: Codable {
-    let score: Int
-    let comment: String?
+    let score: Double
+    let comment: String
 }

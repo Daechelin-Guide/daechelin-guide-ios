@@ -179,8 +179,8 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
         
         reviewCompleteButton.rx.tap
             .subscribe(onNext: {
-                print(reactor.currentState.reviewText)
-                print(reactor.currentState.score)
+                let action = ReviewReactor.Action.completeReview
+                reactor.action.onNext(action)
             })
             .disposed(by: disposeBag)
         
