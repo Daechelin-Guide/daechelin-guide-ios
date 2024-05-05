@@ -91,6 +91,7 @@ final class RankingViewController: BaseVC<RankingReactor> {
     }
     
     override func bindAction(reactor: RankingReactor) {
+        reactor.action.onNext(.fetchRanking)
     }
     
     override func bindState(reactor: RankingReactor) {

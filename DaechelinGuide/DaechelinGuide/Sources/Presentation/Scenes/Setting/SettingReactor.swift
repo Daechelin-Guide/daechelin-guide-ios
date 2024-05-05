@@ -33,9 +33,7 @@ final class SettingReactor: Reactor {
 extension SettingReactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
-//        switch action {
-//
-//        }
+        
     }
     
     // MARK: - Reduce

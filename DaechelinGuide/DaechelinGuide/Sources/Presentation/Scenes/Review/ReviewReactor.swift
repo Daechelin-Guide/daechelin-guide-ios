@@ -42,7 +42,6 @@ final class ReviewReactor: Reactor {
 extension ReviewReactor {
     
     private func postReview() -> Observable<Mutation> {
-        
         return RatingProvider.shared
             .postRating(
                 currentState.menuId,
