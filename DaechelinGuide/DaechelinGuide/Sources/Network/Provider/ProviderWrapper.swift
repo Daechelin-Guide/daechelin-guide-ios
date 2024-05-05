@@ -46,4 +46,14 @@ class ProviderWrapper<P: TargetType>: MoyaProvider<P> {
             }
         }
     }
+    
+    func daechelinSimpleRequest(
+        target: P,
+        completion: @escaping (Result<Response, MoyaError>) -> Void
+    ) {
+        self.request(target) {
+            completion($0)
+        }
+    }
+    
 }

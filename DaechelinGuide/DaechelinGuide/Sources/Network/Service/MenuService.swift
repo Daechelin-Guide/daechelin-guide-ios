@@ -37,10 +37,6 @@ extension MenuService: TargetType {
         }
     }
     
-    var sampleData: Data {
-        return Data()
-    }
-    
     var task: Task {
         switch self {
         case let .getMenu(date):
