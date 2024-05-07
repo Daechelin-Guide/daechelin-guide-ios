@@ -455,7 +455,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             .bind(to: menuDateLabel.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.isRefreshing }
+        reactor.state.map { $0.isFetching }
             .distinctUntilChanged()
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
