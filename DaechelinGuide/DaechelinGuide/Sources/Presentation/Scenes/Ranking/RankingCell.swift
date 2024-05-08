@@ -82,7 +82,10 @@ class RankingCell: UITableViewCell {
         rankingLabel.textColor = color
         starView.rating = data.totalScore
         menuLabel.text = data.menu
-        dateLabel.text = data.date
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        dateLabel.text = dateFormatter.date(from: data.date)!.formattingDate(format: "yyyy년 M월 d일 (E)")
     }
     
     func addView() {

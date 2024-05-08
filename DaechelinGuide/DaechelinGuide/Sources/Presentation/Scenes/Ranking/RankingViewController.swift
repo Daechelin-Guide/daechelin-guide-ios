@@ -66,25 +66,37 @@ final class RankingViewController: BaseVC<RankingReactor> {
     /// ranking
     private lazy var breakfastButton = ScaledButton(scale: 0.95).then {
         $0.setTitle("조식 랭킹", for: .normal)
-        $0.setTitleColor(Color.white, for: .normal)
+        $0.setTitleColor(Color.darkGray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         $0.backgroundColor = Color.breakfast
         $0.layer.cornerRadius = 8
+        $0.layer.shadowRadius = 2
+        $0.layer.shadowOpacity = 0.5
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.shadowColor = Color.getMealColor(for: .TYPE_BREAKFAST).cgColor
     }
     private lazy var lunchButton = ScaledButton(scale: 0.95).then {
         $0.setTitle("중식 랭킹", for: .normal)
-        $0.setTitleColor(Color.white, for: .normal)
+        $0.setTitleColor(Color.darkGray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         $0.backgroundColor = Color.lunch
         $0.layer.cornerRadius = 8
+        $0.layer.shadowRadius = 2
+        $0.layer.shadowOpacity = 0.5
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.shadowColor = Color.getMealColor(for: .TYPE_LUNCH).cgColor
     }
     
     private lazy var dinnerButton = ScaledButton(scale: 0.95).then {
         $0.setTitle("석식 랭킹", for: .normal)
-        $0.setTitleColor(Color.white, for: .normal)
+        $0.setTitleColor(Color.darkGray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         $0.backgroundColor = Color.dinner
         $0.layer.cornerRadius = 8
+        $0.layer.shadowRadius = 2
+        $0.layer.shadowOpacity = 0.5
+        $0.layer.shadowOffset = CGSize(width: 0, height: 0)
+        $0.layer.shadowColor = Color.getMealColor(for: .TYPE_DINNER).cgColor
     }
     
     private lazy var rankingTableView = UITableView().then {
@@ -190,6 +202,26 @@ final class RankingViewController: BaseVC<RankingReactor> {
         }
     }
     
+    private func setUI(for type: MealType) {
+        let buttonColorMapping: [(button: UIButton, isSelected: Bool)] = [
+            (breakfastButton, type == .TYPE_BREAKFAST),
+            (lunchButton, type == .TYPE_LUNCH),
+            (dinnerButton, type == .TYPE_DINNER)
+        ]
+        
+        buttonColorMapping.forEach { mapping in
+            let button = mapping.button
+            let color = mapping.isSelected ? Color.getMealColor(for: type) : Color.white
+            let titleColor = mapping.isSelected ? Color.white : Color.darkGray
+            
+            button.backgroundColor = color
+            button.setTitleColor(titleColor, for: .normal)
+        }
+        
+        
+    }
+
+    
     // MARK: - Reactor
     override func bindView(reactor: RankingReactor) {
         backButton.rx.tap
@@ -222,8 +254,9 @@ final class RankingViewController: BaseVC<RankingReactor> {
         reactor.state
             .map { $0.mealType }
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] _ in
+            .subscribe(onNext: { [weak self] type in
                 self?.rankingTableView.reloadData()
+                self?.setUI(for: type)
             })
             .disposed(by: disposeBag)
         
