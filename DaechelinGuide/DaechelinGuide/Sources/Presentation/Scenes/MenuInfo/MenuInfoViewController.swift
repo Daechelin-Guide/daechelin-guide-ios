@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import RxCocoa
-import SnapKit
-import Then
 import Cosmos
 
 final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
@@ -134,7 +131,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.clipsToBounds = false
     }
     
-    private lazy var bottomShadow = UIView().then { blur in
+    private lazy var bottomShadow = UIView().then { bottomShadow in
         let gradientLayer = CAGradientLayer().then {
             $0.frame = CGRect(x: 0, y: 0, width: view.frame.width - 32, height: 24)
             $0.colors = [Color.darkGray.withAlphaComponent(0.3).cgColor,
@@ -146,7 +143,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
                 arrayLiteral: .layerMinXMaxYCorner, .layerMaxXMaxYCorner
             )
         }
-        blur.layer.addSublayer(gradientLayer)
+        bottomShadow.layer.addSublayer(gradientLayer)
     }
     
     private lazy var fixedMenuLabel = UILabel().then {

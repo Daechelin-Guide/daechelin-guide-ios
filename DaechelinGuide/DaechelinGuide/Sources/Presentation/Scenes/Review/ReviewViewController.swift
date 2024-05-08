@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import RxCocoa
-import SnapKit
-import Then
 import Cosmos
 
 final class ReviewViewController: BaseVC<ReviewReactor> {

@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import RxCocoa
-import SnapKit
-import Then
 
 final class RankingViewController: BaseVC<RankingReactor> {
     
@@ -52,6 +49,18 @@ final class RankingViewController: BaseVC<RankingReactor> {
         $0.axis = .vertical
         $0.spacing = 20
         $0.distribution = .fill
+    }
+    
+    private lazy var fadingBottomView = UIView().then { bottomView in
+        let fadeLayer = CAGradientLayer().then {
+            $0.frame = CGRect(x: 0, y: 0, width: bound.width, height: bound.height / 12)
+            $0.colors = [Color.background.withAlphaComponent(0).cgColor,
+                         Color.background.withAlphaComponent(1).cgColor]
+            $0.startPoint = CGPoint(x: 0.5, y: 0)
+            $0.endPoint = CGPoint(x: 0.5, y: 1)
+        }
+        bottomView.layer.addSublayer(fadeLayer)
+        bottomView.isUserInteractionEnabled = false
     }
     
     /// ranking
@@ -99,7 +108,8 @@ final class RankingViewController: BaseVC<RankingReactor> {
         view.addSubview(container)
         /// navigation bar
         container.addSubviews(
-            scrollView, breakfastButton, lunchButton, dinnerButton, navigationBarView
+            scrollView, breakfastButton, lunchButton, dinnerButton,
+            navigationBarView, fadingBottomView
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -147,6 +157,11 @@ final class RankingViewController: BaseVC<RankingReactor> {
         scrollStackView.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(16)
+        }
+        fadingBottomView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(container.snp.bottom)
+            $0.height.equalTo(bound.height / 12)
         }
         /// ranking
         breakfastButton.snp.makeConstraints {
