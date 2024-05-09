@@ -95,7 +95,7 @@ final class SettingViewController: BaseVC<SettingReactor> {
     }
     
     private lazy var appVersionTrailingItem = UILabel().then {
-        $0.text = "2.2.0"
+        $0.text = appVersion
         $0.textColor = Color.error
         $0.font = .systemFont(ofSize: 15, weight: .regular)
     }
@@ -103,6 +103,7 @@ final class SettingViewController: BaseVC<SettingReactor> {
     // MARK: - LifeCycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
     }
     
     // MARK: - UI

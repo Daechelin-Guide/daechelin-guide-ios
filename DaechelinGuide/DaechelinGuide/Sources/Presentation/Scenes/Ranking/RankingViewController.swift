@@ -217,10 +217,7 @@ final class RankingViewController: BaseVC<RankingReactor> {
             button.backgroundColor = color
             button.setTitleColor(titleColor, for: .normal)
         }
-        
-        
     }
-
     
     // MARK: - Reactor
     override func bindView(reactor: RankingReactor) {
