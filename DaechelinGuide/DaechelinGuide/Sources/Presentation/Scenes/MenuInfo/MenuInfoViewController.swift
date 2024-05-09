@@ -129,6 +129,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             arrayLiteral: .layerMinXMaxYCorner, .layerMaxXMaxYCorner
         )
         $0.clipsToBounds = false
+        $0.isUserInteractionEnabled = false
     }
     
     private lazy var bottomShadow = UIView().then { bottomShadow in
