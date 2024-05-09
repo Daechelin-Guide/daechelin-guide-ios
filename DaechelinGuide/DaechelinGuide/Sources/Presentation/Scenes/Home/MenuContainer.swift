@@ -15,15 +15,11 @@ final class MenuContainer: BaseView {
     ) {
         super.init()
         setUI(for: type)
-        configure(menu: menu)
+        configuration(menu: menu)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configure(menu: String?) {
-        self.menuLabel.text = menu ?? "급식이 없어요."
     }
     
     // MARK: - Properties
@@ -59,6 +55,10 @@ final class MenuContainer: BaseView {
     }
     
     // MARK: - UI
+    func configuration(menu: String?) {
+        self.menuLabel.text = menu ?? "급식이 없어요."
+    }
+    
     override func addView() {
         self.addSubview(container)
         container.addSubviews(foodIcon, mealView, menuLabel)

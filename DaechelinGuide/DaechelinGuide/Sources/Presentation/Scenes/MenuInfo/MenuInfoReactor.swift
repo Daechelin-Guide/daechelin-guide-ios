@@ -24,7 +24,7 @@ final class MenuInfoReactor: Reactor {
     enum Mutation {
         case setMenuDetail(MenuDetailResponse?)
         case setComments([RatingResponse]?)
-        case setRefreshing(Bool)
+        case setIsFetching
     }
     
     // MARK: - State
@@ -33,7 +33,7 @@ final class MenuInfoReactor: Reactor {
         var type: MealType
         var menuDetail: MenuDetailResponse?
         var comments: [RatingResponse]?
-        var isRefreshing: Bool = false
+        var isFetching: Bool = false
     }
     
     init(date: Date, type: MealType) {
@@ -45,7 +45,7 @@ final class MenuInfoReactor: Reactor {
 extension MenuInfoReactor {
     
     private func fetchMenuDetail() -> Observable<Mutation> {
-        return MenuProvider.shared
+        MenuProvider.shared
             .getMenuDetail(
                 currentState.date.formattingDate(format: "yyyyMMdd"),
                 currentState.type
@@ -61,25 +61,17 @@ extension MenuInfoReactor {
     }
     
     private func fetchComments() -> Observable<Mutation> {
-        return self.fetchMenuDetail()
-            .flatMapLatest { result -> Observable<Mutation> in
+        guard let id = currentState.menuDetail?.id else { return .empty() }
+        return RatingProvider.shared.getRating(id)
+            .flatMap { result -> Observable<Mutation> in
                 switch result {
-                case .setMenuDetail(let menuDetail):
-                    guard let id = menuDetail?.id else { return .empty() }
-                    return RatingProvider.shared.getRating(id)
-                        .flatMap { result -> Observable<Mutation> in
-                            switch result {
-                            case .success(let data):
-                                return Observable.just(.setComments(
-                                    data.reversed()
-                                        .filter { !($0.comment.isEmpty) }
-                                ))
-                            case .failure(_):
-                                return Observable.just(.setComments([]))
-                            }
-                        }
-                default:
-                    return Observable.just(.setMenuDetail(nil))
+                case .success(let data):
+                    return Observable.just(.setComments(
+                        data.reversed()
+                            .filter { !($0.comment.isEmpty) }
+                    ))
+                case .failure(_):
+                    return Observable.just(.setComments([]))
                 }
             }
     }
@@ -89,16 +81,24 @@ extension MenuInfoReactor {
             
         case .refresh:
             return Observable.concat([
-                Observable.just(Mutation.setRefreshing(true)),
-                Observable.merge(fetchMenuDetail()),
-                Observable.just(Mutation.setRefreshing(false))
+                fetchMenuDetail(),
+                Observable.just(Mutation.setComments(nil))
             ])
+            .flatMap { _ in
+                Observable.concat([
+                    Observable.just(Mutation.setComments(nil)),
+                    Observable.just(Mutation.setIsFetching),
+                    self.fetchComments()
+                ])
+            }
             
         case .fetchMenuDetail:
             return fetchMenuDetail()
             
         case .fetchComments:
-            return fetchComments()
+            return fetchMenuDetail().flatMap { _ in
+                self.fetchComments()
+            }
         }
     }
     
@@ -109,12 +109,14 @@ extension MenuInfoReactor {
             
         case .setMenuDetail(let menuDetail):
             newState.menuDetail = menuDetail
+            newState.isFetching = false
             
         case .setComments(let comments):
             newState.comments = comments
+            newState.isFetching = false
             
-        case .setRefreshing(let isRefreshing):
-            newState.isRefreshing = isRefreshing
+        case .setIsFetching:
+            newState.isFetching = true
         }
         return newState
     }

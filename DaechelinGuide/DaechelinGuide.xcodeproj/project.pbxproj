@@ -13,6 +13,7 @@
 		52141CF42BE0E03200551A94 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CF32BE0E03200551A94 /* ReactorKit */; };
 		52141CF72BE0E04000551A94 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CF62BE0E04000551A94 /* Then */; };
 		52141CFE2BE0E6C800551A94 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CFD2BE0E6C800551A94 /* SnapKit */; };
+		52453A7B2BEB9EAC000EE10A /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52453A7A2BEB9EAC000EE10A /* String+Ext.swift */; };
 		52F4EB082BE6600000582D33 /* ScaledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB072BE6600000582D33 /* ScaledButton.swift */; };
 		52F4EB0C2BE6718000582D33 /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB0B2BE6718000582D33 /* MenuService.swift */; };
 		52F4EB0F2BE671E400582D33 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 52F4EB0E2BE671E400582D33 /* Moya */; };
@@ -65,6 +66,7 @@
 		52141CE12BE0D82500551A94 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52141CE42BE0D82500551A94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52141CE62BE0D82500551A94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		52453A7A2BEB9EAC000EE10A /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		52F4EB072BE6600000582D33 /* ScaledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledButton.swift; sourceTree = "<group>"; };
 		52F4EB0B2BE6718000582D33 /* MenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuService.swift; path = DaechelinGuide/Sources/Network/Service/MenuService.swift; sourceTree = SOURCE_ROOT; };
 		52F4EB112BE6731E00582D33 /* RatingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingRequest.swift; sourceTree = "<group>"; };
@@ -396,6 +398,7 @@
 			isa = PBXGroup;
 			children = (
 				52FC151A2BE47FDF00462B37 /* Date+Ext.swift */,
+				52453A7A2BEB9EAC000EE10A /* String+Ext.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				52FC152A2BE47FDF00462B37 /* Icon.swift in Sources */,
 				52F8CE982BE76665009D0663 /* RankingService.swift in Sources */,
 				52FC15012BE47E9300462B37 /* MenuResponse.swift in Sources */,
+				52453A7B2BEB9EAC000EE10A /* String+Ext.swift in Sources */,
 				52FC14F62BE47E6E00462B37 /* MenuContainer.swift in Sources */,
 				52FC15232BE47FDF00462B37 /* UIColor+Ext.swift in Sources */,
 				52FC15142BE47EE100462B37 /* MenuInfoViewController.swift in Sources */,
@@ -689,7 +693,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.dgsw.mingyu.Guide-Daechelin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -726,7 +730,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "kr.dgsw.mingyu.Guide-Daechelin";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

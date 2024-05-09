@@ -6,9 +6,6 @@
 //
 
 import UIKit
-import RxCocoa
-import SnapKit
-import Then
 import Cosmos
 
 final class ReviewViewController: BaseVC<ReviewReactor> {
@@ -178,9 +175,10 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
             .disposed(by: disposeBag)
         
         reviewCompleteButton.rx.tap
-            .subscribe(onNext: {
+            .subscribe(onNext: { [weak self] in
                 let action = ReviewReactor.Action.completeReview
                 reactor.action.onNext(action)
+                self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
         

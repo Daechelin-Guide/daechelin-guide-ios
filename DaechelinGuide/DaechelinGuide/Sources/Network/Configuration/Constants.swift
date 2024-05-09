@@ -9,6 +9,9 @@ import Foundation
 
 public let apiUrl: String = {
     let plist = NSDictionary(contentsOfFile: Bundle.main.path(forResource: "Info", ofType: "plist")!)
-    let value = plist?.object(forKey: "URL") as? String
-    return value!
+    return (plist?.object(forKey: "URL") as? String)!
+}()
+
+public let appVersion: String = {
+    return (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String)!
 }()

@@ -6,10 +6,7 @@
 //
 
 import UIKit
-import RxCocoa
 import RxGesture
-import SnapKit
-import Then
 
 final class HomeViewController: BaseVC<HomeReactor> {
     
@@ -303,9 +300,9 @@ final class HomeViewController: BaseVC<HomeReactor> {
                 let breakfast = menuResponse?.breakfast
                 let lunch = menuResponse?.lunch
                 let dinner = menuResponse?.dinner
-                self?.breakfastContainer.configure(menu: breakfast)
-                self?.lunchContainer.configure(menu: lunch)
-                self?.dinnerContainer.configure(menu: dinner)
+                self?.breakfastContainer.configuration(menu: breakfast)
+                self?.lunchContainer.configuration(menu: lunch)
+                self?.dinnerContainer.configuration(menu: dinner)
             })
             .disposed(by: disposeBag)
     }
