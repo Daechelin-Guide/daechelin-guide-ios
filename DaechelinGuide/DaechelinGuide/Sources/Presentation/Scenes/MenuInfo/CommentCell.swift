@@ -68,13 +68,18 @@ class CommentCell: UITableViewCell {
     }
     
     func setLayout() {
+        contentView.snp.makeConstraints {
+            $0.height.equalTo(70)
+            $0.width.equalToSuperview()
+        }
         anonymousProfileImageView.snp.makeConstraints {
             $0.width.height.equalTo(46)
-            $0.leading.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(4)
+            $0.centerY.equalToSuperview()
         }
         commentStackView.snp.makeConstraints {
             $0.leading.equalTo(anonymousProfileImageView.snp.trailing).offset(10)
-            $0.trailing.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(4)
             $0.centerY.equalToSuperview()
         }
     }

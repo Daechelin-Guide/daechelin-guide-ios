@@ -51,6 +51,8 @@ final class HomeViewController: BaseVC<HomeReactor> {
     
     private let refreshControl = UIRefreshControl()
     
+    private lazy var fadingBottomView = FadingView(position: .bottom)
+    
     /// calendar button
     private lazy var calendarStackView = UIStackView().then {
         $0.axis = .horizontal
@@ -116,7 +118,7 @@ final class HomeViewController: BaseVC<HomeReactor> {
     override func addView() {
         view.addSubview(container)
         container.addSubviews(
-            scrollView, navigationBarView
+            scrollView, navigationBarView, fadingBottomView
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -171,6 +173,11 @@ final class HomeViewController: BaseVC<HomeReactor> {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(navigationBarView.snp.bottom).offset(34)
             $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+        }
+        fadingBottomView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(container.snp.bottom)
+            $0.height.equalTo(bound.height / 12)
         }
         /// calendar button
         calendarStackView.snp.makeConstraints {

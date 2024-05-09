@@ -53,6 +53,8 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.distribution = .fill
     }
     
+    private lazy var fadingBottomView = FadingView(position: .bottom)
+    
     /// menu info container
     private lazy var menuInfoContainer = UIView().then {
         $0.backgroundColor = Color.white
@@ -194,7 +196,6 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.isScrollEnabled = false
         $0.allowsSelection = false
         $0.separatorStyle = .none
-        $0.delegate = self
     }
     
     private lazy var emptyCommentsLabel = UILabel().then {
@@ -234,7 +235,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         /// navigation bar
         container.addSubviews(
             scrollView, bottomShadow, fixedMenuInfoContainer,
-            navigationBarView, reviewButton
+            navigationBarView, fadingBottomView, reviewButton
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -294,6 +295,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         scrollStackView.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(16)
+        }
+        fadingBottomView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(container.snp.bottom)
+            $0.height.equalTo(bound.height / 12)
         }
         /// menu info container
         menuInfoContainer.snp.makeConstraints {
@@ -542,13 +548,5 @@ extension MenuInfoViewController: UIScrollViewDelegate {
                 self.bottomShadow.alpha = 0
             }
         }
-    }
-}
-
-// MARK: - UITableViewDelegate
-extension MenuInfoViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
     }
 }

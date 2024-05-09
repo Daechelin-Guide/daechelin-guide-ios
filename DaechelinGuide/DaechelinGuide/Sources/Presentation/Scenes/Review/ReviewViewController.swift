@@ -232,15 +232,12 @@ extension ReviewViewController: UITextViewDelegate {
             }
         }
         /// limit the number of review text count
-        let textCount = textView.text.count
-        let maxCount = 100
-        if textCount >= maxCount {
-            textView.text = String(textView.text.prefix(maxCount))
-            reviewTextCountingLabel.textColor = Color.error
-        } else {
-            reviewTextCountingLabel.textColor = Color.darkGray
-        }
+        let textCount = textView.text.count < 50 ? textView.text.count : 50
+        let maxCount = 50
+        textView.text = String(textView.text.prefix(maxCount))
+        
         reviewTextCountingLabel.text = "\(textCount) / \(maxCount)"
+        reviewTextCountingLabel.textColor = textCount >= maxCount ? Color.error : Color.darkGray
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {

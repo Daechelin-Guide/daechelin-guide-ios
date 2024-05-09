@@ -14,6 +14,7 @@
 		52141CF72BE0E04000551A94 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CF62BE0E04000551A94 /* Then */; };
 		52141CFE2BE0E6C800551A94 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 52141CFD2BE0E6C800551A94 /* SnapKit */; };
 		52453A7B2BEB9EAC000EE10A /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52453A7A2BEB9EAC000EE10A /* String+Ext.swift */; };
+		5290A4C92BECE661002BF6BE /* FadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5290A4C82BECE661002BF6BE /* FadingView.swift */; };
 		52F4EB082BE6600000582D33 /* ScaledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB072BE6600000582D33 /* ScaledButton.swift */; };
 		52F4EB0C2BE6718000582D33 /* MenuService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4EB0B2BE6718000582D33 /* MenuService.swift */; };
 		52F4EB0F2BE671E400582D33 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 52F4EB0E2BE671E400582D33 /* Moya */; };
@@ -67,6 +68,7 @@
 		52141CE42BE0D82500551A94 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52141CE62BE0D82500551A94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52453A7A2BEB9EAC000EE10A /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		5290A4C82BECE661002BF6BE /* FadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadingView.swift; sourceTree = "<group>"; };
 		52F4EB072BE6600000582D33 /* ScaledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaledButton.swift; sourceTree = "<group>"; };
 		52F4EB0B2BE6718000582D33 /* MenuService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuService.swift; path = DaechelinGuide/Sources/Network/Service/MenuService.swift; sourceTree = SOURCE_ROOT; };
 		52F4EB112BE6731E00582D33 /* RatingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingRequest.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				52F4EB072BE6600000582D33 /* ScaledButton.swift */,
+				5290A4C82BECE661002BF6BE /* FadingView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				52FC14F32BE47E6200462B37 /* HomeReactor.swift in Sources */,
 				52F8CE8E2BE71619009D0663 /* RatingService.swift in Sources */,
 				52FC15292BE47FDF00462B37 /* Color.swift in Sources */,
+				5290A4C92BECE661002BF6BE /* FadingView.swift in Sources */,
 				52FC14F42BE47E6200462B37 /* HomeViewController.swift in Sources */,
 				52F8CE9A2BE7676B009D0663 /* RankingProvider.swift in Sources */,
 				52FC15022BE47E9300462B37 /* MenuDetailResponse.swift in Sources */,
