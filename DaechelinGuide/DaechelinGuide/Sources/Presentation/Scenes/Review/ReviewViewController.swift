@@ -182,16 +182,13 @@ final class ReviewViewController: BaseVC<ReviewReactor> {
             })
             .disposed(by: disposeBag)
         
-        reviewTextView.rx.text
-            .map { text -> ReviewReactor.Action in
-                return .setReviewText(text ?? "")
-            }
+        reviewTextView.rx.text.orEmpty
+            .map(ReviewReactor.Action.setReviewText)
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         starView.rx.didFinishTouchingCosmos
-            .onNext { [weak reactor] score in
-                guard let reactor = reactor else { return }
+            .onNext { score in
                 let action = ReviewReactor.Action.setReviewScore(score)
                 reactor.action.onNext(action)
             }

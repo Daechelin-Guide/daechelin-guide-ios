@@ -216,7 +216,7 @@ final class RankingViewController: BaseVC<RankingReactor> {
                 self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
-        
+
         breakfastButton.rx.tap
             .map { Reactor.Action.setMealType(.TYPE_BREAKFAST) }
             .bind(to: reactor.action)
@@ -238,8 +238,7 @@ final class RankingViewController: BaseVC<RankingReactor> {
     }
     
     override func bindState(reactor: RankingReactor) {
-        reactor.state
-            .map { $0.mealType }
+        reactor.state.map { $0.mealType }
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] type in
                 self?.rankingTableView.reloadData()

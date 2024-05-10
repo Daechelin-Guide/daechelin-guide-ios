@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import Then
 import SnapKit
 import Cosmos
@@ -15,7 +17,7 @@ class RankingCell: UITableViewCell {
     // MARK: - Properties
     static let reuseIdentifier = "RankingCell"
     
-    private lazy var container = UIView().then {
+    private lazy var container = UIButton().then {
         $0.backgroundColor = Color.white
         $0.layer.cornerRadius = 12
         $0.layer.shadowRadius = 2
