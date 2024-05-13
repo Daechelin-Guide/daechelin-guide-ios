@@ -51,17 +51,7 @@ final class RankingViewController: BaseVC<RankingReactor> {
         $0.distribution = .fill
     }
     
-    private lazy var fadingBottomView = UIView().then { bottomView in
-        let fadeLayer = CAGradientLayer().then {
-            $0.frame = CGRect(x: 0, y: 0, width: bound.width, height: bound.height / 12)
-            $0.colors = [Color.background.withAlphaComponent(0).cgColor,
-                         Color.background.withAlphaComponent(1).cgColor]
-            $0.startPoint = CGPoint(x: 0.5, y: 0)
-            $0.endPoint = CGPoint(x: 0.5, y: 1)
-        }
-        bottomView.layer.addSublayer(fadeLayer)
-        bottomView.isUserInteractionEnabled = false
-    }
+    private lazy var fadingBottomView = FadingView(position: .bottom)
     
     /// ranking
     private lazy var breakfastButton = ScaledButton(scale: 0.95).then {
@@ -226,7 +216,7 @@ final class RankingViewController: BaseVC<RankingReactor> {
                 self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
-        
+
         breakfastButton.rx.tap
             .map { Reactor.Action.setMealType(.TYPE_BREAKFAST) }
             .bind(to: reactor.action)
@@ -248,8 +238,7 @@ final class RankingViewController: BaseVC<RankingReactor> {
     }
     
     override func bindState(reactor: RankingReactor) {
-        reactor.state
-            .map { $0.mealType }
+        reactor.state.map { $0.mealType }
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] type in
                 self?.rankingTableView.reloadData()

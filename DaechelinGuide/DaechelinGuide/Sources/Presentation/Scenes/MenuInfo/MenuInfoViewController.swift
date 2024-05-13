@@ -53,6 +53,8 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.distribution = .fill
     }
     
+    private lazy var fadingBottomView = FadingView(position: .bottom)
+    
     /// menu info container
     private lazy var menuInfoContainer = UIView().then {
         $0.backgroundColor = Color.white
@@ -194,7 +196,6 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         $0.isScrollEnabled = false
         $0.allowsSelection = false
         $0.separatorStyle = .none
-        $0.delegate = self
     }
     
     private lazy var emptyCommentsLabel = UILabel().then {
@@ -234,7 +235,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         /// navigation bar
         container.addSubviews(
             scrollView, bottomShadow, fixedMenuInfoContainer,
-            navigationBarView, reviewButton
+            navigationBarView, fadingBottomView, reviewButton
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -294,6 +295,11 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
         scrollStackView.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(16)
+        }
+        fadingBottomView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(container.snp.bottom)
+            $0.height.equalTo(bound.height / 12)
         }
         /// menu info container
         menuInfoContainer.snp.makeConstraints {
@@ -422,7 +428,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
     // MARK: - Reactor
     override func bindView(reactor: MenuInfoReactor) {
         refreshControl.rx.controlEvent(.valueChanged)
-            .map { _ in .refresh }
+            .map { .refresh }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -458,13 +464,13 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.menuDetail?.totalScore }
-            .distinctUntilChanged()
-            .map { $0 ?? 0.0 }
+        reactor.state.compactMap { $0.menuDetail }
+            .map { $0.totalScore }
             .bind(to: starView.rx.rating)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.menuDetail?.menu }
+        reactor.state.compactMap { $0.menuDetail }
+            .map { $0.menu }
             .subscribe(onNext: { [weak self] menu in
                 let menu = menu?.replacingOccurrences(of: " ", with: "\n")
                 self?.menuLabel.text = menu
@@ -473,14 +479,16 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             })
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.menuDetail?.cal }
+        reactor.state.compactMap { $0.menuDetail }
+            .map { $0.cal }
             .subscribe(onNext: { [weak self] cal in
                 self?.kcalLabel.text = cal
                 self?.fixedKcalLabel.text = cal
             })
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.menuDetail?.nutrients }
+        reactor.state.compactMap { $0.menuDetail }
+            .map { $0.nutrients }
             .subscribe(onNext: { [weak self] nutrients in
                 let nutrientsArray = nutrients?.components(separatedBy: ", ")[0...2]
                 let replacingNutrients = nutrientsArray?.map {
@@ -492,8 +500,7 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             })
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.comments }
-            .compactMap { $0 }
+        reactor.state.compactMap { $0.comments }
             .bind(to: commentTableView.rx.items(
                 cellIdentifier: CommentCell.reuseIdentifier,
                 cellType: CommentCell.self)
@@ -502,13 +509,13 @@ final class MenuInfoViewController: BaseVC<MenuInfoReactor> {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.comments }
-            .filter { !($0?.isEmpty ?? true) }
+        reactor.state.compactMap { $0.comments }
+            .filter { !$0.isEmpty }
             .subscribe(onNext: { [weak self] comments in
                 self?.emptyCommentsLabel.removeFromSuperview()
                 self?.emptyCommentsSubLabel.removeFromSuperview()
                 
-                let commentsCount = comments?.count ?? 0
+                let commentsCount = comments.count
                 self?.commentTableView.snp.updateConstraints {
                     $0.height.equalTo((commentsCount * 70) + 100)
                 }
@@ -542,13 +549,5 @@ extension MenuInfoViewController: UIScrollViewDelegate {
                 self.bottomShadow.alpha = 0
             }
         }
-    }
-}
-
-// MARK: - UITableViewDelegate
-extension MenuInfoViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
     }
 }

@@ -9,10 +9,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
-	<key>URL</key>
-	<string>http://54.180.155.53:8080</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -30,5 +26,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>URL</key>
+	<string>http://54.180.155.53:8080</string>
 </dict>
 </plist>

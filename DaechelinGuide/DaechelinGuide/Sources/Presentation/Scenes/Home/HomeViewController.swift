@@ -51,6 +51,8 @@ final class HomeViewController: BaseVC<HomeReactor> {
     
     private let refreshControl = UIRefreshControl()
     
+    private lazy var fadingBottomView = FadingView(position: .bottom)
+    
     /// calendar button
     private lazy var calendarStackView = UIStackView().then {
         $0.axis = .horizontal
@@ -116,7 +118,7 @@ final class HomeViewController: BaseVC<HomeReactor> {
     override func addView() {
         view.addSubview(container)
         container.addSubviews(
-            scrollView, navigationBarView
+            scrollView, navigationBarView, fadingBottomView
         )
         navigationBarView.addSubviews(
             navigationBarItemView, navigationBarSeparateLine
@@ -172,6 +174,11 @@ final class HomeViewController: BaseVC<HomeReactor> {
             $0.top.equalTo(navigationBarView.snp.bottom).offset(34)
             $0.bottom.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
         }
+        fadingBottomView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(container.snp.bottom)
+            $0.height.equalTo(bound.height / 12)
+        }
         /// calendar button
         calendarStackView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -200,7 +207,7 @@ final class HomeViewController: BaseVC<HomeReactor> {
     // MARK: - Reactor
     override func bindView(reactor: HomeReactor) {
         refreshControl.rx.controlEvent(.valueChanged)
-            .map { _ in .refresh }
+            .map { .refresh }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
@@ -221,45 +228,42 @@ final class HomeViewController: BaseVC<HomeReactor> {
         breakfastContainer.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self,
-                      reactor.currentState.menu?.breakfast != nil else { return }
+                guard reactor.currentState.menu?.breakfast != nil else { return }
                 let vc = MenuInfoViewController(
                     reactor: MenuInfoReactor(
                         date: reactor.currentState.date,
                         type: .TYPE_BREAKFAST
                     )
                 )
-                self.navigationController?.pushViewController(vc, animated: true)
+                self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
         lunchContainer.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self,
-                      reactor.currentState.menu?.lunch != nil else { return }
+                guard reactor.currentState.menu?.lunch != nil else { return }
                 let vc = MenuInfoViewController(
                     reactor: MenuInfoReactor(
                         date: reactor.currentState.date,
                         type: .TYPE_LUNCH
                     )
                 )
-                self.navigationController?.pushViewController(vc, animated: true)
+                self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
         dinnerContainer.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                guard let self = self,
-                      reactor.currentState.menu?.dinner != nil else { return }
+                guard reactor.currentState.menu?.dinner != nil else { return }
                 let vc = MenuInfoViewController(
                     reactor: MenuInfoReactor(
                         date: reactor.currentState.date,
                         type: .TYPE_DINNER
                     )
                 )
-                self.navigationController?.pushViewController(vc, animated: true)
+                self?.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }
@@ -268,17 +272,17 @@ final class HomeViewController: BaseVC<HomeReactor> {
         reactor.action.onNext(.fetchMenu)
         
         yesterdayButton.rx.tap
-            .map { Reactor.Action.yesterdayButtonDidTap }
+            .map { .yesterdayButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         calendarButton.rx.tap
-            .map { Reactor.Action.calendarButtonDidTap }
+            .map { .calendarButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         tomorrowButton.rx.tap
-            .map { Reactor.Action.tomorrowButtonDidTap }
+            .map { .tomorrowButtonDidTap }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -295,11 +299,11 @@ final class HomeViewController: BaseVC<HomeReactor> {
             .bind(to: refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.menu }
+        reactor.state.compactMap { $0.menu }
             .subscribe(onNext: { [weak self] menuResponse in
-                let breakfast = menuResponse?.breakfast
-                let lunch = menuResponse?.lunch
-                let dinner = menuResponse?.dinner
+                let breakfast = menuResponse.breakfast
+                let lunch = menuResponse.lunch
+                let dinner = menuResponse.dinner
                 self?.breakfastContainer.configuration(menu: breakfast)
                 self?.lunchContainer.configuration(menu: lunch)
                 self?.dinnerContainer.configuration(menu: dinner)
